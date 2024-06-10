@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id                Int             @id @default(autoincrement())
+  nombre            String
+  telefono          String?         @unique
+  correoElectronico String          @unique
+  direccion         String?
+  fechaNacimiento   DateTime?
+  contrasena        String
+  rol               Rol             @default(CLIENTE)
+  mascotas          Mascota[]
+  citas             Cita[]
+  facturas          Factura[]
+}
+
+model Sucursal {
+  id                Int             @id @default(autoincrement())
+  nombre            String
+  descripcion       String?
+  telefono          String?
+  direccion         String?
+  correoElectronico String?
+  servicios         Servicio[]
+  citas             Cita[]
+  horarios          Horario[]
+  facturas          Factura[]
+}
+
+model Servicio {
+  id                Int             @id @default(autoincrement())
+  nombre            String
+  descripcion       String
+  precio            Float
+  duracion          Int
+  categoriaServicio String
+  disponibilidad    Boolean         @default(true)
+  sucursalId        Int
+  sucursal          Sucursal        @relation(fields: [sucursalId], references: [id])
+  citas             Cita[]
+  detallesFactura   DetalleFactura[]
+}
+
+model Mascota {
+  id                Int             @id @default(autoincrement())
+  nombre            String
+  especie           String
+  raza              String?
+  edad              Int
+  propietarioId     Int
+  propietario       Usuario         @relation(fields: [propietarioId], references: [id])
+  citas             Cita[]
+}
+
+model EstadoCita {
+  id                Int             @id @default(autoincrement())
+  nombreEstado      String
+  citas             Cita[]
+}
+
+model Cita {
+  id                Int             @id @default(autoincrement())
+  fecha             DateTime
+  horaInicio        DateTime
+  horaFin           DateTime
+  estadoId          Int
+  estado            EstadoCita      @relation(fields: [estadoId], references: [id])
+  clienteId         Int
+  cliente           Usuario         @relation(fields: [clienteId], references: [id])
+  servicioId        Int
+  servicio          Servicio        @relation(fields: [servicioId], references: [id])
+  mascotaId         Int
+  mascota           Mascota         @relation(fields: [mascotaId], references: [id])
+  sucursalId        Int
+  sucursal          Sucursal        @relation(fields: [sucursalId], references: [id])
+}
+
+model Horario {
+  id                Int             @id @default(autoincrement())
+  sucursalId        Int
+  tipo              TipoHorario     // 'SERVICIO' o 'BLOQUEO'
+  fechaInicio       DateTime
+  fechaFin          DateTime?
+  horaInicio        DateTime?
+  horaFin           DateTime?
+  diasSemana        String?         // 'Lunes,Martes,Miércoles' etc.
+  motivo            String?
+  sucursal          Sucursal        @relation(fields: [sucursalId], references: [id])
+}
+
+enum TipoHorario {
+  SERVICIO
+  BLOQUEO
+}
+
+model Producto {
+  id                Int             @id @default(autoincrement())
+  nombre            String
+  descripcion       String?
+  categoria         String
+  precio            Float
+  stock             Int
+  proveedor         String?
+  detallesFactura   DetalleFactura[]
+}
+
+model Factura {
+  id                Int             @id @default(autoincrement())
+  fecha             DateTime
+  clienteId         Int
+  cliente           Usuario         @relation(fields: [clienteId], references: [id])
+  sucursalId        Int
+  sucursal          Sucursal        @relation(fields: [sucursalId], references: [id])
+  subtotal          Float
+  impuestos         Float
+  total             Float
+  detalles          DetalleFactura[]
+}
+
+model DetalleFactura {
+  id                Int             @id @default(autoincrement())
+  facturaId         Int
+  factura           Factura         @relation(fields: [facturaId], references: [id])
+  productoId        Int?
+  producto          Producto?       @relation(fields: [productoId], references: [id])
+  servicioId        Int?
+  servicio          Servicio?       @relation(fields: [servicioId], references: [id])
+  cantidad          Int
+  precio            Float
+  impuestoPorcentaje Float
+  montoImpuesto     Float
+  totalBruto        Float
+  totalNeto         Float
+}
+
+enum Rol {
+  CLIENTE
+  ENCARGADO
+  ADMINISTRADOR
+}
