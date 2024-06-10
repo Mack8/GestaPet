@@ -10,8 +10,9 @@ const prism = new PrismaClient();
 
 //---Archivos de rutas---
 
-
-
+const citaRouter = require("./routes/citaRoutes")
+const estadoCitaRouter = require("./routes/estadoCitaRoutes")
+const facturaRouter = require("./routes/facturaRoutes")
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -29,6 +30,10 @@ extended: true,
 })
 );
 //---- Definir rutas ----
+
+app.use("/cita/",citaRouter)
+app.use("/estadoCita/",estadoCitaRouter)
+app.use("/factura/",facturaRouter)
 
 
 // Servidor
