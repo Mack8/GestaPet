@@ -9,10 +9,15 @@ const chalk = require ('chalk')
 const prism = new PrismaClient();
 
 //---Archivos de rutas---
-
 const citaRouter = require("./routes/citaRoutes")
 const estadoCitaRouter = require("./routes/estadoCitaRoutes")
 const facturaRouter = require("./routes/facturaRoutes")
+const horarioRouter = require("./routes/horarioRoutes")
+const mascotaRouter = require("./routes/mascotaRoutes")
+const productoRouter = require("./routes/productoRoutes")
+const servicioRouter = require("./routes/servicioRoutes")
+const sucursalRouter = require("./routes/sucursalRoutes")
+const usuarioRouter = require("./routes/usuarioRoutes")
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -30,11 +35,15 @@ extended: true,
 })
 );
 //---- Definir rutas ----
-
 app.use("/cita/",citaRouter)
 app.use("/estadoCita/",estadoCitaRouter)
 app.use("/factura/",facturaRouter)
-
+app.use("/horario/",horarioRouter)
+app.use("/mascota/",mascotaRouter)
+app.use("/producto/",productoRouter)
+app.use("/servicio/",servicioRouter)
+app.use("/sucursal/",sucursalRouter)
+app.use("/usuario/",usuarioRouter)
 
 // Servidor
 app.listen(port, () => {
