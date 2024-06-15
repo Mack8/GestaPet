@@ -17,7 +17,7 @@ const mascotaRouter = require("./routes/mascotaRoutes")
 const productoRouter = require("./routes/productoRoutes")
 const servicioRouter = require("./routes/servicioRoutes")
 const sucursalRouter = require("./routes/sucursalRoutes")
-const usuarioRouter = require("./routes/usuarioRoutes")
+const usuarioRouter = require("./routes/sucursalRoutes")
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
