@@ -22,6 +22,8 @@ model Usuario {
   fechaNacimiento   DateTime?
   contrasena        String
   rol               Rol             @default(CLIENTE)
+  sucursalId        Int?
+  sucursal          Sucursal?       @relation(fields: [sucursalId], references: [id])
   mascotas          Mascota[]
   citas             Cita[]
   facturas          Factura[]
@@ -34,7 +36,7 @@ model Sucursal {
   telefono          String?
   direccion         String?
   correoElectronico String?
-  servicios         Servicio[]
+  usuarios          Usuario[]
   citas             Cita[]
   horarios          Horario[]
   facturas          Factura[]
@@ -48,8 +50,6 @@ model Servicio {
   duracion          Int
   categoriaServicio String
   disponibilidad    Boolean         @default(true)
-  sucursalId        Int
-  sucursal          Sucursal        @relation(fields: [sucursalId], references: [id])
   citas             Cita[]
   detallesFactura   DetalleFactura[]
 }
@@ -66,10 +66,12 @@ model Mascota {
 }
 
 model EstadoCita {
-  id                Int             @id @default(autoincrement())
-  nombreEstado      String
-  citas             Cita[]
+  id           Int      @id @default(autoincrement())
+  nombreEstado String
+  color        String   
+  citas        Cita[]
 }
+
 
 model Cita {
   id                Int             @id @default(autoincrement())
@@ -127,6 +129,7 @@ model Factura {
   subtotal          Float
   impuestos         Float
   total             Float
+  estado            EstadoFactura   @default(PROFORMA)
   detalles          DetalleFactura[]
 }
 
@@ -144,6 +147,11 @@ model DetalleFactura {
   montoImpuesto     Float
   totalBruto        Float
   totalNeto         Float
+}
+
+enum EstadoFactura {
+  PROFORMA
+  FACTURADA
 }
 
 enum Rol {
