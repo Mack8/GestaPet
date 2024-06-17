@@ -2,7 +2,7 @@ const {PrismaClient}= require("@prisma/client")
 
 const prisma=new PrismaClient() 
 
-module.exports.getSucursales = async (request, response, next) => {
+module.exports.get = async (request, response, next) => {
     const sucursales = await prisma.sucursal.findMany({
         orderBy: {
             nombre: 'asc'
