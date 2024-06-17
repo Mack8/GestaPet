@@ -2,14 +2,10 @@ const {PrismaClient}= require("@prisma/client")
 
 const prisma=new PrismaClient() 
 
-module.exports.getUsuarios = async (request, response, next) => {
-    const usuarios = await prisma.usuario.findMany({
-        orderBy: {
-            nombre: 'asc'
-        }
-    });
-    response.json(usuarios);
-};
+module.exports.get=async(request,response, next)=>{
+    const usuarios= await prisma.usuario.findMany()
+    response.json(usuarios)
+}
 
 module.exports.getUsuarioById = async (request, response, next) => {
     let idUsuario = parseInt(request.params.id);
@@ -24,7 +20,7 @@ module.exports.getUsuarioById = async (request, response, next) => {
     response.json(usuario);
 };
 
-module.exports.createUsuario = async (request, response, next) => {
+module.exports.create = async (request, response, next) => {
     let body = request.body;
     const newUsuario = await prisma.usuario.create({
         data: {
