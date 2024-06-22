@@ -8,6 +8,7 @@ CREATE TABLE `Usuario` (
     `fechaNacimiento` DATETIME(3) NULL,
     `contrasena` VARCHAR(191) NOT NULL,
     `rol` ENUM('CLIENTE', 'ENCARGADO', 'ADMINISTRADOR') NOT NULL DEFAULT 'CLIENTE',
+    `sucursalId` INTEGER NULL,
 
     UNIQUE INDEX `Usuario_telefono_key`(`telefono`),
     UNIQUE INDEX `Usuario_correoElectronico_key`(`correoElectronico`),
@@ -35,7 +36,6 @@ CREATE TABLE `Servicio` (
     `duracion` INTEGER NOT NULL,
     `categoriaServicio` VARCHAR(191) NOT NULL,
     `disponibilidad` BOOLEAN NOT NULL DEFAULT true,
-    `sucursalId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -56,6 +56,7 @@ CREATE TABLE `Mascota` (
 CREATE TABLE `EstadoCita` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `nombreEstado` VARCHAR(191) NOT NULL,
+    `color` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -112,6 +113,7 @@ CREATE TABLE `Factura` (
     `subtotal` DOUBLE NOT NULL,
     `impuestos` DOUBLE NOT NULL,
     `total` DOUBLE NOT NULL,
+    `estado` ENUM('PROFORMA', 'FACTURADA') NOT NULL DEFAULT 'PROFORMA',
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -133,7 +135,7 @@ CREATE TABLE `DetalleFactura` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Servicio` ADD CONSTRAINT `Servicio_sucursalId_fkey` FOREIGN KEY (`sucursalId`) REFERENCES `Sucursal`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_sucursalId_fkey` FOREIGN KEY (`sucursalId`) REFERENCES `Sucursal`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Mascota` ADD CONSTRAINT `Mascota_propietarioId_fkey` FOREIGN KEY (`propietarioId`) REFERENCES `Usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

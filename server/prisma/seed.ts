@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { productos } from './seeds/productos';
+import { servicios } from './seeds/servicios';
 
 const prisma = new PrismaClient();
 const main = async () => {
@@ -8,7 +9,11 @@ const main = async () => {
     await prisma.producto.createMany({
       data: productos,
     });
-    //Usuarios - no tiene relaciones
+    
+
+    await prisma.servicio.createMany({
+      data: servicios,
+    });
 
 
   } catch (error) {
