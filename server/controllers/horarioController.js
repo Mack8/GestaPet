@@ -4,7 +4,7 @@ const prisma=new PrismaClient()
 
 module.exports.get=async(request,response, next)=>{
     const horarios= await prisma.horario.findMany()
-    response.json(generos)
+    response.json(horarios)
 }
 
 module.exports.getHorarioById = async (request, response, next) => {

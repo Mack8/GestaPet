@@ -4,7 +4,7 @@ const prisma=new PrismaClient()
 
 module.exports.get=async(request,response, next)=>{
     const mascotas= await prisma.mascota.findMany()
-    response.json(generos)
+    response.json(mascotas)
 }
 
 module.exports.getMascotaById = async (request, response, next) => {

@@ -2,14 +2,10 @@ const {PrismaClient}= require("@prisma/client")
 
 const prisma=new PrismaClient() 
 
-module.exports.get=async (request, response, next) => {
-    const servicios = await prisma.servicio.findMany({
-        orderBy: {
-            nombre: 'asc'
-        }
-    });
-    response.json(servicios);
-};
+module.exports.get=async(request,response, next)=>{
+    const servicios= await prisma.servicio.findMany()
+    response.json(servicios)
+}
 
 module.exports.getServicioById = async (request, response, next) => {
     let idServicio = parseInt(request.params.id);
