@@ -29,11 +29,13 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { FormsModule } from '@angular/forms';
 
 import { ReservaIndexComponent } from './reserva-index/reserva-index.component';
+import { ReservaDetailComponent } from './reserva-detail/reserva-detail.component';
 
 
 @NgModule({
   declarations: [
-    ReservaIndexComponent
+    ReservaIndexComponent,
+    ReservaDetailComponent
   ],
   imports: [
     CommonModule,

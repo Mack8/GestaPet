@@ -11,17 +11,8 @@
   margin: 20px auto;
 }
 
-.home-card-header {
-  font-weight: 500;
-  margin-bottom: 0;
-  padding: 0.5em;
-  text-align: center;
-  font-size: 1.5em;
-  background-color: #00bfa5;;
-  color: white;
-}
-
 .home-card-content {
+  display: flex; /* Cambiamos a flex para que los elementos internos se alineen horizontalmente */
   padding: 1.5em;
 }
 
@@ -41,33 +32,8 @@
   flex-grow: 1; /* Permitir que este contenedor crezca para ocupar el espacio disponible */
 }
 
-.price {
-  font-weight: 800;
-  font-size: 1.2em;
-  text-align: left; /* Alinear el precio a la izquierda */
-}
-
-.stock {
+.price, .stock {
   font-weight: 400;
   font-size: 1em;
-  text-align: left; /* Alinear el stock a la izquierda */
-}
-
-mat-chip-listbox {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-
-mat-chip-grid {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-mat-chip-row {
-  margin: 5px;
-}
-
-:root {
-  --appAngular-primary: #00796b; /* Color primario según tu tema personalizado */
+  text-align: left; /* Alinear el precio y el stock a la izquierda */
 }
