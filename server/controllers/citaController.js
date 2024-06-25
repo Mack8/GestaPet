@@ -22,6 +22,26 @@ module.exports.getCitaById = async (request, response, next) => {
     response.json(cita);
 };
 
+module.exports.getCitaByUsuario = async (request, response, next) => {
+    let ususario = parseInt(request.params.usuario);
+    console.log("🚀 ~ module.exports.getCitaByUsuario= ~ ususario:", ususario)
+    const sucursal = await prisma.usuario.findFirst(
+        {where:{id:ususario}}
+    )
+    console.log("🚀 ~ module.exports.getCitaByUsuario= ~ sucursal:", sucursal)
+    const cita = await prisma.cita.findMany({
+        where: { sucursalId: sucursal.sucursalId },
+        include: {
+            estado: true,
+            cliente: true,
+            servicio: true,
+            mascota: true,
+            sucursal: true
+        }
+    });
+    response.json(cita);
+};
+
 module.exports.createCita = async (request, response, next) => {
     let body = request.body;
     const newCita = await prisma.cita.create({

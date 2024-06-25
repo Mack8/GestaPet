@@ -3,7 +3,18 @@ const {PrismaClient}= require("@prisma/client")
 const prisma = new PrismaClient()
 
 module.exports.get=async(request,response, next)=>{
-    const facturas=await prisma.factura.findMany()
+    const facturas=await prisma.factura.findMany({
+        include: {
+            cliente: true,
+            sucursal: true,
+            detalles: {
+                include:{
+                    producto:true,
+                    servicio: true
+                }
+            }
+        }
+    })
     response.json(facturas)
 }
 
@@ -14,7 +25,12 @@ module.exports.getFacturaById = async (request, response, next) => {
         include: {
             cliente: true,
             sucursal: true,
-            detalles: true
+            detalles: {
+                include:{
+                    producto:true,
+                    servicio: true
+                }
+            }
         }
     });
     response.json(factura);

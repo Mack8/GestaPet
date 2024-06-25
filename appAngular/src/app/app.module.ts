@@ -10,6 +10,13 @@ import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
 import { VideojuegoModule } from './videojuego/videojuego.module';
 import { OrdenModule } from './orden/orden.module';
+
+import { FacturaModule } from './factura/factura.module';
+import { ReservaModule } from './reserva/reserva.module';
+
+/* import { FacturaIndexComponent } from './factura/factura-index/factura-index.component';
+import { FacturaDetailComponent } from './factura/factura-detail/factura-detail.component'; */
+
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -25,6 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
     UserModule,
     VideojuegoModule,
     OrdenModule,
+    FacturaModule,
+    ReservaModule,
     AppRoutingModule,
     
   ],
