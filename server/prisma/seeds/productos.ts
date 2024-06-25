@@ -6,6 +6,7 @@ export const productos = [
       categoria: "Alimento",
       precio: 49.99,
       stock: 100,
+      imagen: 'Producto.jpg',
       proveedor: "Purina"
     },
     // 2
@@ -15,6 +16,7 @@ export const productos = [
       categoria: "Juguetes",
       precio: 12.99,
       stock: 200,
+      imagen: 'Producto.jpg',
       proveedor: "Catit"
     },
     // 3
@@ -24,6 +26,7 @@ export const productos = [
       categoria: "Higiene",
       precio: 15.50,
       stock: 150,
+      imagen: 'Producto.jpg',
       proveedor: "Ever Clean"
     },
     // 4
@@ -33,7 +36,8 @@ export const productos = [
       categoria: "Cuidado Personal",
       precio: 8.99,
       stock: 80,
-      proveedor: "Hartz"
+      proveedor: "Hartz",
+      imagen: 'Producto.jpg',
     },
     // 5
     {
@@ -42,6 +46,7 @@ export const productos = [
       categoria: "Medicamentos",
       precio: 19.99,
       stock: 50,
+      imagen: 'Producto.jpg',
       proveedor: "Frontline"
     },
     // 6
@@ -51,6 +56,7 @@ export const productos = [
       categoria: "Accesorios",
       precio: 29.99,
       stock: 70,
+      imagen: 'Producto.jpg',
       proveedor: "K&H Pet Products"
     },
     // 7
@@ -60,6 +66,7 @@ export const productos = [
       categoria: "Accesorios",
       precio: 25.00,
       stock: 60,
+      imagen: 'Producto.jpg',
       proveedor: "PetFusion"
     },
     // 8
@@ -69,6 +76,7 @@ export const productos = [
       categoria: "Suplementos",
       precio: 22.50,
       stock: 90,
+      imagen: 'Producto.jpg',
       proveedor: "Nutri-Vet"
     },
     // 9
@@ -78,6 +86,7 @@ export const productos = [
       categoria: "Cuidado Personal",
       precio: 9.99,
       stock: 120,
+      imagen: 'Producto.jpg',
       proveedor: "Safari"
     },
     // 10
@@ -87,6 +96,7 @@ export const productos = [
       categoria: "Medicamentos",
       precio: 35.00,
       stock: 110,
+      imagen: 'Producto.jpg',
       proveedor: "Seresto"
     }
   ];

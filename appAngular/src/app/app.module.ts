@@ -8,13 +8,17 @@ import { CoreModule } from './core/core.module';
 import { ShareModule } from './share/share.module';
 import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
-import { VideojuegoModule } from './videojuego/videojuego.module';
-import { OrdenModule } from './orden/orden.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ProductoModule } from './producto/producto.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { HeaderComponent } from './core/header/header.component';
+import { ProductoIndexComponent } from './producto/producto-index/producto-index.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,10 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     ShareModule,
     HomeModule,
     UserModule,
-    VideojuegoModule,
-    OrdenModule,
-    AppRoutingModule,
-    
+    ProductoModule,
+    AppRoutingModule, 
   ],
   providers: [
     provideAnimationsAsync()

@@ -6,46 +6,69 @@ module.exports.get=async(request,response, next)=>{
     response.json(productos)
 }
 
-module.exports.getMascotaById = async (request, response, next) => {
-    let idMascota = parseInt(request.params.id);
-    const mascota = await prisma.mascota.findUnique({
-        where: { id: idMascota },
-        include: {
-            citas: true,
-            propietario: true
-        }
-    });
-    response.json(mascota);
+module.exports.getById = async (request, response, next) => {
+    try {
+        let idProducto = parseInt(request.params.id);
+        const producto = await prisma.producto.findFirst({
+            where: { id: idProducto }
+        });
+        response.json(producto);
+    } catch (error) {
+        next(error);
+    }
 };
 
-module.exports.createMascota = async (request, response, next) => {
-    let body = request.body;
-    const newMascota = await prisma.mascota.create({
-        data: {
-            nombre: body.nombre,
-            especie: body.especie,
-            raza: body.raza,
-            edad: body.edad,
-            propietarioId: body.propietarioId
-        }
-    });
-    response.json(newMascota);
+// Crear producto
+module.exports.create = async (request, response, next) => {
+    try {
+        let body = request.body;
+        const newProducto = await prisma.producto.create({
+            data: {
+                nombre: body.nombre,
+                descripcion: body.descripcion,
+                categoria: body.categoria,
+                precio: body.precio,
+                stock: body.stock,
+                proveedor: body.proveedor
+            }
+        });
+        response.json(newProducto);
+    } catch (error) {
+        next(error);
+    }
 };
 
-module.exports.updateMascota = async (request, response, next) => {
-    let body = request.body;
-    let idMascota = parseInt(request.params.id);
-    const updateMascota = await prisma.mascota.update({
-        where: {
-            id: idMascota
-        },
-        data: {
-            nombre: body.nombre,
-            especie: body.especie,
-            raza: body.raza,
-            edad: body.edad,
-            propietarioId: body.propietarioId
-        }
-    });
-    response.json(updateMascota);
+// Actualizar producto
+module.exports.update = async (request, response, next) => {
+    try {
+        let body = request.body;
+        let idProducto = parseInt(request.params.id);
+        const updateProducto = await prisma.producto.update({
+            where: { id: idProducto },
+            data: {
+                nombre: body.nombre,
+                descripcion: body.descripcion,
+                categoria: body.categoria,
+                precio: body.precio,
+                stock: body.stock,
+                proveedor: body.proveedor
+            }
+        });
+        response.json(updateProducto);
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Eliminar producto
+module.exports.delete = async (request, response, next) => {
+    try {
+        let idProducto = parseInt(request.params.id);
+        await prisma.producto.delete({
+            where: { id: idProducto }
+        });
+        response.json({ message: 'Producto eliminado' });
+    } catch (error) {
+        next(error);
+    }
 };
