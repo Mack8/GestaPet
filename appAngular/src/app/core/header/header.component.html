@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <button mat-icon-button 
   class="example-header-image" 
-   matTooltip="GestaPet"
+   matTooltip="AppVideojuegos"
   [routerLink]="['/inicio']" routerLinkActive="link-active" ></button>
  <button [matMenuTriggerFor]="menu1" mat-icon-button class="example-icon"
    matTooltip="Menu">
@@ -17,35 +17,14 @@
  <mat-menu #menu1="matMenu">
    <button mat-menu-item [routerLink]="['/inicio']" routerLinkActive="link-active">Inicio</button>
    <button mat-menu-item [routerLink]="['/acerca-de']" routerLinkActive="link-active">Acerca de</button>
-   <button mat-menu-item [routerLink]="['/producto']" routerLinkActive="link-active">Producto</button>
+   <button mat-menu-item [routerLink]="['/factura']" routerLinkActive="link-active">Facturas</button>
+   <button mat-menu-item [routerLink]="['/reserva']" routerLinkActive="link-active">Reservas</button>
 
-  </mat-menu>
-  <!--enlaces de la app-->
-  <!--https://material.angular.io/guide/typography-->
-  <div class="example-spacer"></div>
-  <div class="example-spacer">
-    <button mat-icon-button matBadgeColor="accent" [matBadge]="0"
-      [routerLinkActive]="'link-active'">
-      <mat-icon>shopping_cart</mat-icon>
-    </button>
-    <!-- Menu de Usuario-->
-    <span class="mat-caption">Email usuario</span>
-    <button mat-icon-button [matMenuTriggerFor]="menu3">
-      <mat-icon >person</mat-icon>
-    </button>
-    <mat-menu #menu3="matMenu">
-      
-      <button mat-menu-item >
-        <mat-icon>person_add</mat-icon>
-        <span>Login</span>
-      </button>
-      
-      <button mat-menu-item >
-        <mat-icon>person_remove</mat-icon>
-        <span>Logout</span>
-      </button>
-      
-    </mat-menu>
-  </div>
-   </mat-toolbar>
- 
+ </mat-menu>
+ <mat-menu #menu2="matMenu">
+   <button mat-menu-item [routerLink]="'/videojuego-table'" [routerLinkActive]="'link-active'">Videojuegos</button>
+ </mat-menu>
+ <!--enlaces de la app-->
+ <!--https://material.angular.io/guide/typography-->
+ <div class="example-spacer"></div>
+  </mat-toolbar>

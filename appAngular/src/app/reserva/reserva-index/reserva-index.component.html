@@ -1,0 +1,63 @@
+<div class="grid-container">
+    <mat-card>
+      <mat-card-header><h1 class="mat-h1">Reservas</h1></mat-card-header>
+      <mat-card-content> </mat-card-content>
+    </mat-card>
+  
+    <table mat-table [dataSource]="datos" class="mat-elevation-z8">
+      <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+      <!-- Position Column -->
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.fecha | date : "dd/MM/yyyy" }}
+        </td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="horaInicio">
+        <th mat-header-cell *matHeaderCellDef>Hora Inicio</th>
+        <td mat-cell *matCellDef="let element">{{ element.horaInicio | date : "HH:MM" }}</td>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <!--   <td mat-cell *matCellDef="let element">{{ element.estado.nombreEstado }}</td> -->
+        <td mat-cell *matCellDef="let myRowData">
+            <button
+              mat-button
+              aria-label="Edit Row"
+              [ngStyle]="{'background-color': myRowData.estado.color}"
+            >
+            {{ myRowData.estado.nombreEstado }}
+            </button>
+          </td>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="cliente">
+        <th mat-header-cell *matHeaderCellDef>Total</th>
+        <td mat-cell *matCellDef="let element">{{ element.cliente.nombre }}</td>
+        
+      </ng-container>
+  
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="TableHeaderRow">Acciones</th>
+        <td mat-cell *matCellDef="let myRowData">
+          <button
+            mat-button
+            aria-label="Edit Row"
+           
+          >
+            Ver Detalle
+          </button>
+        </td>
+      </ng-container>
+  
+       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr> 
+    </table>
+  </div>

@@ -8,6 +8,15 @@ import { CoreModule } from './core/core.module';
 import { ShareModule } from './share/share.module';
 import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
+
+
+
+import { FacturaModule } from './factura/factura.module';
+import { ReservaModule } from './reserva/reserva.module';
+
+/* import { FacturaIndexComponent } from './factura/factura-index/factura-index.component';
+import { FacturaDetailComponent } from './factura/factura-detail/factura-detail.component'; */
+
 import { HttpClientModule } from '@angular/common/http';
 import { ProductoModule } from './producto/producto.module';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,7 +37,10 @@ import { RouterModule } from '@angular/router';
     HomeModule,
     UserModule,
     ProductoModule,
-    AppRoutingModule, 
+    FacturaModule,
+    ReservaModule,
+    AppRoutingModule,
+  
   ],
   providers: [
     provideAnimationsAsync()
