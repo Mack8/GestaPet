@@ -1,0 +1,48 @@
+@if(datos){
+  <div class="grid-container">
+    <mat-card class="home-card">
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title>{{ datos?.nombre }}</mat-card-title>
+        </mat-card-title-group>
+      </mat-card-header>
+      <mat-card-content class="home-card-content">
+        <div class="content-wrapper">
+          <!-- Espacio reservado para la fotografía -->
+          <div class="photo-placeholder"></div>
+          
+          <!-- Información del producto -->
+          <div class="product-details">
+            <div>
+              <p>Descripción:</p>
+              <p>{{ datos?.descripcion }}</p>
+            </div>
+            <div>
+              <mat-chip-listbox aria-label="Categoría">
+                <mat-chip-option color="accent">
+                  Categoria: {{ datos?.categoria }}
+                </mat-chip-option>
+              </mat-chip-listbox>
+            </div>
+            <div>
+              <p class="price">Precio: {{ datos?.precio | currency : "USD" }}</p>
+            </div>
+            <div>
+              <mat-chip-listbox aria-label="Proveedor">
+                <mat-chip-grid role="list">
+                  <mat-chip-row role="listitem" selected color="primary" highlighted>
+                    <mat-chip highlighted color="accent">Proveedor: {{ datos?.proveedor }}</mat-chip>
+                  </mat-chip-row>
+                </mat-chip-grid>
+              </mat-chip-listbox>
+            </div>
+            <div>
+              <p class="stock">Stock: {{ datos?.stock }}</p>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+}

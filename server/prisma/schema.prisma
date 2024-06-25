@@ -114,6 +114,7 @@ model Producto {
   descripcion       String?
   categoria         String
   precio            Float
+  imagen            String                 @default("image-not-found.jpg")
   stock             Int
   proveedor         String?
   detallesFactura   DetalleFactura[]

@@ -1,0 +1,41 @@
+.grid-container {
+    margin: 20px;
+  }
+  
+  .dashboard-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .dashboard-card-header {
+    background-color: #00bfa5;
+    color: white;
+    text-align: center;
+    padding: 0.5em;
+    margin-bottom: 0;
+    font-size: 1.5em;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  
+  .dashboard-card-content {
+    padding: 1.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Centrar contenido verticalmente */
+    flex: 1; /* Asegurar que ocupe todo el espacio disponible */
+  }
+  
+  .price {
+    font-size: 1.5em;
+    font-weight: 600;
+    text-align: center;
+    margin-top: auto; /* Alinear el precio en la parte inferior */
+  }
+  

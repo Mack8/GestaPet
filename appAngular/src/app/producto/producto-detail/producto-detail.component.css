@@ -1,0 +1,73 @@
+.grid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+.home-card {
+  width: 80%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.home-card-header {
+  font-weight: 500;
+  margin-bottom: 0;
+  padding: 0.5em;
+  text-align: center;
+  font-size: 1.5em;
+  background-color: #00bfa5;;
+  color: white;
+}
+
+.home-card-content {
+  padding: 1.5em;
+}
+
+.content-wrapper {
+  display: flex;
+  align-items: flex-start; /* Alinear elementos hacia arriba */
+}
+
+.photo-placeholder {
+  width: 150px; /* Ancho de la foto (ajustar según necesidades) */
+  height: 150px; /* Alto de la foto (ajustar según necesidades) */
+  background-color: #e0e0e0; /* Color de fondo temporal */
+  margin-right: 20px; /* Espacio a la derecha de la foto */
+}
+
+.product-details {
+  flex-grow: 1; /* Permitir que este contenedor crezca para ocupar el espacio disponible */
+}
+
+.price {
+  font-weight: 800;
+  font-size: 1.2em;
+  text-align: left; /* Alinear el precio a la izquierda */
+}
+
+.stock {
+  font-weight: 400;
+  font-size: 1em;
+  text-align: left; /* Alinear el stock a la izquierda */
+}
+
+mat-chip-listbox {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+mat-chip-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+mat-chip-row {
+  margin: 5px;
+}
+
+:root {
+  --appAngular-primary: #00796b; /* Color primario según tu tema personalizado */
+}
