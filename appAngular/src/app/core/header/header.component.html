@@ -1,13 +1,30 @@
 <mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button> 
-    <span>GestaPet</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>home</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
+  <button mat-icon-button 
+  class="example-header-image" 
+   matTooltip="AppVideojuegos"
+  [routerLink]="['/inicio']" routerLinkActive="link-active" ></button>
+ <button [matMenuTriggerFor]="menu1" mat-icon-button class="example-icon"
+   matTooltip="Menu">
+   <mat-icon>menu</mat-icon>
+ </button>
+ 
+ <!--https://fonts.google.com/icons-->
+
+ <!-- 
+       https://material.angular.io/components/menu/overview
+       nested menu
+   -->
+ <mat-menu #menu1="matMenu">
+   <button mat-menu-item [routerLink]="['/inicio']" routerLinkActive="link-active">Inicio</button>
+   <button mat-menu-item [routerLink]="['/acerca-de']" routerLinkActive="link-active">Acerca de</button>
+   <button mat-menu-item [routerLink]="['/factura']" routerLinkActive="link-active">Facturas</button>
+   <button mat-menu-item [routerLink]="['/reserva']" routerLinkActive="link-active">Reservas</button>
+
+ </mat-menu>
+ <mat-menu #menu2="matMenu">
+   <button mat-menu-item [routerLink]="'/videojuego-table'" [routerLinkActive]="'link-active'">Videojuegos</button>
+ </mat-menu>
+ <!--enlaces de la app-->
+ <!--https://material.angular.io/guide/typography-->
+ <div class="example-spacer"></div>
   </mat-toolbar>
