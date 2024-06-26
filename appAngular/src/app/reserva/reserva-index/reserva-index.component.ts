@@ -24,7 +24,7 @@ export class ReservaIndexComponent {
   
   listReservas(){
     
-    this.gService.get("cita",3)
+    this.gService.get("cita",2)
     .pipe(takeUntil(this.destroy$))
     .subscribe((respuesta:any)=>{
       console.log("🚀 ~ ReservaIndexComponent ~ .subscribe ~ respuesta:", respuesta)
@@ -41,4 +41,11 @@ export class ReservaIndexComponent {
     }
     //this.dialog.open(FacturaDiagComponent,dialogConfig)
   }
+
+  detalleReserva(id: number) {
+    console.log('Navigating to reserva with id:', id);
+    this.router.navigate(['reserva/', id]);
+  }
+  
+
 }

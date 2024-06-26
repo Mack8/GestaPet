@@ -6,10 +6,10 @@
   color: aqua;
   }
   .example-header-image {
-    background-image: url("/assets/images/gamepad.png");
+    background-image: url("/assets/images/GestaPet.png");
     background-size: cover;
-    height: 40px;
-    width: 40px;
+    height: 70px;
+    width: 70px;
     border-radius: 50%;
     flex-shrink: 0;
     margin-bottom: 16px;
