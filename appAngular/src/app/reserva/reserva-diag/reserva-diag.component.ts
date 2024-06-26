@@ -30,7 +30,7 @@ export class ReservaDiagComponent {
   }
 
   listReservas(id:any){
-    this.gService.get("cita",2)
+    this.gService.get("cita/cita",id)
     .pipe(takeUntil(this.destroy$))
     .subscribe((respuesta:any)=>{
       console.log("🚀 ~ ReservaDiagComponent ~ .subscribe ~ respuesta:", respuesta)
