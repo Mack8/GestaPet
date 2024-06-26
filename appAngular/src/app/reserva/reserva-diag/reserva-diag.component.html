@@ -1,0 +1,23 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+
+@if(datos){
+  <div>
+  <h2 mat-dialog-title class="dialog-headline">Detalle de la Reserva</h2>
+
+  <mat-dialog-content class="content">
+    <div class="details">
+      <div>
+        <h3>Información de la Reserva</h3>
+        <p><strong>Fecha:</strong> {{ datos?.fecha | date: 'dd/MM/yyyy' }}</p>
+        <p><strong>Hora Inicio:</strong> {{ datos?.horaInicio | date: 'HH:mm' }}</p>
+        <p><strong>Hora Fin:</strong> {{ datos?.horaFin | date: 'HH:mm' }}</p>
+        <p><strong>Sucursal:</strong> {{ datos?.sucursal?.nombre }}</p>
+        <p><strong>Servicio:</strong> {{ datos?.servicio?.nombre }}</p>
+        <p><strong>Estado:</strong> <span [ngStyle]="{'background-color': datos?.estado?.color}">{{ datos?.estado?.nombreEstado }}</span></p>
+      </div>
+    </div>
+  </mat-dialog-content>
+</div>
+}

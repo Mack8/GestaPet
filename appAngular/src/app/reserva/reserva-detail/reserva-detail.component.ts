@@ -10,7 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class ReservaDetailComponent {
 
-  datos:any
+  reserva: any;
   destroy$: Subject<boolean>=new Subject<boolean>();
 
   constructor(private gService: GenericService,
@@ -26,7 +26,7 @@ export class ReservaDetailComponent {
     .pipe(takeUntil(this.destroy$))
     .subscribe((respuesta:any)=>{
       console.log("🚀 ~ ReservaIndexComponent ~ .subscribe ~ respuesta:", respuesta)
-      this.datos=respuesta
+      this.reserva=respuesta;
     })
   }
 

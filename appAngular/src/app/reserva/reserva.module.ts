@@ -30,12 +30,14 @@ import { FormsModule } from '@angular/forms';
 
 import { ReservaIndexComponent } from './reserva-index/reserva-index.component';
 import { ReservaDetailComponent } from './reserva-detail/reserva-detail.component';
+import { ReservaDiagComponent } from './reserva-diag/reserva-diag.component';
 
 
 @NgModule({
   declarations: [
     ReservaIndexComponent,
-    ReservaDetailComponent
+    ReservaDetailComponent,
+    ReservaDiagComponent
   ],
   imports: [
     CommonModule,
