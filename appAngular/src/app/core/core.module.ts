@@ -11,7 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent],
+  declarations: [HeaderComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -21,6 +21,6 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatMenuModule,
     MatBadgeModule,
   ],
-  exports: [HeaderComponent, FooterComponent],
+  exports: [HeaderComponent],
 })
 export class CoreModule {}
