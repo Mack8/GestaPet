@@ -1,1 +1,46 @@
-<p>reserva-detail works!</p>
+<div class="grid-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Detalle de la Reserva</mat-card-title>
+      </mat-card-header>
+      <mat-card-content *ngIf="reserva">
+        <div class="detail-section">
+          <h2>Información de la Reserva</h2>
+          <p><strong>Fecha:</strong> {{ reserva.fecha | date: 'dd/MM/yyyy' }}</p>
+          <p><strong>Hora Inicio:</strong> {{ reserva.horaInicio | date: 'HH:mm' }}</p>
+          <p><strong>Hora Fin:</strong> {{ reserva.horaFin | date: 'HH:mm' }}</p>
+          <p><strong>Estado:</strong> <span [ngStyle]="{'background-color': reserva.estado.color}">{{ reserva.estado.nombreEstado }}</span></p>
+        </div>
+        <div class="detail-section">
+          <h2>Información del Cliente</h2>
+          <p><strong>Nombre:</strong> {{ reserva.cliente.nombre }}</p>
+          <p><strong>Teléfono:</strong> {{ reserva.cliente.telefono }}</p>
+          <p><strong>Correo Electrónico:</strong> {{ reserva.cliente.correoElectronico }}</p>
+          <p><strong>Dirección:</strong> {{ reserva.cliente.direccion }}</p>
+        </div>
+        <div class="detail-section">
+          <h2>Información de la Mascota</h2>
+          <p><strong>Nombre:</strong> {{ reserva.mascota.nombre }}</p>
+          <p><strong>Edad:</strong> {{ reserva.mascota.edad }}</p>
+          <p><strong>Especie:</strong> {{ reserva.mascota.especie }}</p>
+          <p><strong>Raza:</strong> {{ reserva.mascota.raza }}</p>
+        </div>
+        <div class="detail-section">
+          <h2>Información del Servicio</h2>
+          <p><strong>Nombre:</strong> {{ reserva.servicio.nombre }}</p>
+          <p><strong>Descripción:</strong> {{ reserva.servicio.descripcion }}</p>
+          <p><strong>Precio:</strong> {{ reserva.servicio.precio | currency: 'USD' }}</p>
+          <p><strong>Duración:</strong> {{ reserva.servicio.duracion }} minutos</p>
+        </div>
+        <div class="detail-section">
+          <h2>Información de la Sucursal</h2>
+          <p><strong>Nombre:</strong> {{ reserva.sucursal.nombre }}</p>
+          <p><strong>Teléfono:</strong> {{ reserva.sucursal.telefono }}</p>
+          <p><strong>Correo Electrónico:</strong> {{ reserva.sucursal.correoElectronico }}</p>
+          <p><strong>Dirección:</strong> {{ reserva.sucursal.direccion }}</p>
+          <p><strong>Descripción:</strong> {{ reserva.sucursal.descripcion }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

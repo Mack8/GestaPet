@@ -1,0 +1,27 @@
+/* reserva-detail.component.css */
+.grid-container {
+    margin: 20px;
+  }
+  
+  .detail-section {
+    margin-bottom: 20px;
+  }
+  
+  .detail-section h2 {
+    margin-top: 0;
+  }
+  
+  mat-card-title {
+    font-size: 1.5em;
+  }
+  
+  mat-card-content {
+    font-size: 1em;
+  }
+  
+  span {
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+  }
+  

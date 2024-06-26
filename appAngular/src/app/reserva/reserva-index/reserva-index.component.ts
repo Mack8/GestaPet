@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
 import { Router } from '@angular/router';
+import { ReservaDiagComponent } from '../reserva-diag/reserva-diag.component';
 
 @Component({
   selector: 'app-reserva-index',
@@ -44,8 +45,17 @@ export class ReservaIndexComponent {
 
   detalleReserva(id: number) {
     console.log('Navigating to reserva with id:', id);
-    this.router.navigate(['reserva/', id]);
+    const dialogConfig=new MatDialogConfig()
+    dialogConfig.width='50%'
+    dialogConfig.disableClose=false
+    dialogConfig.data={
+      id:id
+    }
+    this.dialog.open(ReservaDiagComponent,dialogConfig)
   }
   
+
+
+
 
 }
