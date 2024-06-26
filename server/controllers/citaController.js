@@ -23,24 +23,38 @@ module.exports.getCitaById = async (request, response, next) => {
 };
 
 module.exports.getCitaByUsuario = async (request, response, next) => {
-    let ususario = parseInt(request.params.usuario);
-    console.log("🚀 ~ module.exports.getCitaByUsuario= ~ ususario:", ususario)
-    const sucursal = await prisma.usuario.findFirst(
-        {where:{id:ususario}}
-    )
-    console.log("🚀 ~ module.exports.getCitaByUsuario= ~ sucursal:", sucursal)
-    const cita = await prisma.cita.findMany({
-        where: { sucursalId: sucursal.sucursalId },
-        include: {
-            estado: true,
-            cliente: true,
-            servicio: true,
-            mascota: true,
-            sucursal: true
+    try {
+        let ususario = parseInt(request.params.usuario);
+        console.log("🚀 ~ module.exports.getCitaByUsuario= ~ ususario:", ususario)
+        
+        const sucursal = await prisma.usuario.findFirst({
+            where: { id: ususario }
+        });
+
+        console.log("🚀 ~ module.exports.getCitaByUsuario= ~ sucursal:", sucursal)
+
+        if (!sucursal) {
+            return response.status(404).json({ error: 'Sucursal no encontrada para el usuario dado' });
         }
-    });
-    response.json(cita);
+
+        const cita = await prisma.cita.findMany({
+            where: { sucursalId: sucursal.sucursalId },
+            include: {
+                estado: true,
+                cliente: true,
+                servicio: true,
+                mascota: true,
+                sucursal: true
+            }
+        });
+
+        response.json(cita);
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ error: 'Error al obtener las citas' });
+    }
 };
+
 
 module.exports.createCita = async (request, response, next) => {
     let body = request.body;
