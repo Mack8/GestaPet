@@ -25,7 +25,7 @@ export class ReservaIndexComponent {
   
   listReservas(){
     
-    this.gService.get("cita",2)
+    this.gService.get("cita",3)
     .pipe(takeUntil(this.destroy$))
     .subscribe((respuesta:any)=>{
       console.log("🚀 ~ ReservaIndexComponent ~ .subscribe ~ respuesta:", respuesta)

@@ -25,7 +25,7 @@ module.exports.getCitaById = async (request, response, next) => {
 module.exports.getCitaByUsuario = async (request, response, next) => {
     try {
         let ususario = parseInt(request.params.usuario);
-        console.log("🚀 ~ module.exports.getCitaByUsuario= ~ ususario:", ususario)
+        console.log("🚀 ~ module.exports.getCitaByUsuario= ~ usuario:", ususario)
         
         const sucursal = await prisma.usuario.findFirst({
             where: { id: ususario }

@@ -5,7 +5,6 @@ import { ReservaDetailComponent } from './reserva-detail/reserva-detail.componen
 
 const routes: Routes = [
   {path:'reserva',component: ReservaIndexComponent},
-  {path:'reserva/:id',component: ReservaDetailComponent},
 ];
 
 @NgModule({
