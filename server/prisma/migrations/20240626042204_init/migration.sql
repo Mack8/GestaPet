@@ -98,6 +98,7 @@ CREATE TABLE `Producto` (
     `descripcion` VARCHAR(191) NULL,
     `categoria` VARCHAR(191) NOT NULL,
     `precio` DOUBLE NOT NULL,
+    `imagen` VARCHAR(191) NOT NULL DEFAULT 'image-not-found.jpg',
     `stock` INTEGER NOT NULL,
     `proveedor` VARCHAR(191) NULL,
 
