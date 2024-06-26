@@ -1,21 +1,27 @@
 <div class="grid-container">
   <mat-card>
     <mat-card-header><h1 class="mat-h1">Productos</h1></mat-card-header>
+    <br/>
     <mat-card-content>
     </mat-card-content>
   </mat-card>
-  <mat-grid-list [cols]="4" rowHeight="1:2.1" gutterSize="10px">
+  <mat-grid-list [cols]="4" rowHeight="2:2.5" gutterSize="10px">
     @for (item of datos; track item.id) {
     <mat-grid-tile>
       <mat-card class="dashboard-card">
         <mat-card-header class="dashboard-card-header">
           <mat-card-title>{{ item.nombre }}</mat-card-title>
         </mat-card-header>
-        <img
-          mat-card-image
-          [src]="'../../assets/images/' + item.imagen"
-          [alt]="item.nombre"
-        />
+        <div class="image-container">
+          <img
+            mat-card-image
+            [src]="'../../assets/images/' + item.imagen"
+            [alt]="item.nombre"
+            class="product-image"
+          />
+        </div>
+
+        
         <mat-card-content class="dashboard-card-content">
           <div class="price">{{ item.precio | currency : "USD" }}</div>
         </mat-card-content>
@@ -37,3 +43,4 @@
   }
   </mat-grid-list>
 </div>
+
