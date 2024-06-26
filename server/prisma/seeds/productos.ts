@@ -16,7 +16,7 @@ export const productos = [
       categoria: "Juguetes",
       precio: 12.99,
       stock: 200,
-      imagen: 'Producto.jpg',
+      imagen: 'JugueteGatos.jpeg',
       proveedor: "Catit"
     },
     // 3
