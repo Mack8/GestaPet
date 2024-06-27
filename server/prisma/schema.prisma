@@ -79,6 +79,9 @@ model Cita {
   horaInicio        DateTime
   horaFin           DateTime
   estadoId          Int
+  observaciones     String?
+  padecimientos     String?
+  alergias          String?
   estado            EstadoCita      @relation(fields: [estadoId], references: [id])
   clienteId         Int
   cliente           Usuario         @relation(fields: [clienteId], references: [id])
