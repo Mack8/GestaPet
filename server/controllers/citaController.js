@@ -56,6 +56,7 @@ module.exports.getCitaByUsuario = async (request, response, next) => {
 };
 
 
+
 module.exports.createCita = async (request, response, next) => {
     let body = request.body;
     const newCita = await prisma.cita.create({
