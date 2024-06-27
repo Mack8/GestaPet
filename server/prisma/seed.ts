@@ -1,7 +1,7 @@
 import { EstadoFactura, PrismaClient, Rol } from "@prisma/client";
 import { productos } from "./seeds/productos";
 import { servicios } from "./seeds/servicios";
-import { sucursales } from "./seeds/suscursales";
+import { sucursales } from "./seeds/sucursales";
 import { estados } from "./seeds/estados";
 
 const prisma = new PrismaClient();
@@ -296,6 +296,7 @@ const main = async () => {
         fecha: new Date(),
         horaInicio: new Date(),
         horaFin: new Date(),
+        
         estado: {
           connect: { id: 1 },
         },

@@ -1,15 +1,15 @@
 export const sucursales = [
  // 1
  {
-        nombre: "Sucusal Alajuela",
+        nombre: "Sucursal Alajuela",
         telefono:'88888888',
-        descripcion:'Sucusal Principal',
+        descripcion:'Sucursal Principal',
         correoElectronico: "sucursal@alajuela.com",
         direccion: 'Alajuela',
   },
   // 2
  {
-    nombre: "Sucusal San José",
+    nombre: "Sucursal San José",
     telefono:'88888887',
     descripcion: "Sucursal Secundaria",
     correoElectronico:'sucursal@sanjose.com',
@@ -17,7 +17,7 @@ export const sucursales = [
 },
   // 3
   {
-    nombre: "Sucusal Heredia",
+    nombre: "Sucursal Heredia",
     telefono:'88888889',
     descripcion:'Tecera Sucursal',
     correoElectronico: "sucursal@heredia.com",

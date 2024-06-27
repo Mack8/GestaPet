@@ -26,7 +26,7 @@ export const productos = [
       categoria: "Higiene",
       precio: 15.50,
       stock: 150,
-      imagen: 'Arena.jpeg',
+      imagen: 'Producto.jpg',
       proveedor: "Ever Clean"
     },
     // 4
@@ -36,8 +36,8 @@ export const productos = [
       categoria: "Cuidado Personal",
       precio: 8.99,
       stock: 80,
+      imagen: 'Producto.jpg',
       proveedor: "Hartz",
-      imagen: 'Champu.jpg',
     },
     // 5
     {
@@ -46,7 +46,7 @@ export const productos = [
       categoria: "Medicamentos",
       precio: 19.99,
       stock: 50,
-      imagen: 'Antiparasitario.jpg',
+      imagen: 'Producto.jpg',
       proveedor: "Frontline"
     },
     // 6
@@ -56,7 +56,7 @@ export const productos = [
       categoria: "Accesorios",
       precio: 29.99,
       stock: 70,
-      imagen: 'cama.jpeg',
+      imagen: 'Producto.jpg',
       proveedor: "K&H Pet Products"
     },
     // 7
@@ -66,7 +66,7 @@ export const productos = [
       categoria: "Accesorios",
       precio: 25.00,
       stock: 60,
-      imagen: 'rascador.jpeg',
+      imagen: 'Producto.jpg',
       proveedor: "PetFusion"
     },
     // 8
@@ -76,7 +76,7 @@ export const productos = [
       categoria: "Suplementos",
       precio: 22.50,
       stock: 90,
-      imagen: 'Vitaminas.jpg',
+      imagen: 'Producto.jpg',
       proveedor: "Nutri-Vet"
     },
     // 9
@@ -86,7 +86,7 @@ export const productos = [
       categoria: "Cuidado Personal",
       precio: 9.99,
       stock: 120,
-      imagen: 'cortaunas.jpg',
+      imagen: 'Producto.jpg',
       proveedor: "Safari"
     },
     // 10
@@ -96,7 +96,7 @@ export const productos = [
       categoria: "Medicamentos",
       precio: 35.00,
       stock: 110,
-      imagen: 'collar.jpg',
+      imagen: 'Producto.jpg',
       proveedor: "Seresto"
     }
   ];
