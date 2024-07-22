@@ -1,5 +1,6 @@
 const dotEnv = require("dotenv");
 const express = require("express");
+
 const { PrismaClient } = require("@prisma/client");
 const { request, response } = require("express");
 const cors = require("cors");
@@ -7,6 +8,11 @@ const logger = require("morgan");
 const app = express();
 const chalk = require ('chalk')
 const prism = new PrismaClient();
+const path=require('path')
+
+
+global.__basedir = __dirname;
+
 
 //---Archivos de rutas---
 const citaRouter = require("./routes/citaRoutes")
@@ -18,6 +24,7 @@ const productoRouter = require("./routes/productoRoutes")
 const servicioRouter = require("./routes/servicioRoutes")
 const sucursalRouter = require("./routes/sucursalRoutes")
 const usuarioRouter = require("./routes/usuarioRoutes")
+const fileRouter = require("./routes/fileRoutes")
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -44,6 +51,9 @@ app.use("/producto/",productoRouter)
 app.use("/servicio/",servicioRouter)
 app.use("/sucursal/",sucursalRouter)
 app.use("/usuario/",usuarioRouter)
+app.use("/file/", fileRouter)
+
+app.use("/images", express.static(path.join(path.resolve(),"/assets/uploads")));
 
 // Servidor
 app.listen(port, () => {

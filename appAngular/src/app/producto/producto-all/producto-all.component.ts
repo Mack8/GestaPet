@@ -52,7 +52,7 @@ export class ProductoAllComponent implements AfterViewInit {
   }
 
   crearProducto() {
-    this.router.navigate(['/producto/create'], {
+    this.router.navigate(['/producto/create/create'], {
       relativeTo: this.route,
     });
   }

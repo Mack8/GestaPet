@@ -81,7 +81,10 @@ export class ProductoFormComponent implements OnInit {
         Validators.compose([Validators.required, Validators.pattern(number2decimals)])
       ],
       imagen: [this.nameImage, Validators.required],
-      stock: [null, Validators.required],
+      stock: [
+        null,
+        Validators.compose([Validators.required, Validators.pattern(/^\d+$/)])
+      ],
       proveedor: [null, Validators.required]
     });
   }
@@ -109,6 +112,7 @@ export class ProductoFormComponent implements OnInit {
     if (this.productoForm.invalid) {
       return;
     }
+    
     console.log(this.productoForm.value);
     if (this.upload()) {
       this.noti.mensaje('Crear Producto', 'Imagen guardada', TipoMessage.success);
