@@ -23,6 +23,7 @@ export class ProductoIndexComponent {
     this.listProductos()
   }
   //Listar todos los videojuegos del API
+  
   listProductos(){
     //localhost:3000/videojuego
     this.gService.list("producto/")

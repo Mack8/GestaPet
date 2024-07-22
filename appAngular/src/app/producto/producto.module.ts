@@ -16,8 +16,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
 import {MatBadgeModule} from '@angular/material/badge';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
+import { ProductoFormComponent } from './producto-form/producto-form.component';
 
 
 
@@ -25,7 +26,8 @@ import { MatDividerModule } from '@angular/material/divider';
   declarations: [
     ProductoIndexComponent,
     ProductoDetailComponent,
-    ProductoAllComponent
+    ProductoAllComponent,
+    ProductoFormComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +48,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatRadioModule,
     MatChipsModule,
     MatBadgeModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class ProductoModule { }
