@@ -9,8 +9,6 @@ import { ShareModule } from './share/share.module';
 import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
 
-
-
 import { FacturaModule } from './factura/factura.module';
 import { ReservaModule } from './reserva/reserva.module';
 
@@ -24,6 +22,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { HeaderComponent } from './core/header/header.component';
 import { ProductoIndexComponent } from './producto/producto-index/producto-index.component';
 import { RouterModule } from '@angular/router';
+import { SucursalModule } from './sucursal/sucursal.module';
+import { ServicioModule } from './servicio/servicio.module';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     BrowserModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
     CoreModule,
     ShareModule,
     HomeModule,
@@ -39,6 +41,8 @@ import { RouterModule } from '@angular/router';
     ProductoModule,
     FacturaModule,
     ReservaModule,
+    SucursalModule,
+    ServicioModule,
     AppRoutingModule,
   
   ],

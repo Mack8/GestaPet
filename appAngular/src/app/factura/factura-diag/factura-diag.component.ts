@@ -35,8 +35,8 @@ export class FacturaDiagComponent implements OnInit{
       console.log("🚀 ~ FacturaDiagComponent ~ .subscribe ~ data:", data)
         this.datos=data; 
         this.detalles = data.detalles;
+        
       });
-   
   }
   close(){
     //Dentro de close ()

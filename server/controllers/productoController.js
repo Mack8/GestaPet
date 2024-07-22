@@ -27,7 +27,7 @@ module.exports.create = async (request, response, next) => {
                 nombre: body.nombre,
                 descripcion: body.descripcion,
                 categoria: body.categoria,
-                precio: body.precio,
+                precio: parseFloat(body.precio),
                 stock: body.stock,
                 proveedor: body.proveedor
             }
@@ -49,7 +49,7 @@ module.exports.update = async (request, response, next) => {
                 nombre: body.nombre,
                 descripcion: body.descripcion,
                 categoria: body.categoria,
-                precio: body.precio,
+                precio: parseFloat(body.precio),
                 stock: body.stock,
                 proveedor: body.proveedor
             }
