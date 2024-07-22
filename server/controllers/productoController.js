@@ -28,7 +28,7 @@ module.exports.create = async (request, response, next) => {
                 descripcion: body.descripcion,
                 categoria: body.categoria,
                 precio: parseFloat(body.precio),
-                stock: body.stock,
+                stock: parseInt(body.stock, 10),
                 proveedor: body.proveedor
             }
         });
@@ -50,7 +50,7 @@ module.exports.update = async (request, response, next) => {
                 descripcion: body.descripcion,
                 categoria: body.categoria,
                 precio: parseFloat(body.precio),
-                stock: body.stock,
+                stock:parseInt(body.stock, 10),
                 proveedor: body.proveedor
             }
         });

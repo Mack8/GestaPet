@@ -19,6 +19,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { ProductoFormComponent } from './producto-form/producto-form.component';
+import { ProductoFormCreateComponent } from './producto-form-create/producto-form-create.component';
 
 
 
@@ -27,7 +28,8 @@ import { ProductoFormComponent } from './producto-form/producto-form.component';
     ProductoIndexComponent,
     ProductoDetailComponent,
     ProductoAllComponent,
-    ProductoFormComponent
+    ProductoFormComponent,
+    ProductoFormCreateComponent
   ],
   imports: [
     CommonModule,
