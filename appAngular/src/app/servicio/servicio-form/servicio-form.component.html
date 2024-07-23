@@ -1,1 +1,83 @@
-<p>servicio-form works!</p>
+<form [formGroup]="servicioForm" (ngSubmit)="submitServicio()">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ titleForm }} Servicio</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="nombre" placeholder="Nombre">
+              <mat-error *ngIf="errorHandling('nombre')">
+                {{ errorHandling('nombre') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="descripcion" placeholder="Descripción">
+              <mat-error *ngIf="errorHandling('descripcion')">
+                {{ errorHandling('descripcion') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="precio" placeholder="Precio">
+              <mat-error *ngIf="errorHandling('precio')">
+                {{ errorHandling('precio') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="duracion" placeholder="Duración (minutos)">
+              <mat-error *ngIf="errorHandling('duracion')">
+                {{ errorHandling('duracion') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="categoriaServicio" placeholder="Categoría del Servicio">
+              <mat-error *ngIf="errorHandling('categoriaServicio')">
+                {{ errorHandling('categoriaServicio') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-radio-group formControlName="disponibilidad">
+              <mat-radio-button value="1">Activo</mat-radio-button>
+              <mat-radio-button value="0">Inactivo</mat-radio-button>
+            </mat-radio-group>
+            <mat-error *ngIf="errorHandling('disponibilidad')">
+              {{ errorHandling('disponibilidad') }}
+            </mat-error>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="example-button-row">
+          <button mat-raised-button color="warn" type="button" (click)="onReset()">Reset</button>
+          <button mat-raised-button color="primary" type="button" (click)="onBack()">Regresar</button>
+          <button mat-raised-button color="accent" type="submit">Guardar</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+  
