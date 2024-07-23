@@ -1,0 +1,87 @@
+<h1 mat-dialog-title>Detalles</h1>
+
+<mat-dialog-content>
+  <mat-card class="shipping-card">
+    <mat-card-content>
+      <table  style="width: 100%;">
+        <tr>
+          <td  style="text-align: right;">
+            <b>Fecha Inicio:</b>
+          </td>
+          <td style="text-align: left;"> 
+            {{ horario.fechaInicio | date : "dd/MM/yyyy" }}
+          </td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right;">
+            <b>Fecha Fin:</b>
+          </td>
+
+          <td style="text-align: left;">
+            {{ horario.fechaFin | date : "dd/MM/yyyy" }}
+          </td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right;">
+            <b>Hora Inicio:</b>
+          </td>
+          <td style="text-align: left;">
+            {{ formateTime(horario.horaInicio) }}
+          </td>
+        </tr>
+
+        <tr> 
+          <td style="text-align: right;">
+            <b>Hora Fin:</b>
+          </td>
+          <td style="text-align: left;">
+            {{ formateTime(horario.horaFin) }}
+          </td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right;">
+            <b>Sucursal:</b>
+          </td>
+          <td style="text-align: left;">
+            {{ horario.sucursal.nombre }}
+          </td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right;">
+            <b>Tipo:</b>
+          </td>
+          <td style="text-align: left;">
+            {{ horario.tipo == "SERVICIO" ? "Horario" : "Bloqueo" }}
+          </td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right;">
+            <b>Motivo:</b>
+          </td>
+          <td style="text-align: left;">
+            {{ horario.motivo }}
+          </td>
+        </tr>
+
+      </table>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div style="float: right !important">
+        <button
+          mat-raised-button
+          color="warn"
+          [mat-dialog-close]="true"
+          id="close"
+        >
+          Salir
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</mat-dialog-content>

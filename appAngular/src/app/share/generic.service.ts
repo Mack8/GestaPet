@@ -39,4 +39,8 @@ export class GenericService {
     );
   }
 
+  getHorarios(endopoint: string, filtro: any): Observable<any | any[]> {
+    return this.http.get<any | any[]>(this.urlAPI + endopoint + `/${filtro}`);
+  }
+
 }

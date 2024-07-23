@@ -1,16 +1,16 @@
 {
-  "name": "apigestapet",
+  "name": "appejemplo",
   "version": "1.0.0",
-  "description": "CRUD API",
+  "description": "API de videojuegos",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "MM",
+  "author": "NPL",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^20.14.8",
+    "@types/node": "^20.12.12",
     "bcrypt": "^5.1.1",
     "chalk": "^4.1.2",
     "cors": "^2.8.5",
@@ -18,14 +18,15 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "nodemon": "^3.1.4",
+    "nodemon": "^3.1.0",
     "passport-jwt": "^4.0.1",
-    "prisma": "^5.16.0",
+    "prisma": "^5.14.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.2"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@prisma/client": "^5.16.0"
+    "@prisma/client": "^5.14.0",
+    "multer": "^1.4.5-lts.1"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

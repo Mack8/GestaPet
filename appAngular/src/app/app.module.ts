@@ -9,8 +9,6 @@ import { ShareModule } from './share/share.module';
 import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
 
-
-
 import { FacturaModule } from './factura/factura.module';
 import { ReservaModule } from './reserva/reserva.module';
 
@@ -24,11 +22,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { HeaderComponent } from './core/header/header.component';
 import { ProductoIndexComponent } from './producto/producto-index/producto-index.component';
 import { RouterModule } from '@angular/router';
+import { HorarioModule } from './horario/horario.module';
+import { MatTabsModule } from '@angular/material/tabs';
+import { Toast, ToastrModule } from 'ngx-toastr';
+//import { NgxMaskModule, IConfig } from 'ngx-mask'
+
+//export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -39,12 +41,13 @@ import { RouterModule } from '@angular/router';
     ProductoModule,
     FacturaModule,
     ReservaModule,
+    HorarioModule,
+    MatTabsModule,
+    ToastrModule.forRoot(),
+   // NgxMaskModule.forRoot(),
     AppRoutingModule,
-  
   ],
-  providers: [
-    provideAnimationsAsync()
-  ],
-  bootstrap: [AppComponent]
+  providers: [provideAnimationsAsync()],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

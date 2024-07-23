@@ -1,28 +1,72 @@
+<img
+  src="/assets/images/GestaPet.png"
+  alt="image"
+  width="8%"
+  style="display: inline"
+/>
 <mat-toolbar color="primary">
-  <button mat-icon-button 
-  class="example-header-image" 
-   matTooltip="AppVideojuegos"
-  [routerLink]="['/inicio']" routerLinkActive="link-active" ></button>
- <button [matMenuTriggerFor]="menu1" mat-icon-button class="example-icon"
-   matTooltip="Menu">
-   <mat-icon>menu</mat-icon>
- </button>
- 
- <!--https://fonts.google.com/icons-->
+  <button
+    mat-button
+    matTooltip="Inicio"
+    [routerLink]="['/inicio']"
+    routerLinkActive="link-active"
+  >
+    <h4>GestaPet</h4>
+  </button>
 
- <!-- 
-       https://material.angular.io/components/menu/overview
-       nested menu
-   -->
- <mat-menu #menu1="matMenu">
-   <button mat-menu-item [routerLink]="['/inicio']" routerLinkActive="link-active">Inicio</button>
-   <button mat-menu-item [routerLink]="['/producto']" routerLinkActive="link-active">Productos</button>
-   <button mat-menu-item [routerLink]="['/factura']" routerLinkActive="link-active">Facturas</button>
-   <button mat-menu-item [routerLink]="['/reserva']" routerLinkActive="link-active">Reservas</button>
-   <button mat-menu-item [routerLink]="['/acerca-de']" routerLinkActive="link-active">Acerca de</button>
+  <button mat-button [matMenuTriggerFor]="menu1">Inicio</button>
+  <mat-menu #menu1="matMenu">
+    <button
+      mat-menu-item
+      [routerLink]="['/inicio']"
+      routerLinkActive="link-active"
+    >
+      Inicio
+    </button>
+    <button
+      mat-menu-item
+      [routerLink]="['/producto']"
+      routerLinkActive="link-active"
+    >
+      Productos
+    </button>
+    <button
+      mat-menu-item
+      [routerLink]="['/factura']"
+      routerLinkActive="link-active"
+    >
+      Facturas
+    </button>
+    <button
+      mat-menu-item
+      [routerLink]="['/reserva']"
+      routerLinkActive="link-active"
+    >
+      Reservas
+    </button>
+    <button
+      mat-menu-item
+      [routerLink]="['/acerca-de']"
+      routerLinkActive="link-active"
+    >
+      Acerca de
+    </button>
+  </mat-menu>
 
- </mat-menu>
- <!--enlaces de la app-->
- <!--https://material.angular.io/guide/typography-->
- <div class="example-spacer"></div>
-  </mat-toolbar>
+  <button mat-button [matMenuTriggerFor]="menu2">Mantenimientos</button>
+  <mat-menu #menu2="matMenu">
+    <button mat-menu-item>Servicios</button>
+    <button mat-menu-item>Productos</button>
+    <button mat-menu-item>Sucursales</button>
+    <button
+      mat-menu-item
+      [routerLink]="['/horario']"
+      routerLinkActive="link-active"
+    >
+      Horarios
+    </button>
+  </mat-menu>
+  <!--enlaces de la app-->
+  <!--https://material.angular.io/guide/typography-->
+  <div class="example-spacer"></div>
+</mat-toolbar>

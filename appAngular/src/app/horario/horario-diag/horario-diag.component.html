@@ -1,0 +1,89 @@
+<!-- <button
+  mat-icon-button
+  class="close-button"
+  [mat-dialog-close]="true"
+  style="float: right !important; display: block"
+>
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+ -->
+<h1 mat-dialog-title>{{ titulo }}</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="horarioForm" (ngSubmit)="submitHorario()" novalidate>
+    <input type="hidden" formControlName="id" />
+    <input type="hidden" formControlName="idSucursal" />
+    <mat-card class="shipping-card">
+      <mat-card-content>
+
+        <div class="row">
+          <mat-form-field class="example-full-width col">
+            <label>Fecha Inicio</label>
+            <input matInput formControlName="finicio" placeholder="dd/mm/aaaa" />
+            @if(errorHandling('finicio')){
+              <mat-error>
+                {{ errorHandling('finicio') }}
+              </mat-error>
+             }
+          </mat-form-field>
+  
+          <mat-form-field class="example-full-width col">
+            <label>Fecha Fin</label>
+            <input matInput formControlName="ffin" placeholder="dd/mm/aaaa" />
+            @if(errorHandling('ffin')){
+              <mat-error>
+                {{ errorHandling('ffin') }}
+              </mat-error>
+             }
+          </mat-form-field>
+
+        </div>
+
+        <div class="row">
+          <mat-form-field class="example-full-width col">
+            <label>Hora Inicio</label>
+            <input matInput formControlName="hinicio" placeholder="hh:mm" />
+            @if(errorHandling('hinicio')){
+              <mat-error>
+                {{ errorHandling('hinicio') }}
+              </mat-error>
+             }
+          </mat-form-field>
+  
+          <mat-form-field class="example-full-width col">
+            <label>Hora Inicio</label>
+            <input matInput formControlName="hfin" placeholder="hh:mm" />
+            @if(errorHandling('hfin')){
+              <mat-error>
+                {{ errorHandling('hfin') }}
+              </mat-error>
+             }
+          </mat-form-field>
+        </div>
+
+          <mat-form-field class="example-full-width" style="width: 100% !important;">
+            <label>Motivo</label>
+            <textarea matInput placeholder="" formControlName="motivo"></textarea>
+            @if(errorHandling('motivo')){
+              <mat-error>
+                {{ errorHandling('motivo') }}
+              </mat-error>
+             }
+          </mat-form-field>
+      
+      </mat-card-content>
+
+      <mat-card-actions>
+        <div style="float: right !important">
+          <!--  <button mat-raised-button color="primary" type="button" (click)="onBack()">Regresar</button> -->
+          <button mat-raised-button color="primary" type="submit">
+            Guardar
+          </button>
+          <button mat-raised-button color="warn" [mat-dialog-close]="true" id="close">
+            Canclear
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</mat-dialog-content>
