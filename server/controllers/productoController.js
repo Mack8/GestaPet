@@ -9,7 +9,7 @@ module.exports.get=async(request,response, next)=>{
 module.exports.getById = async (request, response, next) => {
     try {
         let idProducto = parseInt(request.params.id);
-        const producto = await prisma.producto.findFirst({
+        const producto = await prisma.producto.findFirst({  
             where: { id: idProducto }
         });
         response.json(producto);

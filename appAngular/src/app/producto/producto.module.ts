@@ -19,9 +19,6 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { ProductoFormComponent } from './producto-form/producto-form.component';
-import { ProductoFormCreateComponent } from './producto-form-create/producto-form-create.component';
-
-
 
 @NgModule({
   declarations: [
@@ -29,7 +26,6 @@ import { ProductoFormCreateComponent } from './producto-form-create/producto-for
     ProductoDetailComponent,
     ProductoAllComponent,
     ProductoFormComponent,
-    ProductoFormCreateComponent
   ],
   imports: [
     CommonModule,
