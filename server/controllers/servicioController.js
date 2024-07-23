@@ -21,8 +21,8 @@ module.exports.create = async (request, response, next) => {
         data: {
             nombre: body.nombre,
             descripcion: body.descripcion,
-            precio: body.precio,
-            duracion: body.duracion,
+            precio: parseFloat(body.precio),
+            duracion: parseInt(body.duracion),
             categoriaServicio: body.categoriaServicio,
             disponibilidad: body.disponibilidad,
         }
@@ -40,8 +40,8 @@ module.exports.update = async (request, response, next) => {
         data: {
             nombre: body.nombre,
             descripcion: body.descripcion,
-            precio: body.precio,
-            duracion: body.duracion,
+            precio: parseFloat(body.precio),
+            duracion: parseInt(body.duracion),
             categoriaServicio: body.categoriaServicio,
             disponibilidad: body.disponibilidad,
             sucursalId: body.sucursalId
