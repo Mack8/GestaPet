@@ -42,7 +42,7 @@ import { ToastrModule } from 'ngx-toastr';
     FacturaModule,
     ReservaModule,
     SucursalModule,
-    ServicioModule,
+
     AppRoutingModule,
   
   ],
