@@ -97,17 +97,17 @@
                 <label>Sucursal</label>
                 <mat-form-field style="width: 300px; display: block">
                   <mat-select
-                    [(value)]="selected"
+                    [(value)]="selected2"
                     (selectionChange)="getHorarios($event.value, 'BLOQUEO')"
                   >
-                    <mat-option [value]="0">
+                    <mat-option [value]="0+'b'">
                       -- Seleccione una Sucursal --
                     </mat-option>
                     <mat-option
                       *ngFor="let opcion of sucursales2"
-                      [value]="opcion.id2"
+                      [value]="opcion.id+'b'"
                     >
-                      {{ opcion.nombre2 }}
+                      {{ opcion.nombre }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>

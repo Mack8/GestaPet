@@ -34,9 +34,10 @@ import { HorarioDiagComponent } from './horario-diag/horario-diag.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HorarioDetailDiagComponent } from './horario-detail-diag/horario-detail-diag.component';
+//import { HorarioFormComponent } from './horario-form/horario-form.component';
 
 @NgModule({
-  declarations: [HorarioIndexComponent, HorarioDiagComponent, HorarioDetailDiagComponent],
+  declarations: [HorarioIndexComponent, HorarioDiagComponent, HorarioDetailDiagComponent/* , HorarioFormComponent */],
   imports: [
     CommonModule,
     HorarioRoutingModule,

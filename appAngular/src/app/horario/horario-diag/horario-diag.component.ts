@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { GenericService } from '../../share/generic.service';
 import {
@@ -16,7 +16,7 @@ import { FormErrorMessage } from '../../form-error-message';
   templateUrl: './horario-diag.component.html',
   styleUrl: './horario-diag.component.css',
 })
-export class HorarioDiagComponent implements OnInit {
+export class HorarioDiagComponent implements OnInit, OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
   id: number;
   tipo: string;
@@ -161,13 +161,16 @@ export class HorarioDiagComponent implements OnInit {
 
     this.horarioForm.value.tipo = this.tipo;
 
-    console.log("🚀 ~ HorarioDiagComponent ~ submitHorario ~ this.allHoarios.length:", this.allHoarios.length)
+    console.log(
+      '🚀 ~ HorarioDiagComponent ~ submitHorario ~ this.allHoarios.length:',
+      this.allHoarios.length
+    );
 
     if (this.allHoarios.length != 0) {
       this.allHoarios.forEach((element) => {
         if (
           new Date(element.fechaInicio) >= finicio &&
-          new Date(element.fechaFin )<= ffin &&
+          new Date(element.fechaFin) <= ffin &&
           new Date(element.horaInicio) >= hinicio &&
           new Date(element.horaFin) <= hfin
         ) {
@@ -205,37 +208,56 @@ export class HorarioDiagComponent implements OnInit {
         .create('horario', this.horarioForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
+          console.log("🚀 ~ HorarioDiagComponent ~ .subscribe ~ data:", data)
           this.respHorario = data;
-          this.noti.mensajeTime(
-            'Éxito',
-            (this.tipo == 'SERVICIO' ? 'Horario' : 'Bloqueo') +
-              ' guardado con éxito',
-            3000,
-            TipoMessage.success
-          );
-          this.router.navigate(['/horario']);
-          this.dialogRef.close();
-         // this.getHorarios(this.id, this.idSucursal)
+         
+          if (this.tipo == 'SERVICIO') {
+            this.gService.actualizarArrayHorario(data);
+          } else {
+            this.gService.actualizarArrayBloque(data);
+          }
+
         });
+
+        this.noti.mensajeTime(
+          'Éxito',
+          (this.tipo == 'SERVICIO' ? 'Horario' : 'Bloqueo') +
+            ' guardado con éxito',
+          3000,
+          TipoMessage.success
+        );
+
+        this.dialogRef.close();
+
+        this.router.navigate(['/horario']);
+
     } else {
       this.gService
         .update('horario', this.horarioForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
+          console.log("🚀 ~ HorarioDiagComponent ~ .subscribe ~ data:", data)
           this.respHorario = data;
 
-          this.noti.mensajeTime(
-            'Éxito',
-            (this.tipo == 'SERVICIO' ? 'Horario' : 'Bloqueo') +
-              ' guardado con éxito',
-            3000,
-            TipoMessage.success
-          );
-
-          this.router.navigate(['/horario']);
-
-           this.dialogRef.close();
+          if (this.tipo == 'SERVICIO') {
+            this.gService.actualizarArrayHorario(data);
+          } else {
+            this.gService.actualizarArrayBloque(data);
+          }
+         
         });
+
+        this.noti.mensajeTime(
+          'Éxito',
+          (this.tipo == 'SERVICIO' ? 'Horario' : 'Bloqueo') +
+            ' actualizado con éxito',
+          3000,
+          TipoMessage.success
+        );
+
+        this.dialogRef.close();
+
+        this.router.navigate(['/horario']);
     }
   }
 
@@ -256,5 +278,11 @@ export class HorarioDiagComponent implements OnInit {
     var hora = date.substring(11, 13);
     var minutos = date.substring(14, 16);
     return hora + ':' + minutos;
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Desinscribirse
+    this.destroy$.unsubscribe();
   }
 }
