@@ -51,6 +51,13 @@ export class ServicioAllComponent implements AfterViewInit {
     });
   }
 
+  detalleServicio(id: number) {
+    this.router.navigate(['/servicio/', id], {
+      relativeTo: this.route,
+    });
+  }
+  
+
   crearServicio() {
     this.router.navigate(['/servicio/create'], {
       relativeTo: this.route,

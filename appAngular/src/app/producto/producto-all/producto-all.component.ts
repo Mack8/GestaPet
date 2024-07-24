@@ -51,6 +51,12 @@ export class ProductoAllComponent implements AfterViewInit {
     });
   }
 
+  detalleProducto(id: number) {
+    this.router.navigate(['/producto/', id], {
+      relativeTo: this.route,
+    });
+  }
+
   crearProducto() {
     this.router.navigate(['/producto/create/create'], {
       relativeTo: this.route,
