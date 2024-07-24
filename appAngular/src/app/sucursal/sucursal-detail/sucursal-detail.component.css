@@ -1,0 +1,66 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .home-card {
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mat-card-header {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .mat-card-title-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .mat-card-title {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  .home-card-content {
+    padding: 16px;
+  }
+  
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .service-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .service-details div {
+    padding: 8px 0;
+  }
+  
+  .categoria {
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+  }
+  
+  .price {
+    font-size: 20px;
+    font-weight: 600;
+    color: #d32f2f;
+  }
+  
+  .duration {
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+  }
+  

@@ -21,13 +21,15 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatBadgeModule} from '@angular/material/badge'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SucursalFormComponent } from './sucursal-form/sucursal-form.component';
+import { SucursalDetailComponent } from './sucursal-detail/sucursal-detail.component';
 
 
 @NgModule({
   declarations: [
     SucursalIndexComponent,
     SucursalAllComponent,
-    SucursalFormComponent
+    SucursalFormComponent,
+    SucursalDetailComponent
   ],
   imports: [
     CommonModule,

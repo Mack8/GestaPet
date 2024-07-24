@@ -19,11 +19,13 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ServicioDetailComponent } from './servicio-detail/servicio-detail.component';
 
 @NgModule({
   declarations: [
     ServicioAllComponent,
-    ServicioFormComponent
+    ServicioFormComponent,
+    ServicioDetailComponent
   ],
   imports: [
     CommonModule,
