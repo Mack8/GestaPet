@@ -1,0 +1,88 @@
+<form [formGroup]="sucursalForm" (ngSubmit)="submitSucursal()" novalidate>
+    <input type="hidden" formControlName="id" />
+    <mat-card class="shipping-card">
+      <mat-card-header>
+        <mat-card-title>{{titleForm}} Sucursal</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="nombre" maxlength="50" placeholder="Nombre">
+              <mat-error *ngIf="errorHandling('nombre')">
+                {{ errorHandling('nombre') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="descripcion" placeholder="Descripción">
+              <mat-error *ngIf="errorHandling('descripcion')">
+                {{ errorHandling('descripcion') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="telefono" placeholder="Teléfono">
+              <mat-error *ngIf="errorHandling('telefono')">
+                {{ errorHandling('telefono') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="direccion" placeholder="Dirección">
+              <mat-error *ngIf="errorHandling('direccion')">
+                {{ errorHandling('direccion') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="correoElectronico" placeholder="Correo Electrónico">
+              <mat-error *ngIf="errorHandling('correoElectronico')">
+                {{ errorHandling('correoElectronico') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Encargados</mat-label>
+              <mat-select formControlName="encargados" multiple>
+                <mat-option *ngFor="let encargado of encargadosList" [value]="encargado.id">
+                  {{ encargado.nombre }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="errorHandling('encargados')">
+                {{ errorHandling('encargados') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="example-button-row">
+          <button mat-raised-button color="warn" type="button" (click)="onReset()">Reset</button>
+          <button mat-raised-button color="primary" type="button" (click)="onBack()">Regresar</button>
+          <button mat-raised-button color="accent" type="submit">Guardar</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+  

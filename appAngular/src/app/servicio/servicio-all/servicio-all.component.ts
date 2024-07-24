@@ -8,16 +8,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { GenericService } from '../../share/generic.service';
 
 @Component({
-  selector: 'app-producto-all',
-  templateUrl: './producto-all.component.html',
-  styleUrls: ['./producto-all.component.css']
+  selector: 'app-servicio-all',
+  templateUrl: './servicio-all.component.html',
+  styleUrls: ['./servicio-all.component.css']
 })
-export class ProductoAllComponent implements AfterViewInit {
+export class ServicioAllComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   dataSource = new MatTableDataSource<any>();
 
-  displayedColumns = ['nombre', 'categoria', 'proveedor', 'acciones'];
+  displayedColumns = ['nombre', 'categoria', 'acciones'];
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -29,12 +29,12 @@ export class ProductoAllComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.listProductos();
+    this.listServicios();
   }
 
-  listProductos() {
+  listServicios() {
     this.gService
-      .list('producto/')
+      .list('servicio/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((respuesta: any) => {
         console.log(respuesta);
@@ -45,14 +45,14 @@ export class ProductoAllComponent implements AfterViewInit {
       });
   }
 
-  actualizarProducto(id: number) {
-    this.router.navigate(['/producto/update', id], {
+  actualizarServicio(id: number) {
+    this.router.navigate(['/servicio/update', id], {
       relativeTo: this.route,
     });
   }
 
-  crearProducto() {
-    this.router.navigate(['/producto/create/create'], {
+  crearServicio() {
+    this.router.navigate(['/servicio/create'], {
       relativeTo: this.route,
     });
   }

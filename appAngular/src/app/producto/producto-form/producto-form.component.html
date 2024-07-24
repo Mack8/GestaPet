@@ -1,0 +1,96 @@
+<form [formGroup]="productoForm" (ngSubmit)="submitProducto()" novalidate>
+    <input type="hidden" formControlName="id" />
+    <mat-card class="shipping-card">
+      <mat-card-header>
+        <mat-card-title>{{titleForm}} Producto</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="nombre" maxlength="50" placeholder="Nombre">
+              <mat-error *ngIf="errorHandling('nombre')">
+                {{ errorHandling('nombre') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="descripcion" placeholder="Descripción">
+              <mat-error *ngIf="errorHandling('descripcion')">
+                {{ errorHandling('descripcion') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="categoria" placeholder="Categoría">
+              <mat-error *ngIf="errorHandling('categoria')">
+                {{ errorHandling('categoria') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="precio" placeholder="Precio">
+              <mat-error *ngIf="errorHandling('precio')">
+                {{ errorHandling('precio') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="stock" placeholder="Stock">
+              <mat-error *ngIf="errorHandling('stock')">
+                {{ errorHandling('stock') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="proveedor" placeholder="Proveedor">
+              <mat-error *ngIf="errorHandling('proveedor')">
+                {{ errorHandling('proveedor') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-label>Imagen</mat-label>
+            <div>
+              <input type="file" accept="image/*" (change)="selectFile($event)" *ngIf="isCreate; else existingImage"/>
+              <ng-template #existingImage>
+                <img mat-card-image [src]="'http://localhost:3000/images/'+nameImage" alt="Imagen Producto">
+              </ng-template>
+            </div>
+            <input type="hidden" formControlName="imagen"/>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="example-button-row">
+          <button mat-raised-button color="warn" type="button" (click)="onReset()">Reset</button>
+          <button mat-raised-button color="primary" type="button" (click)="onBack()">Regresar</button>
+          <button mat-raised-button color="accent" type="submit">Guardar</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+  

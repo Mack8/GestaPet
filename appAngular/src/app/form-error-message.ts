@@ -16,4 +16,5 @@ export const FormErrorMessage = [
   new ErrorMessage('hfin', 'required', 'Hora Fin, requerida'),
   new ErrorMessage('hfin', 'pattern', 'El formato debe ser: hh:mm, ej: 15:05'),
   new ErrorMessage('motivo', 'required', 'Motivo, requerido'),
+
 ];

@@ -1,23 +1,54 @@
-const {PrismaClient}= require("@prisma/client")
+// controllers/usuarioController.js
 
-const prisma=new PrismaClient() 
+const { PrismaClient } = require("@prisma/client");
 
-module.exports.get=async(request,response, next)=>{
-    const usuarios= await prisma.usuario.findMany()
-    response.json(usuarios)
-}
+const prisma = new PrismaClient();
 
-module.exports.getUsuarioById = async (request, response, next) => {
-    let idUsuario = parseInt(request.params.id);
-    const usuario = await prisma.usuario.findUnique({
-        where: { id: idUsuario },
-        include: {
-            mascotas: true,
-            citas: true,
-            facturas: true
+module.exports.get = async (request, response, next) => {
+    const usuarios = await prisma.usuario.findMany();
+    response.json(usuarios);
+};
+
+// module.exports.getUsuarioById = async (request, response, next) => {
+//     let idUsuario = parseInt(request.params.id);
+//     const usuario = await prisma.usuario.findUnique({
+//         where: { id: idUsuario },
+//         include: {
+//             mascotas: true,
+//             citas: true,
+//             facturas: true
+//         }
+//     });
+//     response.json(usuario);
+// };
+
+module.exports.getEncargadosDisponibles = async (request, response, next) => {
+    const sucursalId = parseInt(request.params.sucursalId);
+    try {
+        const encargados = await prisma.usuario.findMany({
+            where: {
+                rol: 'ENCARGADO',
+                OR: [
+                    { sucursalId: null },
+                    { sucursalId: sucursalId }
+                ]
+            }
+        });
+        response.json(encargados);
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports.getUsuariosEncargadosDisponibles = async (request, response, next) => {
+    const encargadosSinSucursal = await prisma.usuario.findMany({
+        where: {
+            rol: 'ENCARGADO',
+            sucursalId: null
         }
     });
-    response.json(usuario);
+    console.log(encargadosSinSucursal);
+    response.json(encargadosSinSucursal);
 };
 
 module.exports.create = async (request, response, next) => {

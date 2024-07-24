@@ -9,7 +9,7 @@ module.exports.get=async(request,response, next)=>{
 module.exports.getById = async (request, response, next) => {
     try {
         let idProducto = parseInt(request.params.id);
-        const producto = await prisma.producto.findFirst({
+        const producto = await prisma.producto.findFirst({  
             where: { id: idProducto }
         });
         response.json(producto);
@@ -27,8 +27,8 @@ module.exports.create = async (request, response, next) => {
                 nombre: body.nombre,
                 descripcion: body.descripcion,
                 categoria: body.categoria,
-                precio: body.precio,
-                stock: body.stock,
+                precio: parseFloat(body.precio),
+                stock: parseInt(body.stock, 10),
                 proveedor: body.proveedor
             }
         });
@@ -49,8 +49,8 @@ module.exports.update = async (request, response, next) => {
                 nombre: body.nombre,
                 descripcion: body.descripcion,
                 categoria: body.categoria,
-                precio: body.precio,
-                stock: body.stock,
+                precio: parseFloat(body.precio),
+                stock:parseInt(body.stock, 10),
                 proveedor: body.proveedor
             }
         });

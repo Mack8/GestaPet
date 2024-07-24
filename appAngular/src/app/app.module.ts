@@ -22,6 +22,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { HeaderComponent } from './core/header/header.component';
 import { ProductoIndexComponent } from './producto/producto-index/producto-index.component';
 import { RouterModule } from '@angular/router';
+
 import { HorarioModule } from './horario/horario.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Toast, ToastrModule } from 'ngx-toastr';
@@ -29,11 +30,13 @@ import { Toast, ToastrModule } from 'ngx-toastr';
 
 //export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
     CoreModule,
     ShareModule,
     HomeModule,
@@ -45,6 +48,7 @@ import { Toast, ToastrModule } from 'ngx-toastr';
     MatTabsModule,
     ToastrModule.forRoot(),
    // NgxMaskModule.forRoot(),
+
     AppRoutingModule,
   ],
   providers: [provideAnimationsAsync()],
