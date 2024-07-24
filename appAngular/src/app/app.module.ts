@@ -26,6 +26,8 @@ import { RouterModule } from '@angular/router';
 import { HorarioModule } from './horario/horario.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Toast, ToastrModule } from 'ngx-toastr';
+import { ServicioModule } from './servicio/servicio.module';
+import { SucursalModule } from './sucursal/sucursal.module';
 //import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 //export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
@@ -45,6 +47,8 @@ import { Toast, ToastrModule } from 'ngx-toastr';
     FacturaModule,
     ReservaModule,
     HorarioModule,
+    ServicioModule,
+    SucursalModule,
     MatTabsModule,
     ToastrModule.forRoot(),
    // NgxMaskModule.forRoot(),
