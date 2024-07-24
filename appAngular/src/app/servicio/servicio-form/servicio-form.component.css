@@ -39,7 +39,7 @@
   .table th{
     background-color: #4a148c;
   }
-  .table td, th{
+  .table td, th{ 
     border: 1px solid white;
     border-collapse: collapse;
     padding: 0.5em;
