@@ -9,18 +9,18 @@ module.exports.get = async (request, response, next) => {
     response.json(usuarios);
 };
 
-module.exports.getUsuarioById = async (request, response, next) => {
-    let idUsuario = parseInt(request.params.id);
-    const usuario = await prisma.usuario.findUnique({
-        where: { id: idUsuario },
-        include: {
-            mascotas: true,
-            citas: true,
-            facturas: true
-        }
-    });
-    response.json(usuario);
-};
+// module.exports.getUsuarioById = async (request, response, next) => {
+//     let idUsuario = parseInt(request.params.id);
+//     const usuario = await prisma.usuario.findUnique({
+//         where: { id: idUsuario },
+//         include: {
+//             mascotas: true,
+//             citas: true,
+//             facturas: true
+//         }
+//     });
+//     response.json(usuario);
+// };
 
 module.exports.getEncargadosDisponibles = async (request, response, next) => {
     const sucursalId = parseInt(request.params.sucursalId);
