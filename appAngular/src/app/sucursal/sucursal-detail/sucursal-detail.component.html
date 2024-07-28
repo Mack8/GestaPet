@@ -1,0 +1,34 @@
+<div *ngIf="datos">
+    <div class="grid-container">
+      <mat-card class="home-card">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>{{ datos?.nombre }}</mat-card-title>
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content class="home-card-content">
+          <div class="content-wrapper">
+            <!-- Información del servicio -->
+            <div class="service-details">
+              <div>
+                <p>Descripción:</p>
+                <p>{{ datos?.descripcion }}</p>
+              </div>
+              <div>
+                <div class="categoria">
+                  Categoría: {{ datos?.categoriaServicio }}
+                </div>
+              </div>
+              <div>
+                <p class="price">Precio: {{ datos?.precio | currency : 'USD' }}</p>
+              </div>
+              <div>
+                <p class="duration">Duración: {{ datos?.duracion }} minutos</p>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  

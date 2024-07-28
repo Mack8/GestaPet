@@ -10,8 +10,6 @@ const facturaController= require("../controllers/facturaController")
 
 //locahost:3000/videojuego/
 router.get('/',facturaController.get)
-
-//Obtener un videojuego
 router.get('/:id',facturaController.getFacturaById)
 
 module.exports=router

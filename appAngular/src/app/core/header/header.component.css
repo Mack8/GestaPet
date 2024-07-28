@@ -3,8 +3,13 @@
 }
 .link-active{
   font-weight: 800;
-  color: aqua;
+  color: #3499c2;
   }
+
+  .mat-button:hover {
+    color:#e7862b
+  }
+
   .example-header-image {
     background-image: url("/assets/images/GestaPet.png");
     background-size: cover;
