@@ -7,6 +7,24 @@ module.exports.get=async(request,response, next)=>{
     response.json(citas)
 }
 
+module.exports.getCitas = async (req, res) => {
+  try {
+    const citas = await prisma.cita.findMany({
+        include: {
+            estado: true,
+            cliente: true,
+            servicio: true,
+            mascota: true,
+            sucursal: true
+        }
+    });
+    res.json(citas); // Envía la respuesta JSON
+  } catch (error) {
+    console.error('Error al obtener citas:', error);
+    res.status(500).json({ error: 'Error al obtener citas' });
+  }
+};
+
 module.exports.getCitaById = async (request, response, next) => {
     let idCita = parseInt(request.params.id);
     const cita = await prisma.cita.findUnique({
