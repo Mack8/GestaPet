@@ -53,6 +53,7 @@ import { SucursalModule } from './sucursal/sucursal.module';
     ToastrModule.forRoot(),
    // NgxMaskModule.forRoot(),
 
+
     AppRoutingModule,
   ],
   providers: [provideAnimationsAsync()],
