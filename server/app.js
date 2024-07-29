@@ -1,7 +1,7 @@
 const dotEnv = require("dotenv");
 const express = require("express");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const { PrismaClient } = require("@prisma/client");
 const { request, response } = require("express");
@@ -19,7 +19,13 @@ var citas = [];
 
 const simulateRequest = async () => {
   // Crea objetos simulados para req y res
-  const req = {}; // Simula la solicitud (puede estar vacío si no se usa)
+  var fecha = new Date();
+
+  fecha.setHours(fecha.getHours() - 6);
+
+  //fecha.setDate(fecha.getDate() + 1);
+
+  const req = fecha; // Simula la solicitud (puede estar vacío si no se usa)
   const res = {
     json: (data) => {
       //console.log('Respuesta JSON:', data)
@@ -63,53 +69,139 @@ mxEnabled: false */
 });
  */
 
-
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-  });
+  service: "gmail",
+  host: "smtp.gmail.com",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+function formateDate(date) {
+  var dia = date.getDate();
+  var mes = date.getMonth() + 1;
+  var anio = date.getFullYear();
+  return (
+    (dia < 10 ? "0" + dia : dia) +
+    "/" +
+    (mes < 10 ? "0" + mes : mes) +
+    "/" +
+    anio
+  );
+}
+
+function formateDate1(date) {
+  date.setDate(date.getDate() + 1);
+  var dia = date.getDate();
+  var mes = date.getMonth() + 1;
+  var anio = date.getFullYear();
+  return (
+    (dia < 10 ? "0" + dia : dia) +
+    "/" +
+    (mes < 10 ? "0" + mes : mes) +
+    "/" +
+    anio
+  );
+}
+
+function formateTime(date) {
+  var hora = date.substring(11, 13);
+  var minutos = date.substring(14, 16);
+  var amPm = hora >= 12 ? " PM" : " AM";
+  hora = hora % 12;
+  hora = hora ? hora : 12;
+
+  return (
+    (hora < 10 ? "0" + hora : hora) +
+    ":" +
+    (minutos < 10 ? "0" + minutos : minutos) +
+    amPm
+  );
+}
 
 cron.schedule("*/10 * * * * *", async () => {
-  //    /*  simulateRequest().then(() => {
-  //         console.log('Array de citas:', citas); // Usa el array de citas
-  //     }).catch(error => {
-  //         console.error('Error en simulateRequest:', error);
-  //     }); */
+  simulateRequest()
+    .then(() => {
+      console.log("Array de citas:", citas.length); // Usa el array de citas
 
-  var mailOptions = {
-    from:  process.env.EMAIL_USER,
-    to: "sanchez.marcia2510@gmail.com",
-    subject: "Prueba Correo",
-    text: "Hola Mundo",
-  };
+      citas.forEach((element) => {
+        var body =
+        "<body>"+
+          "<b>Estimado/a " +
+          element.cliente.nombre +
+          "</b>" +
+          "<br/>" +
+          "<br/>" +
+          "Espero que este mensaje le encuentre bien." +
+          "<br/>" +
+          "<br/>" +
+          "Le escribimos para recordarle su próxima cita en GestaPet, en la sucursal de " +
+          element.sucursal.nombre +
+          ". A continuación, le proporcionamos los detalles de la cita:<br/><br/>" +
+          "<ul>" +
+          "<li><b>Fecha:</b> " +
+          formateDate1(element.fecha) +
+          "</li>" +
+          "<li><b>Hora:</b> " +
+          formateTime(element.horaInicio + "") +
+          "</li>" +
+          "<li><b>Mascota:</b> " +
+          element.mascota.nombre +
+          "</li>" +
+          "</ul>" +
+          "Por favor, llegue con unos 15 minutos de antelación para completar cualquier documentación necesaria y para que podamos comenzar a la hora acordada." +
+          "<br/>" +
+          "<br/>" +
+          "Saludos cordiales."+
+        "<br/>" +
+          "<br/>" +
+          '<img src="cid:pieImagen" style="width:150px; height:150px;" alt="Logo" />'+
+         // "<b><h2>GestaPet</h2></b>" +
+          "<br/>" +
+          element.sucursal.nombre +
+          "<br/>" +
+          element.sucursal.telefono +
+          "<br/>" +
+          element.sucursal.correoElectronico +
+          "<br/>" +
+          element.sucursal.direccion+
+          "</body>";
 
-  const info = await transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
+        var mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: element.cliente.correoElectronico,
+          subject:
+            "Recordatorio de su cita para " +
+            element.mascota.nombre +
+            " - " +
+            formateDate(element.fecha),
+          html: body,
+          attachments: [
+            {
+              filename: 'logo.jpg',
+              path: './assets/uploads/logo.jpg', // Ruta a la imagen en tu sistema
+              cid: 'pieImagen', // Identificador único para referenciar la imagen en el HTML
+            },
+          ],
+        };
 
-  const fecha = new Date();
-  const horasARestar = 6;
-  fecha.setHours(fecha.getHours() - horasARestar);
+        const info = transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("Email sent: " + info.response);
+          }
+        });
 
-  console.log("🚀 ~ cron.schedule ~ fecha:", fecha)
-
-  console.log(new Date());
-
-  const url = nodemailer.getTestMessageUrl(info);
-
-  console.log(url);
-
-
+        const url = nodemailer.getTestMessageUrl(info);
+        console.log(url);
+      });
+    })
+    .catch((error) => {
+      console.error("Error en simulateRequest:", error);
+    });
 });
- 
 
 global.__basedir = __dirname;
 
