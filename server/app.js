@@ -125,6 +125,7 @@ cron.schedule("*/10 * * * * *", async () => {
     .then(() => {
       console.log("Array de citas:", citas.length); // Usa el array de citas
 
+<<<<<<< Updated upstream
       citas.forEach((element) => {
         var body =
         "<body>"+
@@ -167,6 +168,14 @@ cron.schedule("*/10 * * * * *", async () => {
           "<br/>" +
           element.sucursal.direccion+
           "</body>";
+=======
+  var mailOptions = {
+    from:  process.env.EMAIL_USER,
+    to: "mackg08@gmail.com",
+    subject: "Prueba Correo",
+    text: "Hola Mundo",
+  };
+>>>>>>> Stashed changes
 
         var mailOptions = {
           from: process.env.EMAIL_USER,
