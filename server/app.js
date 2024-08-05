@@ -1,8 +1,6 @@
 const dotEnv = require("dotenv");
 const express = require("express");
-
 require("dotenv").config();
-
 const { PrismaClient } = require("@prisma/client");
 const { request, response } = require("express");
 const cors = require("cors");
@@ -13,6 +11,7 @@ const prisma = new PrismaClient();
 const path = require("path");
 const { getCitas } = require("./controllers/citaController");
 const nodemailer = require("nodemailer");
+
 var cron = require("node-cron");
 
 var citas = [];
@@ -20,12 +19,9 @@ var citas = [];
 const simulateRequest = async () => {
   // Crea objetos simulados para req y res
   var fecha = new Date();
-
   fecha.setHours(fecha.getHours() - 6);
-
   //fecha.setDate(fecha.getDate() + 1);
-
-  const req = fecha; // Simula la solicitud (puede estar vacío si no se usa)
+  const req = fecha; // Simula la solicitud 
   const res = {
     json: (data) => {
       //console.log('Respuesta JSON:', data)
@@ -46,28 +42,6 @@ const simulateRequest = async () => {
   }
 };
 
-/* user: 'ofmaxavh3zrqjobr@ethereal.email',
-pass: 'hSNAtuGK9AjyWKg8gE',
-smtp: { host: 'smtp.ethereal.email', port: 587, secure: false },
-imap: { host: 'imap.ethereal.email', port: 993, secure: true },
-pop3: { host: 'pop3.ethereal.email', port: 995, secure: true },
-web: 'https://ethereal.email',
-mxEnabled: false */
-
-/* nodemailer.createTestAccount().then(account =>{
-    console.log(account);
-})
- */
-/* const transporter = nodemailer.createTransport({
-  host: "smtp.ethereal.email", // Puedes usar otros servicios como 'smtp.mailgun.org' si no usas Gmail
-  port: 587,
-  secure: false,
-  auth: {
-    user: "ofmaxavh3zrqjobr@ethereal.email", // Tu dirección de correo
-    pass: "hSNAtuGK9AjyWKg8gE", // Tu contraseña de correo
-  },
-});
- */
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -77,6 +51,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
+
+
 
 function formateDate(date) {
   var dia = date.getDate();
@@ -120,12 +96,11 @@ function formateTime(date) {
   );
 }
 
-cron.schedule("*/10 * * * * *", async () => {
+cron.schedule("*/15 * * * * *", async () => {
   simulateRequest()
     .then(() => {
       console.log("Array de citas:", citas.length); // Usa el array de citas
 
-<<<<<<< Updated upstream
       citas.forEach((element) => {
         var body =
         "<body>"+
@@ -137,7 +112,7 @@ cron.schedule("*/10 * * * * *", async () => {
           "Espero que este mensaje le encuentre bien." +
           "<br/>" +
           "<br/>" +
-          "Le escribimos para recordarle su próxima cita en GestaPet, en la sucursal de " +
+          "Le escribimos para recordarle su próxima cita en GestaPet, en la " +
           element.sucursal.nombre +
           ". A continuación, le proporcionamos los detalles de la cita:<br/><br/>" +
           "<ul>" +
@@ -168,14 +143,6 @@ cron.schedule("*/10 * * * * *", async () => {
           "<br/>" +
           element.sucursal.direccion+
           "</body>";
-=======
-  var mailOptions = {
-    from:  process.env.EMAIL_USER,
-    to: "mackg08@gmail.com",
-    subject: "Prueba Correo",
-    text: "Hola Mundo",
-  };
->>>>>>> Stashed changes
 
         var mailOptions = {
           from: process.env.EMAIL_USER,
@@ -195,6 +162,7 @@ cron.schedule("*/10 * * * * *", async () => {
           ],
         };
 
+       
         const info = transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
             console.log(error);
