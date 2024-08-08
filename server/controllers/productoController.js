@@ -6,6 +6,7 @@ module.exports.get=async(request,response, next)=>{
     response.json(productos)
 }
 
+
 module.exports.getById = async (request, response, next) => {
     try {
         let idProducto = parseInt(request.params.id);

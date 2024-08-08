@@ -22,6 +22,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SucursalFormComponent } from './sucursal-form/sucursal-form.component';
 import { SucursalDetailComponent } from './sucursal-detail/sucursal-detail.component';
+import { FacturaCreateComponent } from '../factura/factura-create/factura-create.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { SucursalDetailComponent } from './sucursal-detail/sucursal-detail.compo
     SucursalIndexComponent,
     SucursalAllComponent,
     SucursalFormComponent,
-    SucursalDetailComponent
+    SucursalDetailComponent,
+
   ],
   imports: [
     CommonModule,

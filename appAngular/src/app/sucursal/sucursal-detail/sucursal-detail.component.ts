@@ -16,12 +16,12 @@ export class SucursalDetailComponent {
   ) {
     let id=this.route.snapshot.paramMap.get('id')
     if(!isNaN(Number(id))) 
-      this.obtenerServicio(Number(id))
+      this.obtenerSucursal(Number(id))
   }
 
-  obtenerServicio(id:any){ 
+  obtenerSucursal(id:any){ 
     this.gService 
-    .get('servicio',id) 
+    .get('sucursal',id) 
     .pipe(takeUntil(this.destroy$)) 
     .subscribe((data:any)=>{ 
       console.log(data); 

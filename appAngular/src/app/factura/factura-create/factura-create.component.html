@@ -1,0 +1,136 @@
+<form [formGroup]="facturaForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-title>Crear Factura</mat-card-title>
+    <mat-card-content>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Fecha</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fecha">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Sucursal</mat-label>
+          <input matInput [value]="sucursal?.nombre" readonly>
+          <input type="hidden" formControlName="sucursalId">
+        </mat-form-field>
+      </div>
+
+
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Cliente</mat-label>
+          <mat-select formControlName="clienteId">
+            <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+              {{ cliente.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Correo Electrónico del Cliente</mat-label>
+          <input matInput formControlName="clienteCorreo" readonly>
+        </mat-form-field>
+      </div>
+
+      
+
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Subtotal</mat-label>
+          <input matInput type="number" formControlName="subtotal" readonly>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Impuestos</mat-label>
+          <input matInput type="number" formControlName="impuestos" readonly>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Total</mat-label>
+          <input matInput type="number" formControlName="total" readonly>
+        </mat-form-field>
+      </div>
+
+      <div formArrayName="detalles">
+        <div *ngFor="let detalle of detalles.controls; let i=index" [formGroupName]="i">
+          <h3>Detalle {{i + 1}}</h3>
+          <div *ngIf="detalle.get('tipo').value === 'producto'">
+            <mat-form-field appearance="fill">
+              <mat-label>Producto</mat-label>
+              <mat-select formControlName="productoId">
+                <mat-option *ngFor="let producto of productos" [value]="producto.id">
+                  {{ producto.nombre }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div *ngIf="detalle.get('tipo').value === 'servicio'">
+            <mat-form-field appearance="fill">
+              <mat-label>Servicio</mat-label>
+              <mat-select formControlName="servicioId">
+                <mat-option *ngFor="let servicio of servicios" [value]="servicio.id">
+                  {{ servicio.nombre }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Cantidad</mat-label>
+              <input matInput type="number" formControlName="cantidad">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Precio</mat-label>
+              <input matInput type="number" formControlName="precio" readonly>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Impuesto Porcentaje</mat-label>
+              <input matInput type="number" formControlName="impuestoPorcentaje">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Monto Impuesto</mat-label>
+              <input matInput type="number" formControlName="montoImpuesto" readonly>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Total Bruto</mat-label>
+              <input matInput type="number" formControlName="totalBruto" readonly>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Total Neto</mat-label>
+              <input matInput type="number" formControlName="totalNeto" readonly>
+            </mat-form-field>
+          </div>
+          <button mat-button (click)="removeDetalle(i)">Eliminar Detalle</button>
+        </div>
+      </div>
+
+      <button mat-button (click)="addDetalle('producto')">Agregar Producto</button>
+      <button mat-button (click)="addDetalle('servicio')">Agregar Servicio</button>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="facturaForm.invalid">Crear</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+

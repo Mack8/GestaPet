@@ -22,6 +22,31 @@ module.exports.get = async (request, response, next) => {
 //     response.json(usuario);
 // };
 
+
+
+module.exports.getUsuarios = async (request, response, next) => {
+    try {
+      const usuarios = await prisma.usuario.findMany({
+        where: {
+            rol: 'CLIENTE' 
+          },
+        select: {
+          id: true,
+          nombre: true,
+          correoElectronico: true 
+        }
+      });
+      response.json(usuarios);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+
+
+
+
+
 module.exports.getEncargadosDisponibles = async (request, response, next) => {
     const sucursalId = parseInt(request.params.sucursalId);
     try {
