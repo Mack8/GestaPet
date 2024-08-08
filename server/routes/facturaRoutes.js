@@ -1,15 +1,11 @@
-const express=require("express")
-
+const express = require('express');
 const router = express.Router();
+const facturaController = require('../controllers/facturaController');
 
-//Controlador
+// Rutas
+router.get('/', facturaController.get);
+router.get('/:id', facturaController.getFacturaById);
+router.post('/', facturaController.create);
+router.put('/:id', facturaController.updateFactura);
 
-const facturaController= require("../controllers/facturaController")
-
-//Rutas
-
-//locahost:3000/videojuego/
-router.get('/',facturaController.get)
-router.get('/:id',facturaController.getFacturaById)
-
-module.exports=router
+module.exports = router;

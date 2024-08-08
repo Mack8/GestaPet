@@ -55,9 +55,27 @@
 
   <button mat-button [matMenuTriggerFor]="menu2">Mantenimientos</button>
   <mat-menu #menu2="matMenu">
-   <button mat-menu-item [routerLink]="'/producto-table'" [routerLinkActive]="'link-active'">Producto</button>
-     <button mat-menu-item [routerLink]="'/sucursal-table'" [routerLinkActive]="'link-active'">Sucursal</button>
-    <button mat-menu-item [routerLink]="'/servicio-table'" [routerLinkActive]="'link-active'">Servicio</button>
+    <button
+      mat-menu-item
+      [routerLink]="'/producto-table'"
+      [routerLinkActive]="'link-active'"
+    >
+      Producto
+    </button>
+    <button
+      mat-menu-item
+      [routerLink]="'/sucursal-table'"
+      [routerLinkActive]="'link-active'"
+    >
+      Sucursal
+    </button>
+    <button
+      mat-menu-item
+      [routerLink]="'/servicio-table'"
+      [routerLinkActive]="'link-active'"
+    >
+      Servicio
+    </button>
     <button
       mat-menu-item
       [routerLink]="['/horario']"

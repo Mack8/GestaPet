@@ -52,6 +52,7 @@ import { SucursalModule } from './sucursal/sucursal.module';
     MatTabsModule,
     ToastrModule.forRoot(),
    // NgxMaskModule.forRoot(),
+   
 
 
     AppRoutingModule,
