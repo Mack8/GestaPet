@@ -1,29 +1,37 @@
-<div *ngIf="datos">
+<div *ngIf="datos?.sucursal">
     <div class="grid-container">
       <mat-card class="home-card">
         <mat-card-header>
           <mat-card-title-group>
-            <mat-card-title>{{ datos?.nombre }}</mat-card-title>
+            <mat-card-title>{{ datos.sucursal.nombre }}</mat-card-title>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content class="home-card-content">
           <div class="content-wrapper">
-            <!-- Información del servicio -->
-            <div class="service-details">
+            <!-- Información de la sucursal -->
+            <div class="branch-details">
               <div>
-                <p>Descripción:</p>
-                <p>{{ datos?.descripcion }}</p>
+                <p>Descripción: {{ datos.sucursal.descripcion }}</p>
               </div>
               <div>
-                <div class="categoria">
-                  Categoría: {{ datos?.categoriaServicio }}
-                </div>
+                <p>Teléfono: {{ datos.sucursal.telefono }}</p>
+                
               </div>
               <div>
-                <p class="price">Precio: {{ datos?.precio | currency : 'USD' }}</p>
+                <p>Dirección: {{ datos.sucursal.direccion }}</p>
+                
               </div>
               <div>
-                <p class="duration">Duración: {{ datos?.duracion }} minutos</p>
+                <p>Correo Electrónico: {{ datos.sucursal.correoElectronico }}</p>
+                
+              </div>
+              <div>
+                <p>Encargados:</p>
+                <ul>
+                  <li *ngFor="let encargado of datos.sucursal.usuarios">
+                    {{ encargado.nombre }}
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
