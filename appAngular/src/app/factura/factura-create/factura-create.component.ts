@@ -188,7 +188,7 @@ export class FacturaCreateComponent implements OnInit {
     }));
 
     if (this.isCreate) {
-      this.gService.create('factura', facturaData)  // Aquí la URL ya se construye correctamente
+      this.gService.create('factura', facturaData)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
           this.noti.mensajeRedirect(
@@ -202,7 +202,7 @@ export class FacturaCreateComponent implements OnInit {
           this.noti.mensaje('Error', 'No se pudo crear la factura', TipoMessage.error);
         });
     } else {
-      this.gService.update('factura', {...facturaData, id: this.facturaId}) // Pasa solo el endpoint base
+      this.gService.update('factura', { ...facturaData, id: this.facturaId })
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
           this.noti.mensajeRedirect(
@@ -216,7 +216,6 @@ export class FacturaCreateComponent implements OnInit {
           this.noti.mensaje('Error', 'No se pudo actualizar la factura', TipoMessage.error);
         });
     }
-    
   }
 
   listClientes() {

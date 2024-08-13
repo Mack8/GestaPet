@@ -28,13 +28,17 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { Toast, ToastrModule } from 'ngx-toastr';
 import { ServicioModule } from './servicio/servicio.module';
 import { SucursalModule } from './sucursal/sucursal.module';
+import { ReportesComponent } from './reportes/reportes.component';
+import { ReporteProductoComponent } from './reporte/reporte-producto/reporte-producto.component';
+import { ReporteServicioComponent } from './reporte/reporte-servicio/reporte-servicio.component';
+import { ReportesModule } from './reportes/reportes.module';
 //import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 //export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ReportesComponent, ReporteProductoComponent, ReporteServicioComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -56,6 +60,7 @@ import { SucursalModule } from './sucursal/sucursal.module';
 
 
     AppRoutingModule,
+   ReportesModule,
   ],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
