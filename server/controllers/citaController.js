@@ -118,14 +118,18 @@ module.exports.getCitaByUsuario = async (request, response, next) => {
 };
 
 module.exports.createCita = async (request, response, next) => {
+  console.log("🚀 ~ module.exports.createCita= ~ request:", request)
   let body = request.body;
   const newCita = await prisma.cita.create({
     data: {
-      fecha: new Date(body.fecha),
-      horaInicio: new Date(body.horaInicio),
-      horaFin: new Date(body.horaFin),
+      fecha: new Date(body.startDate),
+      horaInicio: new Date(body.startDate),
+      horaFin: new Date(body.endDate),
+      observaciones: body.observaciones,
+      padecimientos:body.padecimientos,
+      alergias:body.alergias,
       estado: {
-        connect: { id: body.estadoId },
+        connect: { id: body.estadoId},
       },
       cliente: {
         connect: { id: body.clienteId },
@@ -152,9 +156,12 @@ module.exports.updateCita = async (request, response, next) => {
       id: idCita,
     },
     data: {
-      fecha: new Date(body.fecha),
-      horaInicio: new Date(body.horaInicio),
-      horaFin: new Date(body.horaFin),
+      fecha: new Date(body.startDate),
+      horaInicio: new Date(body.startDate),
+      horaFin: new Date(body.endDate),
+      observaciones: body.observaciones,
+      padecimientos:body.padecimientos,
+      alergias:body.alergias,
       estado: {
         connect: { id: body.estadoId },
       },

@@ -11,5 +11,6 @@ const facturaController= require("../controllers/facturaController")
 //locahost:3000/videojuego/
 router.get('/',facturaController.get)
 router.get('/:id',facturaController.getFacturaById)
+router.post('/', facturaController.createFactura);
 
 module.exports=router

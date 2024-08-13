@@ -38,34 +38,43 @@ module.exports.getFacturaById = async (request, response, next) => {
 
 module.exports.createFactura = async (request, response, next) => {
     let body = request.body;
-    const newFactura = await prisma.factura.create({
-        data: {
-            fecha: new Date(body.fecha),
-            cliente: {
-                connect: { id: body.clienteId }
-            },
-            sucursal: {
-                connect: { id: body.sucursalId }
-            },
-            subtotal: body.subtotal,
-            impuestos: body.impuestos,
-            total: body.total,
-            detalles: {
-                create: body.detalles.map(detalle => ({
-                    productoId: detalle.productoId,
-                    servicioId: detalle.servicioId,
-                    cantidad: detalle.cantidad,
-                    precio: detalle.precio,
-                    impuestoPorcentaje: detalle.impuestoPorcentaje,
-                    montoImpuesto: detalle.montoImpuesto,
-                    totalBruto: detalle.totalBruto,
-                    totalNeto: detalle.totalNeto
-                }))
+    console.log("🚀 ~ module.exports.createFactura ~ body:", body.detalles);
+
+    try {
+        const newFactura = await prisma.factura.create({
+            data: {
+                fecha: new Date(),
+                cliente: {
+                    connect: { id: body.clienteId }
+                },
+                sucursal: {
+                    connect: { id: body.sucursalId }
+                },
+                subtotal: body.subtotal,
+                impuestos: body.impuestos,
+                total: body.total,
+                detalles: {
+                    create: body.detalles.map(detalle => ({
+                        productoId: detalle.productoId,
+                        servicioId: detalle.servicioId,
+                        cantidad: detalle.cantidad,
+                        precio: detalle.precio,
+                        impuestoPorcentaje: detalle.impuestoPorcentaje,
+                        montoImpuesto: detalle.montoImpuesto,
+                        totalBruto: detalle.totalBruto,
+                        totalNeto: detalle.totalNeto
+                    }))
+                }
             }
-        }
-    });
-    response.json(newFactura);
+        });
+
+        response.json(newFactura);
+    } catch (error) {
+        console.error('Error al crear factura:', error);
+        response.status(500).json({ error: 'Error al crear factura' });
+    }
 };
+
 
 module.exports.updateFactura = async (request, response, next) => {
     let body = request.body;

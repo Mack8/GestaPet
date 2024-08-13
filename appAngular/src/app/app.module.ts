@@ -22,12 +22,14 @@ import { MatDividerModule } from '@angular/material/divider';
 import { HeaderComponent } from './core/header/header.component';
 import { ProductoIndexComponent } from './producto/producto-index/producto-index.component';
 import { RouterModule } from '@angular/router';
+import { DxButtonModule } from 'devextreme-angular';
 
 import { HorarioModule } from './horario/horario.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Toast, ToastrModule } from 'ngx-toastr';
 import { ServicioModule } from './servicio/servicio.module';
 import { SucursalModule } from './sucursal/sucursal.module';
+import { CitaModule } from './cita/cita.module';
 //import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 //export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
@@ -52,9 +54,11 @@ import { SucursalModule } from './sucursal/sucursal.module';
     MatTabsModule,
     ToastrModule.forRoot(),
    // NgxMaskModule.forRoot(),
-
+   CitaModule,
+   DxButtonModule,
 
     AppRoutingModule,
+
   ],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],

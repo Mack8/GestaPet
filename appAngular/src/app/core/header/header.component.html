@@ -55,9 +55,9 @@
 
   <button mat-button [matMenuTriggerFor]="menu2">Mantenimientos</button>
   <mat-menu #menu2="matMenu">
-   <button mat-menu-item [routerLink]="'/producto-table'" [routerLinkActive]="'link-active'">Producto</button>
-     <button mat-menu-item [routerLink]="'/sucursal-table'" [routerLinkActive]="'link-active'">Sucursal</button>
-    <button mat-menu-item [routerLink]="'/servicio-table'" [routerLinkActive]="'link-active'">Servicio</button>
+   <button mat-menu-item [routerLink]="['/producto-table']" [routerLinkActive]="'link-active'">Producto</button>
+     <button mat-menu-item [routerLink]="['/sucursal-table']" [routerLinkActive]="'link-active'">Sucursal</button>
+    <button mat-menu-item [routerLink]="['/servicio-table']" [routerLinkActive]="'link-active'">Servicio</button>
     <button
       mat-menu-item
       [routerLink]="['/horario']"
@@ -65,6 +65,11 @@
     >
       Horarios
     </button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="menu3">Citas</button>
+  <mat-menu #menu3="matMenu">
+   <button mat-menu-item [routerLink]="['/agendar']" [routerLinkActive]="'link-active'" title="Agendar uan cita">Agendar</button>
   </mat-menu>
   <!--enlaces de la app-->
   <!--https://material.angular.io/guide/typography-->
