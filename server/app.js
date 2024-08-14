@@ -221,7 +221,7 @@ app.use("/servicio/", servicioRouter);
 app.use("/sucursal/", sucursalRouter);
 app.use("/usuario/", usuarioRouter);
 app.use("/file/", fileRouter);
-app.use("/reporte/", reporteRouter)
+app.use("/reporte", reporteRouter)
 
 
 app.use(

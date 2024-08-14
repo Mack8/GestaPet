@@ -1,1 +1,18 @@
-<p>reporte-servicio works!</p>
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Top 3 Servicios Más Vendidos</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ngx-charts-bar-vertical
+        [results]="data"
+        [animations]="animations"
+        [scheme]="colorScheme"
+        [legend]="legend"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [showYAxisLabel]="showYAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+      ></ngx-charts-bar-vertical>
+    </mat-card-content>
+  </mat-card>
+  

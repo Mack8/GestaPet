@@ -28,8 +28,10 @@ module.exports.getCitasPorSucursalHoy = async (request, response, next) => {
                   ORDER BY total_vendido DESC
                   LIMIT 3;`
     );
+    console.log(result);  // Verifica los datos en el servidor
     response.json(result);
   };
+  
   
   module.exports.getTopProductosVendidos = async (request, response, next) => {
     const result = await prisma.$queryRaw(
@@ -45,11 +47,15 @@ module.exports.getCitasPorSucursalHoy = async (request, response, next) => {
  
   
   module.exports.getCitasPorEstadoSucursal = async (request, response, next) => {
-    const { userId } = request.user; // Asumimos que el ID del usuario se pasa en la solicitud
+    const { userId } = request.params; // Obtén el userId de los parámetros de la ruta
   
-    // Primero obtenemos la sucursalId asociada al usuario encargado
+    if (!userId) {
+      return response.status(400).json({ message: "ID de usuario no proporcionado" });
+    }
+  
+    // Ahora obtén el `sucursalId` asociado al usuario encargado
     const encargado = await prisma.usuario.findUnique({
-      where: { id: userId },
+      where: { id: parseInt(userId) },
       select: { sucursalId: true },
     });
   
@@ -57,7 +63,7 @@ module.exports.getCitasPorSucursalHoy = async (request, response, next) => {
       return response.status(404).json({ message: "Sucursal no encontrada para el usuario encargado." });
     }
   
-    // Ahora obtenemos la cantidad de citas por estado para la sucursal del encargado
+    // Obtener la cantidad de citas por estado para la sucursal del encargado
     const result = await prisma.$queryRaw(
       Prisma.sql`SELECT e.nombreEstado AS estado, COUNT(c.id) AS cantidad
                   FROM Cita c
@@ -68,5 +74,44 @@ module.exports.getCitasPorSucursalHoy = async (request, response, next) => {
   
     response.json(result);
   };
+  
+
+
+
+
+
+
+  // module.exports.getCitasPorEstadoSucursal = async (request, response, next) => {
+  //   const { user } = request;
+  
+  //   if (!user || !user.userId) {
+  //     return response.status(400).json({ message: "Usuario no autenticado o ID de usuario no disponible" });
+  //   }
+  
+  //   const { userId } = user;
+  
+  //   // Ahora obtén el `sucursalId` asociado al usuario encargado
+  //   const encargado = await prisma.usuario.findUnique({
+  //     where: { id: userId },
+  //     select: { sucursalId: true },
+  //   });
+  
+  //   if (!encargado || !encargado.sucursalId) {
+  //     return response.status(404).json({ message: "Sucursal no encontrada para el usuario encargado." });
+  //   }
+  
+  //   // Obtener la cantidad de citas por estado para la sucursal del encargado
+  //   const result = await prisma.$queryRaw(
+  //     Prisma.sql`SELECT e.nombreEstado AS estado, COUNT(c.id) AS cantidad
+  //                 FROM Cita c
+  //                 JOIN EstadoCita e ON c.estadoId = e.id
+  //                 WHERE c.sucursalId = ${encargado.sucursalId}
+  //                 GROUP BY e.nombreEstado;`
+  //   );
+  
+  //   response.json(result);
+  // };
+  
+  
   
   

@@ -1,14 +1,10 @@
-//Express para agregar las rutas
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const reporteController = require('../controllers/reporteController');
 
-//Videojuego controller para los métodos definidos
-const reporteController = require("../controllers/reporteController");
-
-//Definición de rutas para generos
-router.get("/citas-dia/", reporteController.getCitasPorSucursalHoy);
-
-router.get("/top3-productos/", reporteController.getTopProductosVendidos);
-router.get("/top3-servicios/", reporteController.getVentaProductoMes);
+router.get('/reporte/citas-por-sucursal-hoy', reporteController.getCitasPorSucursalHoy);
+router.get('/reporte/top-servicios-vendidos', reporteController.getTopServiciosVendidos);
+router.get('/reporte/top-productos-vendidos', reporteController.getTopProductosVendidos);
+router.get('/reporte/citas-por-estado-sucursal/:userId', reporteController.getCitasPorEstadoSucursal);
 
 module.exports = router;

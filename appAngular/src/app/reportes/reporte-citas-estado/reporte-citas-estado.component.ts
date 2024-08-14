@@ -3,15 +3,15 @@ import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
 
 @Component({
-  selector: 'app-reporte-servicio',
-  templateUrl: './reporte-servicio.component.html',
-  styleUrl: './reporte-servicio.component.css'
+  selector: 'app-reporte-citas-estado',
+  templateUrl: './reporte-citas-estado.component.html',
+  styleUrls: ['./reporte-citas-estado.component.css']
 })
-export class ReporteServicioComponent {
+export class ReporteCitasEstadoComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<boolean> = new Subject<boolean>();
   data: any = null;
-  view: [number, number] = [800, 600];
+  view: [number, number] = [800, 400];
 
   // Configuración del gráfico
   animations = true;
@@ -20,23 +20,24 @@ export class ReporteServicioComponent {
   xAxis = true;
   yAxis = true;
   showYAxisLabel = true;
-  yAxisLabel = "Cantidad Vendida";
-  legendTitle = 'Servicios';
+  yAxisLabel = "Cantidad de Citas";
+  xAxisLabel = "Estados";
+  legendTitle = 'Estados de Citas';
 
   constructor(private gService: GenericService) {}
 
   ngOnInit() {
-    this.listaTopServiciosVendidos();
+    this.getCitasPorEstado();
   }
 
-  listaTopServiciosVendidos() {
-    this.gService.list('reporte/reporte/top-servicios-vendidos')
+  getCitasPorEstado() {
+    this.gService.get('reporte/reporte/citas-por-estado-sucursal',3)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data) => {
           this.data = data.map(item => ({
-            name: item.servicio || 'Sin nombre',
-            value: item.total_vendido || 0
+            name: item.estado || 'Sin estado',
+            value: item.cantidad || 0
           }));
         },
         (error) => {
@@ -44,7 +45,6 @@ export class ReporteServicioComponent {
         }
       );
   }
-  
 
   ngOnDestroy() {
     this.destroy$.next(true);
