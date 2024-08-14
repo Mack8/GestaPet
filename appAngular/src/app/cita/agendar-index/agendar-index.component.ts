@@ -66,8 +66,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
     this.getEstados();
     this.getAllMascotas();
     locale('es');
-    console.log('🚀 ~ AgendarIndexComponent ~ currentDate:', this.currentDate);
-  }
+    }
 
   ngOnInit(): void {}
 
@@ -76,10 +75,6 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   }
 
   getBloqueos() {
-    console.log(
-      '🚀 ~ AgendarIndexComponent ~ getBloqueos ~ this.sucursales.id:',
-      this.sucursales.id
-    );
     this.gService
       .get('horario/sucursalTipo', this.sucursales.id + '/BLOQUEO')
       .pipe(takeUntil(this.destroy$))
@@ -89,19 +84,11 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   }
 
   getHorarios() {
-    console.log(
-      '🚀 ~ AgendarIndexComponent ~ getBloqueos ~ this.sucursales.id:',
-      this.sucursales.id
-    );
     this.gService
       .get('horario/sucursalTipo', this.sucursales.id + '/SERVICIO')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.horarios = data;
-        console.log(
-          '🚀 ~ AgendarIndexComponent ~ .subscribe ~ this.horarios:',
-          this.horarios
-        );
       });
   }
 
@@ -111,10 +98,6 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.sucursales = data.sucursal;
-        console.log(
-          '🚀 ~ AgendarIndexComponent ~ .subscribe ~ this.sucursales:',
-          this.sucursales
-        );
         this.getBloqueos();
         this.getCitas();
         this.getHorarios();
@@ -157,10 +140,6 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((respuesta: any) => {
         this.mascotas = respuesta;
-        console.log(
-          '🚀 ~ AgendarIndexComponent ~ .subscribe ~ mascotas:',
-          this.mascotas
-        );
       });
   }
 
@@ -169,10 +148,6 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
       .get('cita', this.sucursales.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((respuesta: any) => {
-        console.log(
-          '🚀 ~ ReservaIndexComponent ~ .subscribe ~ respuesta:',
-          respuesta
-        );
 
         this.citas = this.renamePropertiesInArray(
           respuesta,
@@ -347,9 +322,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   onAppointmentFormOpening = (
     data: DxSchedulerTypes.AppointmentFormOpeningEvent
   ) => {
-    console.log('🚀 ~ AgendarIndexComponent ~ data:', data);
-
-    const isValidAppointment = this.isValidAppointment(
+      const isValidAppointment = this.isValidAppointment(
       data.component,
       data.appointmentData
     );
@@ -366,10 +339,6 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
 
     var filteredNumbers = this.citas.filter(
       (x) => x.startDate == data.appointmentData.startDate && x.estadoId != 3
-    );
-    console.log(
-      '🚀 ~ AgendarIndexComponent ~ filteredNumbers:',
-      filteredNumbers
     );
 
     var idCita =
@@ -588,7 +557,6 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   };
 
   onAppointmentAdding = (e: DxSchedulerTypes.AppointmentAddingEvent) => {
-    console.log('🚀 ~ AgendarIndexComponent ~ e:', e);
 
     const form = this.formData;
     if (form) {
@@ -668,11 +636,10 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   }
 
   crearProforma(cita) {
-    console.log("🚀 ~ AgendarIndexComponent ~ crearProforma ~ cita:", cita)
-    var servicio = this.servicios.filter(
+      var servicio = this.servicios.filter(
       (x) => x.id ==  cita.servicioId );
-    console.log("🚀 ~ AgendarIndexComponent ~ crearProforma ~ servicio:", servicio)
-    var data = {
+
+       var data = {
       clienteId: cita.clienteId,
       sucursalId: cita.sucursalId,
       subtotal: servicio[0].precio,
@@ -691,17 +658,11 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
           }
       ]
   };
-  
-    console.log("🚀 ~ AgendarIndexComponent ~ crearProforma ~ data:", data)
-    
     this.gService
       .create('factura', data)
       .pipe(takeUntil(this.destroy$))
       .subscribe((respuesta: any) => {
-        console.log(
-          '🚀 ~ HorarioDiagComponent ~ .subscribe ~ data:',
-          respuesta
-        );
+        
   
       });
   }

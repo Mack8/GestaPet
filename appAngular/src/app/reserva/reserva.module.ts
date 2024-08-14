@@ -27,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { FormsModule } from '@angular/forms';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { ReservaIndexComponent } from './reserva-index/reserva-index.component';
 import { ReservaDetailComponent } from './reserva-detail/reserva-detail.component';
@@ -64,7 +65,8 @@ import { ReservaDiagComponent } from './reserva-diag/reserva-diag.component';
     MatCell,
     MatRow,
     MatRowDef,
-    MatHeaderCell
+    MatHeaderCell,
+    MatDatepickerModule
   ]
 })
 export class ReservaModule { }

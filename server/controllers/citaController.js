@@ -181,3 +181,60 @@ module.exports.updateCita = async (request, response, next) => {
   });
   response.json(updateCita);
 };
+
+module.exports.getCitaByCliente = async (request, response, next) => {
+  let idCliente = parseInt(request.params.cliente);
+  let idUsuario = parseInt(request.params.usuario);
+
+  const sucursal = await prisma.usuario.findFirst({
+    where: { id: idUsuario },
+  });
+
+  const cita = await prisma.cita.findMany({
+    where: { 
+      clienteId: idCliente,
+      sucursalId: sucursal.sucursalId
+     },
+    include: {
+      estado: true,
+      cliente: true,
+      servicio: true,
+      mascota: true,
+      sucursal: true,
+    },
+  });
+  response.json(cita);
+};
+
+module.exports.getCitaByFecha = async (request, response, next) => {
+  var fechaInicio = new Date(request.params.fecha);
+  fechaInicio.setHours(0, 0, 0, 0);
+
+  var fechaFin = new Date(request.params.fecha);
+  fechaFin.setHours(23, 59, 59, 999);
+
+  let idUsuario = parseInt(request.params.usuario);
+
+  const sucursal = await prisma.usuario.findFirst({
+    where: { id: idUsuario },
+  });
+  
+
+  const cita = await prisma.cita.findMany({
+    where: { 
+      fecha: {
+        gte: fechaInicio,
+        lte: fechaFin,
+      },
+      sucursalId: sucursal.sucursalId
+     },
+    include: {
+      estado: true,
+      cliente: true,
+      servicio: true,
+      mascota: true,
+      sucursal: true,
+    },
+  });
+  response.json(cita);
+};
