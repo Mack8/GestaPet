@@ -61,6 +61,12 @@ export class SucursalAllComponent implements AfterViewInit{
     });
   }
 
+  detalleSucursal(id: number) {
+    this.router.navigate(['/sucursal/',id], {
+      relativeTo: this.route,
+    });
+  }
+
   crearSucursal() {
     this.router.navigate(['/sucursal/create'], {
       relativeTo: this.route,

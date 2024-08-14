@@ -7,6 +7,8 @@ const sucursalController=require("../controllers/sucursalController")
 //Rutas
 router.get("/",sucursalController.get)
 
+router.get("/sucursal/:id",sucursalController.getSucursalByUsuarioId)
+
 router.get('/:id', sucursalController.getSucursalAndEncargados); 
 
 router.post('/', sucursalController.create); // Crear un nuevo usuario

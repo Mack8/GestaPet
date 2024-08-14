@@ -29,11 +29,18 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { FacturaIndexComponent } from './factura-index/factura-index.component';
 import { FacturaDetailComponent } from './factura-detail/factura-detail.component';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FacturaDiagComponent } from './factura-diag/factura-diag.component';
 
+import { FacturaCreateComponent } from './factura-create/factura-create.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 @NgModule({
-  declarations: [FacturaIndexComponent, FacturaDetailComponent, FacturaDiagComponent],
+  declarations: [FacturaIndexComponent, FacturaDetailComponent, FacturaDiagComponent, FacturaCreateComponent, FacturaCreateComponent],
   imports: [
     CommonModule,
     FacturaRoutingModule,
@@ -59,7 +66,16 @@ import { FacturaDiagComponent } from './factura-diag/factura-diag.component';
     MatCell,
     MatRow,
     MatRowDef,
-    MatHeaderCell
+    MatHeaderCell,
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule
   ],
 })
 export class FacturaModule {}

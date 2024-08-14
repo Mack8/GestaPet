@@ -24,6 +24,31 @@ module.exports.getSucursalById = async (request, response, next) => {
 };
 
 
+
+module.exports.getSucursalByUsuarioId = async (request, response, next) => {
+    try {
+      let idUsuario = parseInt(request.params.id);
+      const usuario = await prisma.usuario.findUnique({
+        where: { id: idUsuario },
+        select: {
+          sucursal: {
+            select: {
+              id: true,
+              nombre: true
+            }
+          }
+        }
+      });
+      response.json(usuario.sucursal);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+
+
+
+
 module.exports.getSucursalAndEncargados = async (request, response, next) => {
     let idSucursal = parseInt(request.params.id);
     try {
