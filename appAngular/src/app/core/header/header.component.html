@@ -78,6 +78,7 @@
     >
       Servicio
     </button>
+
     <button
       mat-menu-item
       [routerLink]="['/horario']"
@@ -86,6 +87,7 @@
       Horarios
     </button>
   </mat-menu>
+
 
   <!-- Menú Facturación -->
   <button mat-button [matMenuTriggerFor]="menu3">Facturación</button>
@@ -151,5 +153,13 @@
   
 
   <!-- Espaciador para empujar el contenido a la derecha -->
+
+  <button mat-button [matMenuTriggerFor]="menu3">Citas</button>
+  <mat-menu #menu3="matMenu">
+   <button mat-menu-item [routerLink]="['/agendar']" [routerLinkActive]="'link-active'" title="Agendar uan cita">Agendar</button>
+  </mat-menu>
+  <!--enlaces de la app-->
+  <!--https://material.angular.io/guide/typography-->
+
   <div class="example-spacer"></div>
 </mat-toolbar>
