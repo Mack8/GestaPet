@@ -58,6 +58,7 @@ module.exports.createFactura = async (request, response, next) => {
                 sucursal: {
                     connect: { id: body.sucursalId }
                 },
+                estado:body.estado,
                 subtotal: body.subtotal,
                 impuestos: body.impuestos,
                 total: body.total,
@@ -82,7 +83,8 @@ module.exports.createFactura = async (request, response, next) => {
         response.status(500).json({ error: 'Error al crear factura' });
     }
 
-
+  }
+  
 module.exports.create = async (request, response, next) => {
   try {
     let infoFactura = request.body;

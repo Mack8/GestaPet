@@ -575,7 +575,8 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
       }
 
       this.guardarCita(formData);
-      this.crearProforma(formData)
+      this.crearProforma(formData);
+      this.getCitas();
     }
   };
 
@@ -605,11 +606,11 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
       .create('cita', data)
       .pipe(takeUntil(this.destroy$))
       .subscribe((respuesta: any) => {
-
+        this.getCitas();
       });
 
      
-      this.getCitas();
+     
 
     this.noti.mensajeTime(
       'Éxito',
@@ -659,7 +660,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
       ]
   };
     this.gService
-      .create('factura', data)
+      .create('factura/proforma', data)
       .pipe(takeUntil(this.destroy$))
       .subscribe((respuesta: any) => {
         
