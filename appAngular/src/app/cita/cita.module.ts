@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { ReservaRoutingModule } from './reserva-routing.module';
+import { CommonModule, registerLocaleData } from '@angular/common';
 
 import { MatDividerModule } from '@angular/material/divider';
 import {
@@ -26,23 +24,27 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
-import { FormsModule } from '@angular/forms';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { DxButtonModule, DxTemplateModule } from 'devextreme-angular';
+import { DxSchedulerModule } from 'devextreme-angular';
+import { LOCALE_ID } from '@angular/core';
+import localeEs from '@angular/common/locales/es';
 
-import { ReservaIndexComponent } from './reserva-index/reserva-index.component';
-import { ReservaDetailComponent } from './reserva-detail/reserva-detail.component';
-import { ReservaDiagComponent } from './reserva-diag/reserva-diag.component';
+import { CitaRoutingModule } from './cita-routing.module';
+import { AgendarIndexComponent, ApplyPipe } from './agendar-index/agendar-index.component';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+
+registerLocaleData(localeEs);
 
 
 @NgModule({
   declarations: [
-    ReservaIndexComponent,
-    ReservaDetailComponent,
-    ReservaDiagComponent
+    AgendarIndexComponent,ApplyPipe
   ],
   imports: [
     CommonModule,
-    ReservaRoutingModule,
+    CitaRoutingModule,
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
@@ -66,7 +68,16 @@ import { ReservaDiagComponent } from './reserva-diag/reserva-diag.component';
     MatRow,
     MatRowDef,
     MatHeaderCell,
-    MatDatepickerModule
-  ]
+    ReactiveFormsModule,
+    DxButtonModule,
+    DxSchedulerModule,
+    DxTemplateModule,
+  ],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es' } // Configura el idioma
+  ],
+  bootstrap: [AgendarIndexComponent]
 })
-export class ReservaModule { }
+export class CitaModule { }
+
+platformBrowserDynamic().bootstrapModule( CitaModule);
