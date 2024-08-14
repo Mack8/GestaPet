@@ -1,0 +1,262 @@
+<!-- <form [formGroup]="agendarForm"  novalidate>
+    <input type="hidden" formControlName="id" />
+    <mat-card class="shipping-card">
+      <mat-card-header>
+        <mat-card-title>Agendar una Cita </mat-card-title>
+      </mat-card-header>
+      <mat-card-content style="margin: 15px;">
+        
+        <div class="row">
+            <div class="col">
+              <label>Sucursal</label>
+              <mat-form-field class="full-width">
+                <input matInput formControlName="sucursal" readonly>
+                
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label>Cliente</label>
+              <mat-form-field style="width: 100%; display: block">
+                <mat-select
+                (selectionChange)="getMascota($event.value)"
+                  [(value)]="selectedCliente" formControlName="cliente">
+                  <mat-option [value]="0+'c'">
+                    -- Seleccione un Cliente --
+                  </mat-option>
+                  <mat-option
+                    *ngFor="let cliente of clientes"
+                    [value]="cliente.id+'c'"
+                  >
+                    {{ cliente.nombre }}
+                  </mat-option>
+                </mat-select>
+
+                @if(errorHandling('cliente')){
+                  <mat-error>
+                    {{ errorHandling('cliente') }}
+                  </mat-error>
+                 }
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label>Mascota</label>
+              <mat-form-field style="width: 100%; display: block">
+                <mat-select
+                  [(value)]="selectedMascota" formControlName="mascota">
+                  <mat-option [value]="0+'m'">
+                    -- Seleccione una mascota --
+                  </mat-option>
+                  <mat-option
+                    *ngFor="let mascota of mascotas"
+                    [value]="mascota.id+'m'"
+                  >
+                    {{ mascota.nombre }}
+                  </mat-option>
+                </mat-select>
+
+                @if(errorHandling('mascota')){
+                  <mat-error>
+                    {{ errorHandling('mascota') }}
+                  </mat-error>
+                 }
+              </mat-form-field>
+            </div>
+          </div>
+
+        <div class="row">
+          <div class="col">
+            <label>Servicio</label>
+            <mat-form-field style="width: 100%; display: block">
+              <mat-select
+                [(value)]="selected" formControlName="servicio">
+                <mat-option [value]="0">
+                  -- Seleccione un servicio --
+                </mat-option>
+                <mat-option
+                  *ngFor="let servicio of servicios"
+                  [value]="servicio.id"
+                >
+                  {{ servicio.nombre }}
+                </mat-option>
+              </mat-select>
+
+              @if(errorHandling('servicio')){
+                <mat-error>
+                  {{ errorHandling('servicio') }}
+                </mat-error>
+               }
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-label>¿Tiene algun padecimiento?</mat-label>
+            <mat-radio-group formControlName="padecimiento">
+              <mat-radio-button [value]="false">No</mat-radio-button>
+              <mat-radio-button [value]="true">Sí</mat-radio-button>
+              
+            </mat-radio-group>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-label>¿Posee alguna alegia?</mat-label>
+            <mat-radio-group formControlName="alergia">
+              <mat-radio-button [value]="false">No</mat-radio-button>
+              <mat-radio-button [value]="true">Sí</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <br>
+
+        <div class="row">
+          <div class="col">
+            <label>Observaciones</label>
+
+             <mat-form-field class="example-full-width" style="width: 100% !important;">
+             
+              <textarea matInput placeholder="" formControlName="observaciones"></textarea>
+              @if(errorHandling('observaciones')){
+                <mat-error>
+                  {{ errorHandling('observaciones') }}
+                </mat-error>
+               }
+            </mat-form-field>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col">
+            <label>Fecha</label>
+            <mat-form-field class="full-width">
+              <input matInput formControlName="fecha">
+              @if(errorHandling('fecha')){
+                <mat-error>
+                  {{ errorHandling('fecha') }}
+                </mat-error>
+               }
+            </mat-form-field>
+          </div>
+        </div>
+
+     
+
+      
+
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="example-button-row">
+          <button mat-raised-button color="primary" type="button">Regresar</button>
+          <button mat-raised-button color="accent" type="submit">Guardar</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form> -->
+
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Agenda de citas</mat-card-title>
+    </mat-card-header>
+    <mat-card-content style="margin: 15px;">
+
+<div class="row">
+  <div class="col">
+    <dx-scheduler
+      [dataSource]="citas"
+      [views]="['week']"
+      [currentView]="'week'"
+      [currentDate]="currentDate"
+      [height]="700"
+      [cellDuration]="30"
+      [showAllDayPanel]="false"
+      dataCellTemplate="dataCellTemplate"
+      appointmentTemplate="appointment-template"
+      appointmentTooltipTemplate="tooltip-template"
+      (onAppointmentFormOpening)="onAppointmentFormOpening($event)"
+      (onAppointmentAdding)="onAppointmentAdding($event)"
+      (onAppointmentUpdating)="onAppointmentUpdating($event)"
+    >
+
+    <dxi-resource
+    fieldExpr="estadoId"
+    [useColorAsDefault]="true"
+    [dataSource]="estados"
+  >
+  </dxi-resource>
+
+  <div *dxTemplate="let model of 'appointment-template'">
+    <div class="showtime-preview">
+      <div><strong>{{(getMascotaById | apply : model.appointmentData.mascotaId : this).nombre}}</strong></div>
+      <div>
+        {{(getServicioById | apply : model.appointmentData.servicioId : this).nombre}}
+      </div>
+      <!-- <div class="dropdown-appointment-dates">
+        {{ (model.targetedAppointmentData.horaInicio |  date : "HH:mm") +
+            " - " +
+            (model.targetedAppointmentData.horaFin |  date : "HH:mm")
+        }}
+      </div> -->
+    </div>
+  </div>
+
+  <div *dxTemplate="let model of 'tooltip-template'">
+    <ng-container
+      *ngIf="getCitaById | apply : model.appointmentData.id as cita"
+    >
+      <div class="movie-tooltip">
+        <div class="movie-info">
+          <div class="movie-title">
+            {{ cita.mascota.nombre }}
+          </div>
+          <div>
+            {{ "Edad: " + cita.mascota.edad + ' años'}}
+          </div>
+          <div>
+            {{ "Dueño: " + cita.cliente.nombre }}
+          </div>
+          <div>
+            {{ "Servicio: " + cita.servicio.nombre }}
+          </div>
+          <div>
+            {{ "Padecimientos: " + cita.padecimientos }}
+          </div>
+          <div>
+            {{ "Alergias: " + cita.alergias }}
+          </div>
+          <div>
+            {{ "Observaciones: " + cita.observaciones }}
+          </div>
+          <div>
+            {{ "Estado: " + cita.estado.nombreEstado }}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+    <div
+    *dxTemplate="let dataCell of 'dataCellTemplate'"
+    [ngClass]="{'disable-date': (isDisableDate | apply : dataCell.startDate)}">
+    {{ "" }}
+  </div>
+
+
+     
+    </dx-scheduler>
+  </div>
+</div>
+</mat-card-content>
+<mat-card-actions>
+  <div class="example-button-row">
+   
+  </div>
+</mat-card-actions>
+</mat-card>

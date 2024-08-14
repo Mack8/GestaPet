@@ -96,6 +96,7 @@ function formateTime(date) {
   );
 }
 
+
 cron.schedule("*/15 * * * * *", async () => {
   simulateRequest()
     .then(() => {
@@ -144,23 +145,73 @@ cron.schedule("*/15 * * * * *", async () => {
           element.sucursal.direccion+
           "</body>";
 
-        var mailOptions = {
-          from: process.env.EMAIL_USER,
-          to: element.cliente.correoElectronico,
-          subject:
-            "Recordatorio de su cita para " +
-            element.mascota.nombre +
-            " - " +
-            formateDate(element.fecha),
-          html: body,
-          attachments: [
-            {
-              filename: 'logo.jpg',
-              path: './assets/uploads/logo.jpg', // Ruta a la imagen en tu sistema
-              cid: 'pieImagen', // Identificador único para referenciar la imagen en el HTML
-            },
-          ],
-        };
+// cron.schedule("*/10 * * * * *", async () => {
+//   simulateRequest()
+//     .then(() => {
+//       console.log("Array de citas:", citas.length); // Usa el array de citas
+
+//       citas.forEach((element) => {
+//         var body =
+//         "<body>"+
+//           "<b>Estimado/a " +
+//           element.cliente.nombre +
+//           "</b>" +
+//           "<br/>" +
+//           "<br/>" +
+//           "Espero que este mensaje le encuentre bien." +
+//           "<br/>" +
+//           "<br/>" +
+//           "Le escribimos para recordarle su próxima cita en GestaPet, en la sucursal de " +
+//           element.sucursal.nombre +
+//           ". A continuación, le proporcionamos los detalles de la cita:<br/><br/>" +
+//           "<ul>" +
+//           "<li><b>Fecha:</b> " +
+//           formateDate1(element.fecha) +
+//           "</li>" +
+//           "<li><b>Hora:</b> " +
+//           formateTime(element.horaInicio + "") +
+//           "</li>" +
+//           "<li><b>Mascota:</b> " +
+//           element.mascota.nombre +
+//           "</li>" +
+//           "</ul>" +
+//           "Por favor, llegue con unos 15 minutos de antelación para completar cualquier documentación necesaria y para que podamos comenzar a la hora acordada." +
+//           "<br/>" +
+//           "<br/>" +
+//           "Saludos cordiales."+
+//         "<br/>" +
+//           "<br/>" +
+//           '<img src="cid:pieImagen" style="width:150px; height:150px;" alt="Logo" />'+
+//          // "<b><h2>GestaPet</h2></b>" +
+//           "<br/>" +
+//           element.sucursal.nombre +
+//           "<br/>" +
+//           element.sucursal.telefono +
+//           "<br/>" +
+//           element.sucursal.correoElectronico +
+//           "<br/>" +
+//           element.sucursal.direccion+
+//           "</body>";
+
+
+//         var mailOptions = {
+//           from: process.env.EMAIL_USER,
+//           to: element.cliente.correoElectronico,
+//           subject:
+//             "Recordatorio de su cita para " +
+//             element.mascota.nombre +
+//             " - " +
+//             formateDate(element.fecha),
+//           html: body,
+//           attachments: [
+//             {
+//               filename: 'logo.jpg',
+//               path: './assets/uploads/logo.jpg', // Ruta a la imagen en tu sistema
+//               cid: 'pieImagen', // Identificador único para referenciar la imagen en el HTML
+//             },
+//           ],
+//         };
+
 
        
         const info = transporter.sendMail(mailOptions, function (error, info) {
@@ -171,14 +222,23 @@ cron.schedule("*/15 * * * * *", async () => {
           }
         });
 
-        const url = nodemailer.getTestMessageUrl(info);
-        console.log(url);
-      });
-    })
-    .catch((error) => {
-      console.error("Error en simulateRequest:", error);
-    });
-});
+//         const info = transporter.sendMail(mailOptions, function (error, info) {
+//           if (error) {
+//             console.log(error);
+//           } else {
+//             console.log("Email sent: " + info.response);
+//           }
+//         });
+
+
+//         const url = nodemailer.getTestMessageUrl(info);
+//         console.log(url);
+//       });
+//     })
+//     .catch((error) => {
+//       console.error("Error en simulateRequest:", error);
+//     });
+// });
 
 global.__basedir = __dirname;
 
