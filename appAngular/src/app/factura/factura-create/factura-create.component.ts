@@ -151,7 +151,7 @@ export class FacturaCreateComponent implements OnInit {
   }
 
   loadFactura(id: number): void {
-    this.gService.get(`factura/${id}`, null)
+    this.gService.get(`factura/${id}`)
       .pipe(takeUntil(this.destroy$))
       .subscribe((factura: any) => {
         this.facturaForm.patchValue({
@@ -188,7 +188,7 @@ export class FacturaCreateComponent implements OnInit {
     }));
 
     if (this.isCreate) {
-      this.gService.create('factura/', facturaData)
+      this.gService.create('factura', facturaData)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
           this.noti.mensajeRedirect(
@@ -202,7 +202,7 @@ export class FacturaCreateComponent implements OnInit {
           this.noti.mensaje('Error', 'No se pudo crear la factura', TipoMessage.error);
         });
     } else {
-      this.gService.update(`factura/${this.facturaId}`, facturaData)
+      this.gService.update('factura', { ...facturaData, id: this.facturaId })
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
           this.noti.mensajeRedirect(

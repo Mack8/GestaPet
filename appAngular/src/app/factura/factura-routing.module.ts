@@ -6,6 +6,7 @@ import { FacturaCreateComponent } from './factura-create/factura-create.componen
 const routes: Routes = [
   {path:'factura',component: FacturaIndexComponent},
   {path:'factura/create',component: FacturaCreateComponent},
+  { path: 'factura/update/:id', component: FacturaCreateComponent },
   
 ];
 
