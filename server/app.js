@@ -145,6 +145,7 @@ cron.schedule("*/15 * * * * *", async () => {
           element.sucursal.direccion+
           "</body>";
 
+
 // cron.schedule("*/10 * * * * *", async () => {
 //   simulateRequest()
 //     .then(() => {
@@ -194,23 +195,24 @@ cron.schedule("*/15 * * * * *", async () => {
 //           "</body>";
 
 
-//         var mailOptions = {
-//           from: process.env.EMAIL_USER,
-//           to: element.cliente.correoElectronico,
-//           subject:
-//             "Recordatorio de su cita para " +
-//             element.mascota.nombre +
-//             " - " +
-//             formateDate(element.fecha),
-//           html: body,
-//           attachments: [
-//             {
-//               filename: 'logo.jpg',
-//               path: './assets/uploads/logo.jpg', // Ruta a la imagen en tu sistema
-//               cid: 'pieImagen', // Identificador único para referenciar la imagen en el HTML
-//             },
-//           ],
-//         };
+
+        var mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: element.cliente.correoElectronico,
+          subject:
+            "Recordatorio de su cita para " +
+            element.mascota.nombre +
+            " - " +
+            formateDate(element.fecha),
+          html: body,
+          attachments: [
+            {
+              filename: 'logo.jpg',
+              path: './assets/uploads/logo.jpg', // Ruta a la imagen en tu sistema
+              cid: 'pieImagen', // Identificador único para referenciar la imagen en el HTML
+            },
+          ],
+        };
 
 
        
@@ -222,6 +224,7 @@ cron.schedule("*/15 * * * * *", async () => {
           }
         });
 
+
 //         const info = transporter.sendMail(mailOptions, function (error, info) {
 //           if (error) {
 //             console.log(error);
@@ -231,14 +234,15 @@ cron.schedule("*/15 * * * * *", async () => {
 //         });
 
 
-//         const url = nodemailer.getTestMessageUrl(info);
-//         console.log(url);
-//       });
-//     })
-//     .catch((error) => {
-//       console.error("Error en simulateRequest:", error);
-//     });
-// });
+
+        const url = nodemailer.getTestMessageUrl(info);
+        console.log(url);
+      });
+    })
+    .catch((error) => {
+      console.error("Error en simulateRequest:", error);
+    });
+});
 
 global.__basedir = __dirname;
 

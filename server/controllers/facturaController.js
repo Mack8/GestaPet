@@ -21,6 +21,33 @@ module.exports.get = async (request, response, next) => {
   }
 };
 
+
+
+module.exports.getProformas = async (request, response, next) => {
+  try {
+    const proformas = await prisma.factura.findMany({
+      where: {
+        estado: "PROFORMA" // Filtra por el estado "PROFORMA"
+      },
+      include: {
+        cliente: true,
+        sucursal: true,
+        detalles: {
+          include: {
+            producto: true,
+            servicio: true
+          }
+        }
+      }
+    });
+    response.json(proformas);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
 module.exports.getFacturaById = async (request, response, next) => {
   try {
     let idFactura = parseInt(request.params.id);
@@ -96,7 +123,7 @@ module.exports.create = async (request, response, next) => {
         subtotal: parseFloat(infoFactura.subtotal),
         impuestos: parseFloat(infoFactura.impuestos),
         total: parseFloat(infoFactura.total),
-        estado: infoFactura.estado,
+        estado: "FACTURADA",
         detalles: {
           createMany: {
             data: infoFactura.detalles.map(detalle => ({
@@ -142,6 +169,7 @@ module.exports.updateFactura = async (request, response, next) => {
           subtotal: body.subtotal,
           impuestos: body.impuestos,
           total: body.total,
+          estado: "FACTURADA",
           detalles: {
             // Primero eliminar todos los detalles existentes
             deleteMany: {},
