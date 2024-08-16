@@ -20,6 +20,7 @@ export class FacturaCreateComponent implements OnInit {
   sucursal: any;
   facturaId: number = 0;
   isCreate: boolean = true;
+  today: Date = new Date();
 
   constructor(
     private fb: FormBuilder,
@@ -49,12 +50,12 @@ export class FacturaCreateComponent implements OnInit {
 
   formularioReactive() {
     this.facturaForm = this.fb.group({
-      fecha: ['', Validators.required],
+      fecha: [this.today, [Validators.required, Validators.min(this.today.getTime())]],
       clienteId: ['', Validators.required],
       clienteCorreo: [{ value: '', disabled: true }],
       sucursalId: [{ value: '', disabled: true }, Validators.required],
       subtotal: [{ value: '', disabled: true }],
-      impuestos: [{ value: '', disabled: true }],
+      impuestos: [{ value: 13, disabled: true }],
       total: [{ value: '', disabled: true }],
       detalles: this.fb.array([])
     });
@@ -82,14 +83,26 @@ export class FacturaCreateComponent implements OnInit {
       tipo: [tipo],
       productoId: [detalleData ? detalleData.productoId : null],
       servicioId: [detalleData ? detalleData.servicioId : null],
-      cantidad: [detalleData ? detalleData.cantidad : '', Validators.required],
+      cantidad: [detalleData ? detalleData.cantidad : 1, [Validators.required, Validators.min(1)]], // Inicia en 1, y el mínimo es 1
       precio: [{ value: detalleData ? detalleData.precio : '', disabled: true }],
-      impuestoPorcentaje: [detalleData ? detalleData.impuestoPorcentaje : '', Validators.required],
+      impuestoPorcentaje: [detalleData ? detalleData.impuestoPorcentaje : 13, Validators.required],
       montoImpuesto: [{ value: detalleData ? detalleData.montoImpuesto : '', disabled: true }],
       totalBruto: [{ value: detalleData ? detalleData.totalBruto : '', disabled: true }],
       totalNeto: [{ value: detalleData ? detalleData.totalNeto : '', disabled: true }]
     });
-
+  
+    // Lógica para manejar cambios en cantidad
+    detalleForm.get('cantidad').valueChanges.subscribe(cantidad => {
+      if (cantidad <= 0) {
+        const index = this.detalles.controls.indexOf(detalleForm);
+        if (index !== -1) {
+          this.removeDetalle(index); // Elimina la línea si la cantidad es 0
+        }
+      } else {
+        this.calcularTotales(); // Recalcula los totales si la cantidad es mayor a 0
+      }
+    });
+  
     if (tipo === 'producto') {
       detalleForm.get('productoId').valueChanges.subscribe(productoId => {
         const producto = this.productos.find(p => p.id === productoId);
@@ -109,14 +122,15 @@ export class FacturaCreateComponent implements OnInit {
         }
       });
     }
-
+  
     this.detalles.push(detalleForm);
   }
-
+  
   removeDetalle(index: number): void {
     this.detalles.removeAt(index);
     this.calcularTotales();
   }
+  
 
   calcularTotales(): void {
     let subtotal = 0;
@@ -155,7 +169,7 @@ export class FacturaCreateComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((factura: any) => {
         this.facturaForm.patchValue({
-          fecha: factura.fecha,
+          fecha: new Date(),
           clienteId: factura.clienteId,
           clienteCorreo: factura.cliente.correoElectronico,
           sucursalId: factura.sucursalId,
@@ -197,7 +211,7 @@ export class FacturaCreateComponent implements OnInit {
             TipoMessage.success,
             'factura-list'
           );
-          this.router.navigate(['factura']);
+          this.router.navigate(['factura/create']);
         }, error => {
           this.noti.mensaje('Error', 'No se pudo crear la factura', TipoMessage.error);
         });
@@ -211,7 +225,7 @@ export class FacturaCreateComponent implements OnInit {
             TipoMessage.success,
             'factura-list'
           );
-          this.router.navigate(['/factura']);
+          this.router.navigate(['/factura/proformas']);
         }, error => {
           this.noti.mensaje('Error', 'No se pudo actualizar la factura', TipoMessage.error);
         });
@@ -263,6 +277,6 @@ export class FacturaCreateComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['/factura-list']);
+    this.router.navigate(['/facturas']);
   }
 }

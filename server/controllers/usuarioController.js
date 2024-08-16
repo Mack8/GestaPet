@@ -80,6 +80,12 @@ module.exports.getUsuariosEncargadosDisponibles = async (
 
 module.exports.create = async (request, response, next) => {
   let body = request.body;
+
+  // Validar la fecha antes de guardarla
+  if (isNaN(Date.parse(body.fechaNacimiento))) {
+    return response.status(400).json({ error: "Fecha de nacimiento inválida" });
+  }
+
   const newUsuario = await prisma.usuario.create({
     data: {
       nombre: body.nombre,
@@ -93,6 +99,7 @@ module.exports.create = async (request, response, next) => {
   });
   response.json(newUsuario);
 };
+
 
 module.exports.updateUsuario = async (request, response, next) => {
   let body = request.body;
@@ -115,7 +122,6 @@ module.exports.updateUsuario = async (request, response, next) => {
 };
 
 module.exports.getClientes = async (request, response, next) => {
-  const sucursalId = parseInt(request.params.sucursalId);
   try {
     const encargados = await prisma.usuario.findMany({
       where: {
@@ -123,9 +129,6 @@ module.exports.getClientes = async (request, response, next) => {
       },
       include: {
         mascotas: true,
-        citas: true,
-        facturas: true,
-        sucursal: true,
       },
     });
     response.json(encargados);

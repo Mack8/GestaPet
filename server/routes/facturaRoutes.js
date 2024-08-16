@@ -4,11 +4,11 @@ const facturaController = require('../controllers/facturaController');
 
 //Rutas
 
-//locahost:3000/videojuego/
+
+router.get('/proformas', facturaController.getProformas);
 router.get('/',facturaController.get)
-router.get('/:id',facturaController.getFacturaById)
 router.post('/proforma', facturaController.createFactura);
-// Rutas
+
 router.get('/', facturaController.get);
 router.get('/:id', facturaController.getFacturaById);
 router.post('/', facturaController.create);
