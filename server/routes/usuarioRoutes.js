@@ -1,5 +1,3 @@
-// routes/usuarioRoutes.js
-
 const express = require("express");
 const router = express.Router();
 
@@ -9,12 +7,12 @@ const usuarioController = require("../controllers/usuarioController");
 // Rutas
 router.get('/sucursal/:sucursalId', usuarioController.getEncargadosDisponibles); // Encargados de una sucursal específica
 router.get('/encargados/', usuarioController.getUsuariosEncargadosDisponibles); // Encargados sin sucursal asignada
-router.get('/clientes/', usuarioController.getClientes);
+router.get('/clientes/', usuarioController.getClientes); // Obtener clientes
+router.get('/factura/', usuarioController.getUsuarios); // Obtener usuarios para factura
+
 router.get('/:id', usuarioController.getUsuarioById); // Obtener usuario por ID
-router.get('/factura/', usuarioController.getUsuarios);
 
 router.get('/', usuarioController.get); // Obtener todos los usuarios
-
 router.post('/', usuarioController.create); // Crear un nuevo usuario
 
 module.exports = router;

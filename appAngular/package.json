@@ -20,17 +20,14 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
-
     "@swimlane/ngx-charts": "^20.5.0",
     "chart.js": "^4.4.3",
-    "echarts": "^5.5.1",
-    "ngx-echarts": "^18.0.0",
-
     "devextreme": "^24.1.4",
-    "devextreme-angular": "24.1.4",
+    "devextreme-angular": "^24.1.4",
     "devextreme-intl": "^19.1.8",
     "devextreme-schematics": "^1.7.1",
-
+    "echarts": "^5.5.1",
+    "ngx-echarts": "^18.0.0",
     "ngx-toastr": "^19.0.0",
     "node-cron": "^3.0.3",
     "rxjs": "~7.8.0",
