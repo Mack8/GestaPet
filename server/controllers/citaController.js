@@ -238,3 +238,26 @@ module.exports.getCitaByFecha = async (request, response, next) => {
   });
   response.json(cita);
 };
+
+
+module.exports.getCitaBySucursal = async (request, response, next) => {
+  try {
+    let sucursal = parseInt(request.params.id);
+
+    const cita = await prisma.cita.findMany({
+      where: { sucursalId: sucursal },
+      include: {
+        estado: true,
+        cliente: true,
+        servicio: true,
+        mascota: true,
+        sucursal: true,
+      },
+    });
+
+    response.json(cita);
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: "Error al obtener las citas" });
+  }
+};
