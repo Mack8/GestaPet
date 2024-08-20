@@ -1,8 +1,10 @@
-// controllers/usuarioController.js
 
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
+const { Rol } = require("@prisma/client");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 module.exports.get = async (request, response, next) => {
   const usuarios = await prisma.usuario.findMany();
@@ -79,47 +81,71 @@ module.exports.getUsuariosEncargadosDisponibles = async (
 };
 
 module.exports.create = async (request, response, next) => {
-  let body = request.body;
+  const userData = request.body;
 
-  // Validar la fecha antes de guardarla
-  if (isNaN(Date.parse(body.fechaNacimiento))) {
-    return response.status(400).json({ error: "Fecha de nacimiento inválida" });
+  // Generar un salt con factor de costo de 10
+  let salt = bcrypt.genSaltSync(10);
+  
+  // Hashear la contraseña
+  let hash = bcrypt.hashSync(userData.contrasena, salt);
+  
+  try {
+    const user = await prisma.usuario.create({
+      data: {
+        nombre: userData.nombre,
+        telefono: userData.telefono,
+        correoElectronico: userData.correoElectronico,
+        direccion: userData.direccion,
+        fechaNacimiento: new Date(userData.fechaNacimiento),
+        contrasena: hash,
+        rol: Rol[userData.rol], // Convertir el rol a su valor en el enum
+      },
+    });
+
+    response.status(200).json({
+      status: true,
+      message: "Usuario creado",
+      data: user,
+    });
+  } catch (error) {
+    next(error);
   }
-
-  const newUsuario = await prisma.usuario.create({
-    data: {
-      nombre: body.nombre,
-      telefono: body.telefono,
-      correoElectronico: body.correoElectronico,
-      direccion: body.direccion,
-      fechaNacimiento: new Date(body.fechaNacimiento),
-      contrasena: body.contrasena,
-      rol: body.rol,
-    },
-  });
-  response.json(newUsuario);
 };
 
 
 module.exports.updateUsuario = async (request, response, next) => {
-  let body = request.body;
+  const userData = request.body;
   let idUsuario = parseInt(request.params.id);
-  const updateUsuario = await prisma.usuario.update({
-    where: {
-      id: idUsuario,
-    },
-    data: {
-      nombre: body.nombre,
-      telefono: body.telefono,
-      correoElectronico: body.correoElectronico,
-      direccion: body.direccion,
-      fechaNacimiento: new Date(body.fechaNacimiento),
-      contrasena: body.contrasena,
-      rol: body.rol,
-    },
-  });
-  response.json(updateUsuario);
+
+  // Si se proporciona una nueva contraseña, generarla y hashearla
+  let hash = null;
+  if (userData.contrasena) {
+    let salt = bcrypt.genSaltSync(10);
+    hash = bcrypt.hashSync(userData.contrasena, salt);
+  }
+
+  try {
+    const updateUsuario = await prisma.usuario.update({
+      where: {
+        id: idUsuario,
+      },
+      data: {
+        nombre: userData.nombre,
+        telefono: userData.telefono,
+        correoElectronico: userData.correoElectronico,
+        direccion: userData.direccion,
+        fechaNacimiento: new Date(userData.fechaNacimiento),
+        contrasena: hash || undefined, // Si no se proporciona una nueva contraseña, mantener la anterior
+        rol: Rol[userData.rol], // Convertir el rol a su valor en el enum
+      },
+    });
+
+    response.json(updateUsuario);
+  } catch (error) {
+    next(error);
+  }
 };
+
 
 module.exports.getClientes = async (request, response, next) => {
   try {
@@ -132,6 +158,58 @@ module.exports.getClientes = async (request, response, next) => {
       },
     });
     response.json(encargados);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.login = async (request, response, next) => {
+  const userReq = request.body;
+
+  try {
+    // Buscar el usuario según el correo electrónico dado
+    const user = await prisma.usuario.findUnique({
+      where: {
+        correoElectronico: userReq.correoElectronico,
+      },
+    });
+
+    // Si no encuentra al usuario según el correo electrónico
+    if (!user) {
+      return response.status(401).send({
+        success: false,
+        message: "Usuario no registrado",
+      });
+    }
+
+    // Verifica la contraseña comparando el hash almacenado con la contraseña proporcionada
+    const checkPassword = await bcrypt.compare(userReq.contrasena, user.contrasena);
+
+    if (!checkPassword) {
+      return response.status(401).send({
+        success: false,
+        message: "Credenciales no válidas",
+      });
+    }
+
+    // Si la autenticación es correcta, crear el payload
+    const payload = {
+      id: user.id,
+      correoElectronico: user.correoElectronico,
+      rol: user.rol,
+    };
+
+    // Crear el token usando JWT
+    const token = jwt.sign(payload, process.env.SECRET_KEY, {
+      expiresIn: process.env.JWT_EXPIRE,
+    });
+
+    // Responder con el token y mensaje de éxito
+    response.json({
+      success: true,
+      message: "Inicio de sesión exitoso",
+      token,
+    });
   } catch (error) {
     next(error);
   }

@@ -89,6 +89,7 @@
   </mat-menu>
 
 
+  @if (this.currentUser?.role==='ADMIN') {
   <!-- Menú Facturación -->
   <button mat-button [matMenuTriggerFor]="menu3">Facturación</button>
   <mat-menu #menu3="matMenu">
@@ -108,6 +109,10 @@
     </button>
 
   </mat-menu>
+
+  }
+
+ @if (this.currentUser?.role==='ADMIN') {
 
   <!-- Menú Reportes -->
   <button mat-button [matMenuTriggerFor]="menu4">Reportes</button>
@@ -143,7 +148,7 @@
   </button>
 
   </mat-menu>
-
+  }
   
 
   <!-- Espaciador para empujar el contenido a la derecha -->
@@ -154,6 +159,32 @@
   </mat-menu>
   <!--enlaces de la app-->
   <!--https://material.angular.io/guide/typography-->
+
+
+
+  <span class="mat-caption" *ngIf="isAuntenticated">{{currentUser?.correoElectronico}}</span>
+  <button mat-icon-button [matMenuTriggerFor]="menu6">
+    <mat-icon [ngStyle]="{'color':isAuntenticated ? '#62E1CA': '#7E9BEF'}">person</mat-icon>
+  </button>
+  <mat-menu #menu6="matMenu">
+    @if (!isAuntenticated) {
+    <button mat-menu-item (click)="login()">
+      <mat-icon>person_add</mat-icon>
+      <span>Login</span>
+    </button>
+   }
+   @else{
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>person_remove</mat-icon>
+      <span>Logout</span>
+    </button>
+   }
+  </mat-menu>
+
+
+
+
+
 
   <div class="example-spacer"></div>
 </mat-toolbar>

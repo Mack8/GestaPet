@@ -1,0 +1,83 @@
+<form [formGroup]="formCreate" novalidate>
+    <mat-card class="shipping-card">
+      <mat-card-header>
+        <mat-card-title>Crear Usuario</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Nombre</mat-label>
+              <input matInput type="text" placeholder="Nombre usuario" formControlName="nombre" />
+              <mat-error *ngIf="formCreate.get('nombre').hasError('required')">
+                El nombre es requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" placeholder="Email usuario" formControlName="correoElectronico" />
+              <mat-error *ngIf="formCreate.get('correoElectronico').hasError('required')">
+                El email es requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Teléfono</mat-label>
+              <input matInput type="text" placeholder="Teléfono usuario" formControlName="telefono" />
+              <mat-error *ngIf="formCreate.get('telefono').hasError('required')">
+                El teléfono es requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Dirección</mat-label>
+              <input matInput type="text" placeholder="Dirección usuario" formControlName="direccion" />
+              <mat-error *ngIf="formCreate.get('direccion').hasError('required')">
+                La dirección es requerida
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Fecha de Nacimiento</mat-label>
+              <input matInput type="date" placeholder="Fecha de Nacimiento" formControlName="fechaNacimiento" />
+              <mat-error *ngIf="formCreate.get('fechaNacimiento').hasError('required')">
+                La fecha de nacimiento es requerida
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password usuario" formControlName="contrasena" />
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="formCreate.get('contrasena').hasError('required')">
+                La contraseña es requerida
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="submitForm()">Registrar</button>
+        <button mat-raised-button color="accent" type="reset" (click)="onReset()">Cancelar</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+  
