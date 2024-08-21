@@ -4,6 +4,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {  Router } from '@angular/router';
 import { environment } from '../../environments/environment.development';
+import { CartService } from './cart.service';
+import { jwtDecode } from 'jwt-decode';
 //npm install jwt-decode
 //npm audit fix --force
 
@@ -25,7 +27,9 @@ export class AuthenticationService {
 
 
   constructor(private http: HttpClient,
-    private router: Router) {
+    private router: Router,
+    private cartService: CartService
+  ) {
     //Obtener los datos del usuario en localStorage, si existe
     this.tokenUserSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('currentUser'))
@@ -49,7 +53,7 @@ export class AuthenticationService {
   //Crear usuario
   createUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.ServerUrl + 'user/registrar',
+      this.ServerUrl + 'usuario/registrar',
       user
     );
   }
@@ -66,7 +70,7 @@ export class AuthenticationService {
   //Login
   loginUser(user: any): Observable<any> {
     return this.http
-      .post<any>(this.ServerUrl + 'user/login', user)
+      .post<any>(this.ServerUrl + 'usuario/login', user)
       .pipe(
         map((response) => {
           // almacene los detalles del usuario y el token jwt

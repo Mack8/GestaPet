@@ -258,6 +258,7 @@ const sucursalRouter = require("./routes/sucursalRoutes");
 const usuarioRouter = require("./routes/usuarioRoutes");
 const fileRouter = require("./routes/fileRoutes");
 const reporteRouter = require("./routes/reporteRoutes")
+const rolRouter = require("./routes/rolRoutes")
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -286,6 +287,7 @@ app.use("/sucursal/", sucursalRouter);
 app.use("/usuario/", usuarioRouter);
 app.use("/file/", fileRouter);
 app.use("/reporte", reporteRouter)
+app.use("/rol/", rolRouter)
 
 
 app.use(

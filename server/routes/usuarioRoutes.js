@@ -13,6 +13,7 @@ router.get('/factura/', usuarioController.getUsuarios); // Obtener usuarios para
 router.get('/:id', usuarioController.getUsuarioById); // Obtener usuario por ID
 
 router.get('/', usuarioController.get); // Obtener todos los usuarios
-router.post('/', usuarioController.create); // Crear un nuevo usuario
+router.post('/registrar', usuarioController.create); // Crear un nuevo usuario
+router.post("/login", usuarioController.login); // Inicio de sesión
 
 module.exports = router;

@@ -7,15 +7,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { CoreModule } from './core/core.module';
 import { ShareModule } from './share/share.module';
 import { HomeModule } from './home/home.module';
-import { UserModule } from './user/user.module';
-
 import { FacturaModule } from './factura/factura.module';
 import { ReservaModule } from './reserva/reserva.module';
 
 /* import { FacturaIndexComponent } from './factura/factura-index/factura-index.component';
 import { FacturaDetailComponent } from './factura/factura-detail/factura-detail.component'; */
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProductoModule } from './producto/producto.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -30,6 +28,10 @@ import { ServicioModule } from './servicio/servicio.module';
 import { SucursalModule } from './sucursal/sucursal.module';
 import { ReportesModule } from './reportes/reportes.module';
 import { CitaModule } from './cita/cita.module';
+import { HttpAuthInterceptorService } from './share/http-auth-interceptor.service';
+import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
+
+import { UsuarioModule } from './usuario/usuario.module';
 
 //import { NgxMaskModule, IConfig } from 'ngx-mask'
 
@@ -37,7 +39,7 @@ import { CitaModule } from './cita/cita.module';
 
 
 @NgModule({
-  declarations: [AppComponent,],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -45,13 +47,14 @@ import { CitaModule } from './cita/cita.module';
     CoreModule,
     ShareModule,
     HomeModule,
-    UserModule,
+    UsuarioModule,
     ProductoModule,
     FacturaModule,
     ReservaModule,
     HorarioModule,
     ServicioModule,
     SucursalModule,
+    UsuarioModule,
     MatTabsModule,
     ToastrModule.forRoot(),
     ReportesModule,
@@ -60,9 +63,23 @@ import { CitaModule } from './cita/cita.module';
    DxButtonModule,
 
     AppRoutingModule,
+      UsuarioModule,
 
   ],
-  providers: [provideAnimationsAsync()],
-  bootstrap: [AppComponent],
+  providers: [
+    provideAnimationsAsync(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptorService,
+      multi:true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpAuthInterceptorService,
+      multi:true
+    }
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
+
