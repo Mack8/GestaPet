@@ -4,14 +4,15 @@ import { SucursalIndexComponent } from './sucursal-index/sucursal-index.componen
 import { SucursalAllComponent } from './sucursal-all/sucursal-all.component';
 import { SucursalFormComponent } from './sucursal-form/sucursal-form.component';
 import { SucursalDetailComponent } from './sucursal-detail/sucursal-detail.component';
+import { authGuard } from '../share/auth.guard';
 
 const routes: Routes = [
 
   {path:'sucursal',component: SucursalIndexComponent},
-  {path:'sucursal-table',component: SucursalAllComponent},
-  { path: 'sucursal/create', component: SucursalFormComponent },
-  { path: 'sucursal/update/:id', component: SucursalFormComponent },
-  {path:'sucursal/:id',component: SucursalDetailComponent},
+  {path:'sucursal-table',component: SucursalAllComponent, canActivate: [authGuard], data: { roles: ['ADMINISTRADOR', 'ENCARGADO'] }},
+  { path: 'sucursal/create', component: SucursalFormComponent, canActivate: [authGuard], data: { roles: ['ADMINISTRADOR', 'ENCARGADO'] } },
+  { path: 'sucursal/update/:id', component: SucursalFormComponent, canActivate: [authGuard], data: { roles: ['ADMINISTRADOR', 'ENCARGADO'] }},
+  {path:'sucursal/:id',component: SucursalDetailComponent, },
 
 
 

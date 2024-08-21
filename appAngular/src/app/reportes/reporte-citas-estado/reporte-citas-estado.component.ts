@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
+import { AuthenticationService } from '../../share/authentication.service';
 
 @Component({
   selector: 'app-reporte-citas-estado',
@@ -12,6 +13,7 @@ export class ReporteCitasEstadoComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
   data: any = null;
   view: [number, number] = [800, 400];
+  currentUser : any
 
   // Configuración del gráfico
   animations = true;
@@ -24,14 +26,20 @@ export class ReporteCitasEstadoComponent implements OnInit, OnDestroy {
   xAxisLabel = "Estados";
   legendTitle = 'Estados de Citas';
 
-  constructor(private gService: GenericService) {}
+  constructor(private gService: GenericService, private authService: AuthenticationService) {
+
+    this.authService.decodeToken.subscribe((user:any) => ( this.currentUser = user ));
+
+  }
+
+  
 
   ngOnInit() {
     this.getCitasPorEstado();
   }
 
   getCitasPorEstado() {
-    this.gService.get('reporte/reporte/citas-por-estado-sucursal',3)
+    this.gService.get('reporte/reporte/citas-por-estado-sucursal',this.currentUser.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data) => {

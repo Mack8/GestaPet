@@ -1,9 +1,4 @@
-<img
-  src="/assets/images/GestaPet.png"
-  alt="image"
-  width="8%"
-  style="display: inline"
-/>
+
 <mat-toolbar color="primary">
   <button
     mat-button
@@ -11,18 +6,25 @@
     [routerLink]="['/inicio']"
     routerLinkActive="link-active"
   >
-    <h4>GestaPet</h4>
+  <img
+        src="/assets/images/GestaPet.png"
+        alt="GestaPet Logo"
+        width="40px"
+        height="40px"
+        class="logo-centered"
+      />
   </button>
 
+  
   <!-- Menú Inicio -->
   <button mat-button [matMenuTriggerFor]="menu1">Inicio</button>
   <mat-menu #menu1="matMenu">
     <button
       mat-menu-item
-      [routerLink]="['/inicio']"
-      routerLinkActive="link-active"
+      [routerLink]="'/sucursal'"
+      [routerLinkActive]="'link-active'"
     >
-      Inicio
+      Sucursales
     </button>
     <button
       mat-menu-item
@@ -31,13 +33,7 @@
     >
       Productos
     </button>
-    <button
-      mat-menu-item
-      [routerLink]="['/factura']"
-      routerLinkActive="link-active"
-    >
-      Facturas
-    </button>
+   
     <button
       mat-menu-item
       [routerLink]="['/reserva']"
@@ -54,6 +50,8 @@
     </button>
   </mat-menu>
 
+
+  @if (this.currentUser?.rol === 'ENCARGADO' || this.currentUser?.rol === 'ADMINISTRADOR') {  
   <!-- Menú Mantenimientos -->
   <button mat-button [matMenuTriggerFor]="menu2">Mantenimientos</button>
   <mat-menu #menu2="matMenu">
@@ -87,9 +85,9 @@
       Horarios
     </button>
   </mat-menu>
+}
 
-
-  @if (this.currentUser?.role==='ADMIN') {
+@if (this.currentUser?.rol === 'ENCARGADO' || this.currentUser?.rol === 'ADMINISTRADOR') {  
   <!-- Menú Facturación -->
   <button mat-button [matMenuTriggerFor]="menu3">Facturación</button>
   <mat-menu #menu3="matMenu">
@@ -108,11 +106,19 @@
       Ver Facturas
     </button>
 
+    <button
+    mat-menu-item
+    [routerLink]="['/factura']"
+    routerLinkActive="link-active"
+  >
+    Historico Facturacion
+  </button>
+
   </mat-menu>
 
   }
 
- @if (this.currentUser?.role==='ADMIN') {
+  @if (this.currentUser?.rol === 'ENCARGADO' || this.currentUser?.rol === 'ADMINISTRADOR') {  
 
   <!-- Menú Reportes -->
   <button mat-button [matMenuTriggerFor]="menu4">Reportes</button>
@@ -147,27 +153,41 @@
     Reporte de Citas por Estado
   </button>
 
+  <button
+      mat-menu-item
+      [routerLink]="['reserva']"
+      routerLinkActive="link-active"
+    >
+      Reserva
+    </button>
+
+  
+
   </mat-menu>
   }
   
 
   <!-- Espaciador para empujar el contenido a la derecha -->
 
+  @if (this.currentUser?.rol === 'ENCARGADO' || this.currentUser?.rol === 'ADMINISTRADOR' ||  this.currentUser?.rol === 'CLIENTE') {  
+
   <button mat-button [matMenuTriggerFor]="menu5">Citas</button>
   <mat-menu #menu5="matMenu">
    <button mat-menu-item [routerLink]="['/agendar']" [routerLinkActive]="'link-active'" title="Agendar uan cita">Agendar</button>
   </mat-menu>
+
+}
   <!--enlaces de la app-->
   <!--https://material.angular.io/guide/typography-->
 
+  <span class="example-spacer"></span>
 
-
-  <span class="mat-caption" *ngIf="isAuntenticated">{{currentUser?.correoElectronico}}</span>
+  <span class="mat-caption" *ngIf="isAuthenticated">{{currentUser?.correoElectronico}}</span>
   <button mat-icon-button [matMenuTriggerFor]="menu6">
-    <mat-icon [ngStyle]="{'color':isAuntenticated ? '#62E1CA': '#7E9BEF'}">person</mat-icon>
+    <mat-icon [ngStyle]="{'color':isAuthenticated ? '#7E9BEF': '##FFFFFF'}">person</mat-icon>
   </button>
   <mat-menu #menu6="matMenu">
-    @if (!isAuntenticated) {
+    @if (!isAuthenticated) {
     <button mat-menu-item (click)="login()">
       <mat-icon>person_add</mat-icon>
       <span>Login</span>
@@ -182,9 +202,4 @@
   </mat-menu>
 
 
-
-
-
-
-  <div class="example-spacer"></div>
 </mat-toolbar>

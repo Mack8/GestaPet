@@ -8,7 +8,7 @@ import { AuthenticationService } from '../../share/authentication.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  isAuntenticated:boolean
+  isAuthenticated:boolean
   currentUser:any
   constructor(
     private router: Router,
@@ -19,7 +19,7 @@ export class HeaderComponent {
   }
   ngOnInit():void{
     this.authService.isAuthenticated.subscribe((valor)=>{
-      this.isAuntenticated=valor
+      this.isAuthenticated=valor
     })
     //Información usuario actual
     this.authService.decodeToken.subscribe((user:any)=>{
@@ -29,8 +29,11 @@ export class HeaderComponent {
   login(){
     this.router.navigate(['usuario/login']);
   }
-  logout(){
+  logout() {
     this.authService.logout();
-    this.router.navigate(['inicio']);
+    this.router.navigate(['inicio']).then(() => {
+      window.location.reload();  // Esto recargará la página y refrescará el estado del header
+    });
   }
+  
 }

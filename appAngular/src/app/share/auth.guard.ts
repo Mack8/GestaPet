@@ -17,7 +17,7 @@ export class UserGuard {
   }
   checkUserLogin(route: ActivatedRouteSnapshot): boolean {
     if (this.auth) {
-      const userRole = this.currentUser.role;
+      const userRole = this.currentUser.rol;
       if(route.data['roles'].length && !route.data['roles'].includes(userRole)){ 
         this.noti.mensajeRedirect(
           'Usuario',
@@ -25,7 +25,7 @@ export class UserGuard {
           TipoMessage.warning,
           '/usuario/login'
         );
-        this.router.navigate(['/usuario/login']);
+        this.router.navigate(['/inicio/']);
         return false;
       }
       return true;
