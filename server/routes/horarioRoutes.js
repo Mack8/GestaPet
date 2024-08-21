@@ -9,6 +9,7 @@ router.get("/",horarioController.get)
 router.get('/:id',horarioController.getHorarioById)
 router.get('/sucursal/:id',horarioController.getHorarioBySucursal)
 router.get('/sucursalTipo/:id/:tipo',horarioController.getHorarioBySucursalTipo)
+router.get('/sucursalTipoHora/:id/:tipo',horarioController.getHorarioBySucursalTipoHora)
 
 router.post('/',horarioController.createHorario)
 router.put('/:id', horarioController.update)

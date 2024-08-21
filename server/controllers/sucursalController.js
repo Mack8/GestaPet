@@ -23,8 +23,6 @@ module.exports.getSucursalById = async (request, response, next) => {
     response.json(sucursal);
 };
 
-
-
 module.exports.getSucursalByUsuarioId = async (request, response, next) => {
     try {
       let idUsuario = parseInt(request.params.id);
@@ -44,10 +42,6 @@ module.exports.getSucursalByUsuarioId = async (request, response, next) => {
       next(error);
     }
   };
-
-
-
-
 
 module.exports.getSucursalAndEncargados = async (request, response, next) => {
     let idSucursal = parseInt(request.params.id);
@@ -83,9 +77,6 @@ module.exports.getSucursalAndEncargados = async (request, response, next) => {
         next(error);
     }
 };
-
-
-
 
 module.exports.create= async (request, response, next) => {
     let body = request.body;

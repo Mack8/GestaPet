@@ -12,6 +12,7 @@
 <mat-dialog-content>
   <form [formGroup]="horarioForm" (ngSubmit)="submitHorario()" novalidate>
     <input type="hidden" formControlName="id" />
+    <input type="hidden" formControlName="idRepeat" />
     <input type="hidden" formControlName="idSucursal" />
     <mat-card class="shipping-card">
       <mat-card-content>

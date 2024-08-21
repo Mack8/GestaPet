@@ -110,3 +110,11 @@
   margin-bottom: 20px;
 }
 
+.non-client-field {
+  background-color: #e0e0e0; /* Color de fondo para campos no relacionados con el cliente */
+  color: #000; /* Color del texto para campos no relacionados con el cliente */
+}
+.client-field {
+  background-color: #ffffff; /* Color de fondo para campos relacionados con el cliente */
+  color: #000; /* Color del texto para campos relacionados con el cliente */
+}
