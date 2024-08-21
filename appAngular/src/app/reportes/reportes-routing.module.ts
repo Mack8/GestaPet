@@ -11,17 +11,20 @@ const routes: Routes = [
   {
     path:'reportProducto',
     component: ReporteProductoComponent,
-    canActivate:[authGuard], data:{ roles: ['ADMINISTRADOR'] }
+    canActivate: [authGuard], data: { roles: ['ADMINISTRADOR', 'ENCARGADO'] }
   },
   {
     path:'reportServicio',
-    component: ReporteServicioComponent
+    component: ReporteServicioComponent,
+    canActivate: [authGuard], data: { roles: ['ADMINISTRADOR', 'ENCARGADO'] }
   },
   { path: 'reporte-citas-sucursal', 
-    component: ReporteCitasSucursalComponent 
+    component: ReporteCitasSucursalComponent,
+    canActivate: [authGuard], data: { roles: ['ADMINISTRADOR', 'ENCARGADO'] }
   },
   { path: 'reporte-citas-estado', 
-    component: ReporteCitasEstadoComponent
+    component: ReporteCitasEstadoComponent,
+    canActivate: [authGuard], data: { roles: ['ADMINISTRADOR', 'ENCARGADO'] }
   },
 
 ];
