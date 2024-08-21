@@ -11,12 +11,10 @@ module.exports.getCitas = async (req, res) => {
   var fechaInicio = new Date(req);
   fechaInicio.setHours(0, 0, 0, 0);
  // fechaInicio = formateDate(fechaInicio);
-  console.log("🚀 ~ module.exports.getCitas= ~ fechaInicio:", fechaInicio);
 
   var fechaFin = new Date(req);
   fechaFin.setHours(23, 59, 59, 999);
   //fechaFin = formateDate(fechaFin);
-  console.log("🚀 ~ module.exports.getCitas= ~ fechaFin:", fechaFin);
 
   try {
     const citas = await prisma.cita.findMany({
@@ -85,13 +83,10 @@ module.exports.getCitaById = async (request, response, next) => {
 module.exports.getCitaByUsuario = async (request, response, next) => {
   try {
     let ususario = parseInt(request.params.usuario);
-    console.log("🚀 ~ module.exports.getCitaByUsuario= ~ usuario:", ususario);
 
     const sucursal = await prisma.usuario.findFirst({
       where: { id: ususario },
     });
-
-    console.log("🚀 ~ module.exports.getCitaByUsuario= ~ sucursal:", sucursal);
 
     if (!sucursal) {
       return response
@@ -118,7 +113,7 @@ module.exports.getCitaByUsuario = async (request, response, next) => {
 };
 
 module.exports.createCita = async (request, response, next) => {
-  console.log("🚀 ~ module.exports.createCita= ~ request:", request)
+  
   let body = request.body;
   const newCita = await prisma.cita.create({
     data: {

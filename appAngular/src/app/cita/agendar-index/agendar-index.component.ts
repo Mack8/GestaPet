@@ -22,6 +22,7 @@ import {
   DxSchedulerTypes,
 } from 'devextreme-angular/ui/scheduler';
 import { DxFormComponent } from 'devextreme-angular';
+import { AuthenticationService } from '../../share/authentication.service';
 //import { AuthenticationService } from '../../share/authentication.service';
 
 @Pipe({ name: 'apply' })
@@ -59,19 +60,20 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   sucursales: any;
 
   tipoUsuario = 'CLIENTE';
-  clienteId = 7;
+  clienteId = 0;
   mascotasClinte : any;
+  
 
   constructor(
     private gService: GenericService,
     private router: Router,
     private activeRouter: ActivatedRoute,
     private noti: NotificacionService,
-   // private authService: AuthenticationService
+   private authService: AuthenticationService
   ) {
     this.listServicios();
     this.listClientes();
-    this.getSucursal();
+   
     this.initMessages();
     this.getEstados();
     this.getAllMascotas();
@@ -79,7 +81,15 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
- 
+    this.authService.isAuthenticated.subscribe((valor)=>{
+      this.isAuntenticated=valor
+    })
+    //Información usuario actual
+    this.authService.decodeToken.subscribe((user:any)=>{
+      this.currentUser=user
+      this.clienteId = this.currentUser.rol == 'CLIENTE'?this.currentUser.id:0;
+       this.getSucursal();
+    })
   }
 
   initMessages() {
@@ -106,22 +116,22 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
 
   getSucursal() {
 
-    if (this.tipoUsuario == 'CLIENTE'){
+    if (this.currentUser.rol == 'CLIENTE'){
       this.gService.list("sucursal/")
       .pipe(takeUntil(this.destroy$))
       .subscribe((respuesta:any)=>{
-        console.log("🚀 ~ HorarioIndexComponent ~ .subscribe ~ respuesta:", respuesta)
         this.sucursales=respuesta
       })
     }else{
       this.gService
-      .get('usuario', 2)
+      .get('usuario', this.currentUser?.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.sucursal = data.sucursal;
         this.getBloqueos();
         this.getCitas();
         this.getHorarios();
+        
       });
     }
     
@@ -168,7 +178,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
 
   getCitas() {
     this.sucursal.id
-    if (this.tipoUsuario != 'CLIENTE') {
+    if (this.currentUser.rol != 'CLIENTE') {
       // Si el usuario no es CLIENTE, obtén todas las citas normalmente
       this.gService
         .get('cita/sucursal', this.sucursal.id)
@@ -187,7 +197,6 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
           );
         });
     } else {
-      console.log("🚀 ~ AgendarIndexComponent ~ getCitas ~ this.sucursal.id:", this.sucursal.id)
       this.gService
         .get('cita/sucursal', this.sucursal.id)
         .pipe(takeUntil(this.destroy$))
@@ -268,7 +277,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   isDisabledDateCell = (date: Date) => this.isDisableDate(date);
 
   isDisableDate = (date: Date) =>
-    this.isBloqueo(date) || this.isHorario(date)// || this.isCita(date);
+    this.isBloqueo(date) || !this.isHorario(date)// || this.isCita(date);
 
   isBloqueo = (date: Date) => {
     var b = [];
@@ -295,39 +304,33 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   };
 
   isHorario = (date: Date) => {
-    var b = [];
+    // Esta función devuelve true si la fecha está dentro de algún intervalo en horarios
 
+    let isWithinAnyHorario = false;
+  
     this.horarios.forEach((element) => {
+      
       const normalizedDate1 = new Date(element.fechaInicio);
       const normalizedDate2 = new Date(element.fechaFin);
       const date1 = new Date(element.horaInicio);
       const date2 = new Date(element.horaFin);
-      var isInRange = this.isDateTimeInRange(
-        date,
-        normalizedDate1,
-        date1,
-        normalizedDate2,
-        date2
-      );
-
-      if (!isInRange) {
-        b.push(element);
+  
+      if (this.isDateTimeInRange(date, normalizedDate1, date1, normalizedDate2, date2)) {
+        isWithinAnyHorario = true;
       }
     });
-
-    return b.length != 0;
+  
+    return isWithinAnyHorario;
   };
+  
 
   isCita = (date: Date) => {
     console.log('🚀 ~ AgendarIndexComponent ~ date:', date);
     var b = [];
 
     this.citas.forEach((element) => {
-      console.log("🚀 ~ AgendarIndexComponent ~ this.citas.forEach ~ element:", element)
       const date1 = new Date(element.startDate);
-      console.log("🚀 ~ AgendarIndexComponent ~ this.citas.forEach ~ date1:", date1)
       const date2 = new Date(element.endDate);
-      console.log("🚀 ~ AgendarIndexComponent ~ this.citas.forEach ~ date2:", date2)
 
       if (date >= date1 && date <= date2) {
         b.push(element);
@@ -423,7 +426,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
       var idClinte =
       data.appointmentData['clienteId'] == undefined ? 0 : data.appointmentData['clienteId'];
 
-      if (idCita !=0 && this.clienteId != idClinte  && this.tipoUsuario == 'CLIENTE'){
+      if (idCita !=0 && this.clienteId != idClinte  && this.currentUser.rol == 'CLIENTE'){
         this.noti.mensajeTime(
           'Atención',
           'Espacio no disponible.',
@@ -552,7 +555,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
           value:this.clienteId !=0 ?this.clienteId:idClinte,
           displayExpr: 'nombre',
           valueExpr: 'id',
-          readOnly: this.tipoUsuario == 'CLIENTE',
+          readOnly: this.currentUser.rol == 'CLIENTE',
           onValueChanged({ value }) {
             that.getMascota(value).then((mascotas) => {
               form.itemOption('mascotaId', 'editorOptions', {
@@ -653,7 +656,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
       },
       {
         label: {
-          text: idCita == 0 || this.tipoUsuario=='CLIENTE' ? '   ' : 'Selecione una fecha',
+          text: idCita == 0 || this.currentUser.rol=='CLIENTE' ? '   ' : 'Selecione una fecha',
         },
         dataField: 'startDate',
         editorType: 'dxDateBox',
@@ -661,7 +664,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
         editorOptions: {
           //  width: '100%',
           type: 'datetime',
-          visible: idCita == 0 || that.tipoUsuario == 'CLIENTE'? false : true,
+          visible: idCita == 0 || that.currentUser.rol == 'CLIENTE'? false : true,
           onValueChanged({ value }) {
             var mensaje = that.validarCambioFecha(new Date(value));
 
@@ -830,7 +833,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   };
 
   isValidAppointmentDate = (date: Date) =>
-    !this.isBloqueo(date) && !this.isHorario(date)/*  && !this.isCita(date);
+    !this.isBloqueo(date) && this.isHorario(date)/*  && !this.isCita(date);
  */
   formatDate(date: Date | string, format: string = 'shortDate'): string {
     // Aquí puedes utilizar un formateador de fecha como date-fns o moment.js
@@ -901,12 +904,10 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   }
 
   getCitasSucursalCliente(sucursalSelected: any){
-    console.log("🚀 ~ AgendarIndexComponent ~ getCitasSucursalCliente ~ sucursalSelected:", sucursalSelected)
     this.gService
     .get('sucursal', sucursalSelected)
     .pipe(takeUntil(this.destroy$))
     .subscribe((data: any) => {
-      console.log("🚀 ~ AgendarIndexComponent ~ .subscribe ~ data:", data)
       this.sucursal = data.sucursal;
       this.getBloqueos();
       this.getCitas();
@@ -915,7 +916,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   }
 
   getEstadosFiltrados() {
-    if (this.tipoUsuario === 'CLIENTE') {
+    if (this.currentUser.rol === 'CLIENTE') {
       return this.estados.filter(estado => estado.id !== 3  && estado.id !== 4);
     }else{
       return this.estados.filter(estado => estado.id !== 4);

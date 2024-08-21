@@ -73,7 +73,6 @@ module.exports.getFacturaById = async (request, response, next) => {
 
 module.exports.createFactura = async (request, response, next) => {
     let body = request.body;
-    console.log("🚀 ~ module.exports.createFactura ~ body:", body.detalles);
 
     try {
         const newFactura = await prisma.factura.create({
