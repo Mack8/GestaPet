@@ -70,6 +70,28 @@ module.exports.getFacturaById = async (request, response, next) => {
   }
 };
 
+module.exports.getFacturasByCliente = async (request, response, next) => {
+  try {
+    let idCliente = parseInt(request.params.id);
+    const factura = await prisma.factura.findMany({
+      where: { clienteId: idCliente },
+      include: {
+        cliente: true,
+        sucursal: true,
+        detalles: {
+          include: {
+            producto: true,
+            servicio: true
+          }
+        }
+      }
+    });
+    response.json(factura);
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 module.exports.createFactura = async (request, response, next) => {
     let body = request.body;
@@ -284,3 +306,6 @@ module.exports.updateDetalleFactura = async (request, response, next) => {
     next(error);
   }
 };
+
+
+

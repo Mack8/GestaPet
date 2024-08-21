@@ -20,12 +20,14 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServicioDetailComponent } from './servicio-detail/servicio-detail.component';
+import { ServicioCatalogoComponent } from './servicio-catalogo/servicio-catalogo.component';
 
 @NgModule({
   declarations: [
     ServicioAllComponent,
     ServicioFormComponent,
-    ServicioDetailComponent
+    ServicioDetailComponent,
+    ServicioCatalogoComponent
   ],
   imports: [
     CommonModule,

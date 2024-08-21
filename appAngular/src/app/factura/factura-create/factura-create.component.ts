@@ -211,7 +211,7 @@ export class FacturaCreateComponent implements OnInit {
             TipoMessage.success,
             'factura-list'
           );
-          this.router.navigate(['factura/create']);
+          this.router.navigate(['factura/']);
         }, error => {
           this.noti.mensaje('Error', 'No se pudo crear la factura', TipoMessage.error);
         });
