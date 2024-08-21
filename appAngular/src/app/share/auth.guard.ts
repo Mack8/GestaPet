@@ -25,7 +25,7 @@ export class UserGuard {
           TipoMessage.warning,
           '/usuario/login'
         );
-        this.router.navigate(['/usuario/login']);
+        this.router.navigate(['/inicio/']);
         return false;
       }
       return true;

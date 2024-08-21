@@ -197,6 +197,7 @@ module.exports.login = async (request, response, next) => {
       id: user.id,
       correoElectronico: user.correoElectronico,
       rol: user.rol,
+      idSucursal: user.sucursalId || null 
     };
 
     // Crear el token usando JWT
