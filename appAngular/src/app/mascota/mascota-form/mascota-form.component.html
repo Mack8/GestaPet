@@ -1,0 +1,65 @@
+<form [formGroup]="mascotaForm" (ngSubmit)="onSubmit()">
+    <mat-card>
+      <mat-card-title>{{ titleForm }}</mat-card-title>
+      <mat-card-content>
+        
+        <!-- Sección: Campos generales de la mascota -->
+        <div class="mascota-fields">
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre">
+            <mat-error *ngIf="mascotaForm.get('nombre').hasError('required')">
+              El nombre es obligatorio
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Especie</mat-label>
+            <input matInput formControlName="especie">
+            <mat-error *ngIf="mascotaForm.get('especie').hasError('required')">
+              La especie es obligatoria
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Raza</mat-label>
+            <input matInput formControlName="raza">
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Edad</mat-label>
+            <input matInput type="number" formControlName="edad">
+            <mat-error *ngIf="mascotaForm.get('edad').hasError('required')">
+              La edad es obligatoria
+            </mat-error>
+            <mat-error *ngIf="mascotaForm.get('edad').hasError('min')">
+              La edad debe ser mayor o igual a 0
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Propietario</mat-label>
+            <mat-select formControlName="propietarioId">
+              <mat-option *ngFor="let propietario of propietarios" [value]="propietario.id">
+                {{ propietario.nombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Nombre del Propietario</mat-label>
+            <input matInput formControlName="propietarioNombre" readonly>
+          </mat-form-field>
+  
+        </div>
+        
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit" [disabled]="mascotaForm.invalid">{{ isCreate ? 'Crear' : 'Actualizar' }}</button>
+        <button mat-button (click)="onBack()">Cancelar</button>
+        <button mat-button (click)="onReset()">Limpiar</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+  

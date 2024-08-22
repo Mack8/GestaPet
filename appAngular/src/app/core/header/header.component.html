@@ -110,6 +110,8 @@
 
   }
 
+  
+
 
   @if (this.currentUser?.rol === 'ENCARGADO' || this.currentUser?.rol === 'ADMINISTRADOR') {  
 
@@ -210,6 +212,18 @@
   </mat-menu>
 
 }
+
+
+@if (this.currentUser?.rol === 'CLIENTE') {  
+
+  <button mat-button [matMenuTriggerFor]="menu7">Mascota</button>
+  <mat-menu #menu7="matMenu">
+   <button mat-menu-item [routerLink]="['/mascota/create']" [routerLinkActive]="'link-active'" title="Agendar uan cita">Agregar Mascota</button>
+  </mat-menu>
+
+}
+
+
   <!--enlaces de la app-->
   <!--https://material.angular.io/guide/typography-->
 
