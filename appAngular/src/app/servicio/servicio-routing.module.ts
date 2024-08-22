@@ -8,7 +8,7 @@ import { ServicioCatalogoComponent } from './servicio-catalogo/servicio-catalogo
 
 const routes: Routes = [
   
-  {path:'servicio-table',component: ServicioAllComponent},
+  {path:'servicio-table',component: ServicioAllComponent, canActivate: [authGuard], data: { roles: ['ADMINISTRADOR', 'ENCARGADO'] }},
   {path:'servicio/create',component: ServicioFormComponent, canActivate: [authGuard], data: { roles: ['ADMINISTRADOR', 'ENCARGADO'] }},
   {path:'servicio/update/:id',component: ServicioFormComponent, canActivate: [authGuard], data: { roles: ['ADMINISTRADOR', 'ENCARGADO'] }},
   {path:'servicio/:id',component: ServicioDetailComponent},
