@@ -31,8 +31,7 @@ listfacturas(){
   this.gService.list("factura/proformas")
   .pipe(takeUntil(this.destroy$))
   .subscribe((respuesta:any)=>{
-    console.log("🚀 ~ FacturaIndexComponent ~ .subscribe ~ respuesta:", respuesta)
-    this.datos=respuesta
+       this.datos=respuesta
   })
 }
 

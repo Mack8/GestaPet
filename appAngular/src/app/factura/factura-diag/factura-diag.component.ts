@@ -32,7 +32,6 @@ export class FacturaDiagComponent implements OnInit{
     .get('factura',id)
     .pipe(takeUntil(this.destroy$))
     .subscribe((data:any)=>{
-      console.log("🚀 ~ FacturaDiagComponent ~ .subscribe ~ data:", data)
         this.datos=data; 
         this.detalles = data.detalles;
         

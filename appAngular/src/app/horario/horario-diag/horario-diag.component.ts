@@ -10,15 +10,19 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { FormErrorMessage } from '../../form-error-message';
+import { EventEmitter, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-horario-diag',
   templateUrl: './horario-diag.component.html',
   styleUrl: './horario-diag.component.css',
 })
+
 export class HorarioDiagComponent implements OnInit, OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
   id: number;
+  idRepeat: number
   tipo: string;
   datosDialog: any;
   horarioForm: FormGroup;
@@ -27,6 +31,7 @@ export class HorarioDiagComponent implements OnInit, OnDestroy {
   respHorario: any;
   idSucursal: number;
   horarioInfo: any;
+  currentDate: Date = new Date()
 
   constructor(
     @Inject(MAT_DIALOG_DATA) data,
@@ -38,11 +43,14 @@ export class HorarioDiagComponent implements OnInit, OnDestroy {
     private noti: NotificacionService
   ) {
     this.id = data.id;
+    this.idRepeat=data.idRepeat;
     this.tipo = data.tipo;
     this.idSucursal = data.idSucursal;
     this.formularioReactive();
     this.getAllHorarios();
   }
+
+  @Output() onSave: EventEmitter<void> = new EventEmitter();
 
   formularioReactive() {
     let number2decimals = /^[0-9]+[.,]{1,1}[0-9]{2,2}$/;
@@ -86,30 +94,54 @@ export class HorarioDiagComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.titulo =
-      (this.id == 0 ? 'Crear ' : 'Editar ') +
+      (this.idRepeat !=0? 'Repetir ':(this.id == 0 ? 'Crear ' : 'Editar ')) +
       (this.tipo == 'SERVICIO' ? 'Horario' : 'Bloqueo');
 
     this.activeRouter.params.subscribe((params: Params) => {
-      if (this.id != 0) {
-        this.gService
-          .get('horario', this.id)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((data: any) => {
-            console.log('🚀 ~ HorarioDiagComponent ~ .subscribe ~ data:', data);
-            this.horarioInfo = data;
-
-            this.horarioForm.patchValue({
-              id: this.horarioInfo.id,
-              finicio: this.formateDate(new Date(this.horarioInfo.fechaInicio)),
-              ffin: this.formateDate(new Date(this.horarioInfo.fechaFin)),
-              hinicio: this.formateTime(this.horarioInfo.horaInicio),
-              hfin: this.formateTime(this.horarioInfo.horaFin),
-              tipo: this.horarioInfo.tipo,
-              idSucursal: this.horarioInfo.sucursalId,
-              motivo: this.horarioInfo.motivo,
+      if(this.idRepeat ==0){
+        if (this.id != 0) {
+          this.gService
+            .get('horario', this.id)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((data: any) => {
+              console.log('🚀 ~ HorarioDiagComponent ~ .subscribe ~ data:', data);
+              this.horarioInfo = data;
+  
+              this.horarioForm.patchValue({
+                id: this.horarioInfo.id,
+                finicio: this.formateDate(new Date(this.horarioInfo.fechaInicio)),
+                ffin: this.formateDate(new Date(this.horarioInfo.fechaFin)),
+                hinicio: this.formateTime(this.horarioInfo.horaInicio),
+                hfin: this.formateTime(this.horarioInfo.horaFin),
+                tipo: this.horarioInfo.tipo,
+                idSucursal: this.horarioInfo.sucursalId,
+                motivo: this.horarioInfo.motivo,
+              });
             });
-          });
+        }
+      }else{
+       
+          this.gService
+            .get('horario', this.idRepeat)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((data: any) => {
+              console.log('🚀 ~ HorarioDiagComponent ~ .subscribe ~ data:', data);
+              this.horarioInfo = data;
+  
+              this.horarioForm.patchValue({
+                id: 0,
+                finicio: this.formateDate(new Date(this.horarioInfo.fechaInicio)),
+                ffin: this.formateDate(new Date(this.horarioInfo.fechaFin)),
+                hinicio: this.formateTime(this.horarioInfo.horaInicio),
+                hfin: this.formateTime(this.horarioInfo.horaFin),
+                tipo: this.horarioInfo.tipo,
+                idSucursal: this.horarioInfo.sucursalId,
+                motivo: this.horarioInfo.motivo,
+              });
+            });
+        
       }
+      
     });
   }
 
@@ -166,6 +198,26 @@ export class HorarioDiagComponent implements OnInit, OnDestroy {
       this.allHoarios.length
     );
 
+    if (finicio<this.currentDate){
+      this.noti.mensajeTime(
+        'Atención',
+        'No se puede selecionar una fecha anterior a la actual.',
+        3000,
+        TipoMessage.warning
+      );
+      return;
+    }
+
+    if (ffin<this.currentDate){
+      this.noti.mensajeTime(
+        'Atención',
+        'No se puede selecionar una fecha anterior a la actual.',
+        3000,
+        TipoMessage.warning
+      );
+      return;
+    }
+
     if (this.allHoarios.length != 0) {
       this.allHoarios.forEach((element) => {
         if (
@@ -204,62 +256,50 @@ export class HorarioDiagComponent implements OnInit, OnDestroy {
 
   guardarHoario() {
     if (this.id == 0) {
-      this.gService
-        .create('horario', this.horarioForm.value)
+      this.gService.create('horario', this.horarioForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
-          console.log("🚀 ~ HorarioDiagComponent ~ .subscribe ~ data:", data)
           this.respHorario = data;
-         
           if (this.tipo == 'SERVICIO') {
             this.gService.actualizarArrayHorario(data);
           } else {
             this.gService.actualizarArrayBloque(data);
           }
-
+  
+          this.noti.mensajeTime(
+            'Éxito',
+            (this.tipo == 'SERVICIO' ? 'Horario' : 'Bloqueo') + ' guardado con éxito',
+            3000,
+            TipoMessage.success
+          );
+          this.onSave.emit(); // Emitir el evento
+          this.dialogRef.close();
+          this.router.navigate(['/horario']);
         });
-
-        this.noti.mensajeTime(
-          'Éxito',
-          (this.tipo == 'SERVICIO' ? 'Horario' : 'Bloqueo') +
-            ' guardado con éxito',
-          3000,
-          TipoMessage.success
-        );
-
-        this.dialogRef.close();
-
-        this.router.navigate(['/horario']);
-
     } else {
-      this.gService
-        .update('horario', this.horarioForm.value)
+      this.gService.update('horario', this.horarioForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
-          console.log("🚀 ~ HorarioDiagComponent ~ .subscribe ~ data:", data)
           this.respHorario = data;
-
           if (this.tipo == 'SERVICIO') {
             this.gService.actualizarArrayHorario(data);
           } else {
             this.gService.actualizarArrayBloque(data);
           }
-         
+  
+          this.noti.mensajeTime(
+            'Éxito',
+            (this.tipo == 'SERVICIO' ? 'Horario' : 'Bloqueo') + ' actualizado con éxito',
+            3000,
+            TipoMessage.success
+          );
+          this.onSave.emit(); // Emitir el evento
+          this.dialogRef.close();
+          this.router.navigate(['/horario']);
         });
-
-        this.noti.mensajeTime(
-          'Éxito',
-          (this.tipo == 'SERVICIO' ? 'Horario' : 'Bloqueo') +
-            ' actualizado con éxito',
-          3000,
-          TipoMessage.success
-        );
-
-        this.dialogRef.close();
-
-        this.router.navigate(['/horario']);
     }
   }
+  
 
   formateDate(date) {
     var dia = date.getDate();

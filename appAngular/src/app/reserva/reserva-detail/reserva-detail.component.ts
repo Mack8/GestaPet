@@ -25,7 +25,7 @@ export class ReservaDetailComponent {
     this.gService.get("cita",2)
     .pipe(takeUntil(this.destroy$))
     .subscribe((respuesta:any)=>{
-      console.log("🚀 ~ ReservaIndexComponent ~ .subscribe ~ respuesta:", respuesta)
+      
       this.reserva=respuesta;
     })
   }

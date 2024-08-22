@@ -33,7 +33,7 @@
                 <button
                   mat-raised-button
                   color="primary"
-                  (click)="openForm(0, 'SERVICIO')"
+                  (click)="openForm(0, 'SERVICIO',0)"
                   style="margin-bottom: 10px; float: right; display: block"
                 >
                   <mat-icon>add_circle_outline</mat-icon>&nbsp;Agregar Horario
@@ -66,14 +66,16 @@
                       Acciones
                     </th>
                     <td mat-cell *matCellDef="let myRowData">
-                      <button (click)="detalle(myRowData.id)" mat-raised-button aria-label="Edit Row" color="accent">
+                      <button (click)="detalle(myRowData.id)" mat-mini-fab title="Ver Detalle" aria-label="Edit Row" color="primary">
                         <mat-icon>remove_red_eye</mat-icon>
-                        Ver Detalle
                       </button>
                       &nbsp;
-                      <button mat-raised-button aria-label="Edit Row" color="primary"  (click)="openForm(myRowData.id, 'SERVICIO')">
+                      <button mat-mini-fab title="Editar Horario" aria-label="Edit Row" color="primary"  (click)="openForm(myRowData.id, 'SERVICIO',0)">
                         <mat-icon>edit</mat-icon>
-                        Editar
+                      </button>
+                      &nbsp;
+                      <button mat-mini-fab title="Repetir Horario" aria-label="Edit Row" color="primary"  (click)="openForm(myRowData.id, 'SERVICIO',1)">
+                        <mat-icon>repeat</mat-icon>
                       </button>
                     </td>
                   </ng-container>
@@ -114,7 +116,7 @@
                 <button
                   color="primary"
                   mat-raised-button
-                  (click)="openForm(0, 'BLOQUEO')"
+                  (click)="openForm(0, 'BLOQUEO',0)"
                   style="margin-bottom: 10px; float: right; display: block"
                 >
                   <mat-icon>add_circle_outline</mat-icon>&nbsp;Agregar Bloqueo
@@ -146,14 +148,16 @@
                       Acciones
                     </th>
                     <td mat-cell *matCellDef="let myRowData">
-                      <button (click)="detalle(myRowData.id)" mat-raised-button aria-label="Edit Row" color="accent">
+                      <button (click)="detalle(myRowData.id)" mat-mini-fab title="Ver Detalle" aria-label="Edit Row" color="primary">
                         <mat-icon>remove_red_eye</mat-icon>
-                        Ver Detalle
                       </button>
                       &nbsp;
-                      <button mat-raised-button aria-label="Edit Row" color="primary"  (click)="openForm(myRowData.id, 'BLOQUEO')">
+                      <button mat-mini-fab title="Editar Bloqueo" aria-label="Edit Row" color="primary"  (click)="openForm(myRowData.id, 'BLOQUEO',0)">
                         <mat-icon>edit</mat-icon>
-                        Editar
+                      </button>
+                      &nbsp;
+                      <button mat-mini-fab title="Repetir Bloqueo" aria-label="Edit Row" color="primary"  (click)="openForm(myRowData.id, 'BLOQUEO',1)">
+                        <mat-icon>repeat</mat-icon>
                       </button>
                     </td>
                   </ng-container>

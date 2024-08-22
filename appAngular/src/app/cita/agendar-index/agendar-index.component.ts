@@ -21,6 +21,9 @@ import {
   DxSchedulerComponent,
   DxSchedulerTypes,
 } from 'devextreme-angular/ui/scheduler';
+import { DxFormComponent } from 'devextreme-angular';
+import { AuthenticationService } from '../../share/authentication.service';
+//import { AuthenticationService } from '../../share/authentication.service';
 
 @Pipe({ name: 'apply' })
 export class ApplyPipe<TArgs, TReturn> implements PipeTransform {
@@ -43,7 +46,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   selected = 0;
   clientes: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
-  sucursales: any;
+  sucursal: any;
   mascotas: any;
   currentDate: Date = new Date();
   appointments = [];
@@ -52,23 +55,42 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   citas = [];
   estados: any;
   horarios = [];
+  isAuntenticated:boolean;
+  currentUser:any;
+  sucursales: any;
+
+  tipoUsuario = 'CLIENTE';
+  clienteId = 0;
+  mascotasClinte : any;
+  
 
   constructor(
     private gService: GenericService,
     private router: Router,
     private activeRouter: ActivatedRoute,
-    private noti: NotificacionService
+    private noti: NotificacionService,
+   private authService: AuthenticationService
   ) {
     this.listServicios();
     this.listClientes();
-    this.getSucursal();
+   
     this.initMessages();
     this.getEstados();
     this.getAllMascotas();
     locale('es');
-    }
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.isAuthenticated.subscribe((valor)=>{
+      this.isAuntenticated=valor
+    })
+    //Información usuario actual
+    this.authService.decodeToken.subscribe((user:any)=>{
+      this.currentUser=user
+      this.clienteId = this.currentUser.rol == 'CLIENTE'?this.currentUser.id:0;
+       this.getSucursal();
+    })
+  }
 
   initMessages() {
     loadMessages(esMessages);
@@ -76,7 +98,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
 
   getBloqueos() {
     this.gService
-      .get('horario/sucursalTipo', this.sucursales.id + '/BLOQUEO')
+      .get('horario/sucursalTipoHora', this.sucursal.id + '/BLOQUEO')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.bloqueos = data;
@@ -85,7 +107,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
 
   getHorarios() {
     this.gService
-      .get('horario/sucursalTipo', this.sucursales.id + '/SERVICIO')
+      .get('horario/sucursalTipoHora', this.sucursal.id + '/SERVICIO')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.horarios = data;
@@ -93,15 +115,26 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   }
 
   getSucursal() {
-    this.gService
-      .get('usuario', 2)
+
+    if (this.currentUser.rol == 'CLIENTE'){
+      this.gService.list("sucursal/")
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((respuesta:any)=>{
+        this.sucursales=respuesta
+      })
+    }else{
+      this.gService
+      .get('usuario', this.currentUser?.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        this.sucursales = data.sucursal;
+        this.sucursal = data.sucursal;
         this.getBloqueos();
         this.getCitas();
         this.getHorarios();
+        
       });
+    }
+    
   }
 
   listServicios() {
@@ -144,24 +177,60 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   }
 
   getCitas() {
-    this.gService
-      .get('cita', this.sucursales.id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((respuesta: any) => {
+    this.sucursal.id
+    if (this.currentUser.rol != 'CLIENTE') {
+      // Si el usuario no es CLIENTE, obtén todas las citas normalmente
+      this.gService
+        .get('cita/sucursal', this.sucursal.id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((respuesta: any) => {
+          this.citas = this.renamePropertiesInArray(
+            respuesta,
+            {
+              horaInicio: 'startDate',
+              horaFin: 'endDate',
+            },
+            {
+              start: 'shortDate',
+              end: 'shortDate',
+            }
+          );
+        });
+    } else {
+      this.gService
+        .get('cita/sucursal', this.sucursal.id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((respuesta: any) => {
+          // Obtén todas las citas
+          this.citas = this.renamePropertiesInArray(
+            respuesta,
+            {
+              horaInicio: 'startDate',
+              horaFin: 'endDate',
+            },
+            {
+              start: 'shortDate',
+              end: 'shortDate',
+            }
+          );
 
-        this.citas = this.renamePropertiesInArray(
-          respuesta,
-          {
-            horaInicio: 'startDate',
-            horaFin: 'endDate',
-          },
-          {
-            start: 'shortDate',
-            end: 'shortDate',
-          }
-        );
-      });
+          this.citas = this.citas.filter(cita => {
+            return cita.estadoId !== 3 || cita.clienteId === this.clienteId;
+          });
+  
+          // Modifica las citas para el cliente
+          this.citas = this.citas.map(cita => {
+            if (cita.clienteId !== this.clienteId) {
+              // Cambia el estado a "No disponible" o algún otro valor para citas que no pertenecen al cliente
+              cita.estadoId = 4; // -1 o el ID que corresponda al estado "No disponible"
+            }
+            return cita;
+          });
+        });
+    }
   }
+  
+  
 
   getEstados() {
     this.gService
@@ -208,7 +277,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   isDisabledDateCell = (date: Date) => this.isDisableDate(date);
 
   isDisableDate = (date: Date) =>
-    this.isBloqueo(date) || this.isHorario(date) || this.isCita(date);
+    this.isBloqueo(date) || !this.isHorario(date)// || this.isCita(date);
 
   isBloqueo = (date: Date) => {
     var b = [];
@@ -235,42 +304,40 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   };
 
   isHorario = (date: Date) => {
-    var b = [];
+    // Esta función devuelve true si la fecha está dentro de algún intervalo en horarios
 
+    let isWithinAnyHorario = false;
+  
     this.horarios.forEach((element) => {
+      
       const normalizedDate1 = new Date(element.fechaInicio);
       const normalizedDate2 = new Date(element.fechaFin);
       const date1 = new Date(element.horaInicio);
       const date2 = new Date(element.horaFin);
-      var isInRange = this.isDateTimeInRange(
-        date,
-        normalizedDate1,
-        date1,
-        normalizedDate2,
-        date2
-      );
-
-      if (!isInRange) {
-        b.push(element);
+  
+      if (this.isDateTimeInRange(date, normalizedDate1, date1, normalizedDate2, date2)) {
+        isWithinAnyHorario = true;
       }
     });
-
-    return b.length != 0;
+  
+    return isWithinAnyHorario;
   };
+  
 
   isCita = (date: Date) => {
+    console.log('🚀 ~ AgendarIndexComponent ~ date:', date);
     var b = [];
 
     this.citas.forEach((element) => {
-      const date1 = new Date(element.horaInicio);
-      const date2 = new Date(element.horaFin);
-      var isInRange = this.isDateTimeInRange2(date, date1, date2);
+      const date1 = new Date(element.startDate);
+      const date2 = new Date(element.endDate);
 
-      if (isInRange) {
+      if (date >= date1 && date <= date2) {
         b.push(element);
       }
     });
-
+      
+      
     return b.length != 0;
   };
 
@@ -322,7 +389,19 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   onAppointmentFormOpening = (
     data: DxSchedulerTypes.AppointmentFormOpeningEvent
   ) => {
-      const isValidAppointment = this.isValidAppointment(
+
+    if (this.sucursal == null){
+      this.noti.mensajeTime(
+        'Atención',
+        'Sucursal, requerida.',
+        3000,
+        TipoMessage.warning
+      );
+      data.cancel = true;
+      return;
+    }
+
+    var isValidAppointment = this.isValidAppointment(
       data.component,
       data.appointmentData
     );
@@ -343,6 +422,20 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
 
     var idCita =
       data.appointmentData['id'] == undefined ? 0 : data.appointmentData['id'];
+
+      var idClinte =
+      data.appointmentData['clienteId'] == undefined ? 0 : data.appointmentData['clienteId'];
+
+      if (idCita !=0 && this.clienteId != idClinte  && this.currentUser.rol == 'CLIENTE'){
+        this.noti.mensajeTime(
+          'Atención',
+          'Espacio no disponible.',
+          3000,
+          TipoMessage.warning
+        );
+        data.cancel = true;
+        return;
+      }
 
     if (
       this.currentDate > new Date(data.appointmentData.startDate) &&
@@ -380,6 +473,10 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
       return;
     }
 
+
+    this.getMascotaByCliente(this.clienteId)
+ 
+
     const that = this;
     const form = data.form;
     const alergias =
@@ -401,6 +498,8 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
       data.appointmentData['estadoId'] == undefined
         ? 1
         : data.appointmentData['estadoId'];
+
+    this.applyDisableDatesToDateEditors(data.form);
 
     this.formData = form;
 
@@ -427,7 +526,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
         dataField: 'sucursalId',
         editorType: 'dxTextBox',
         editorOptions: {
-          value: this.sucursales.id,
+          value: this.sucursal.id,
           readOnly: true,
           visible: false,
         },
@@ -439,7 +538,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
         },
         editorType: 'dxTextBox',
         editorOptions: {
-          value: this.sucursales.nombre,
+          value: this.sucursal.nombre,
           readOnly: true,
         },
         colSpan: 2,
@@ -453,8 +552,10 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
         colSpan: 2,
         editorOptions: {
           items: this.clientes,
+          value:this.clienteId !=0 ?this.clienteId:idClinte,
           displayExpr: 'nombre',
           valueExpr: 'id',
+          readOnly: this.currentUser.rol == 'CLIENTE',
           onValueChanged({ value }) {
             that.getMascota(value).then((mascotas) => {
               form.itemOption('mascotaId', 'editorOptions', {
@@ -476,7 +577,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
         editorType: 'dxSelectBox',
         colSpan: 2,
         editorOptions: {
-          items: this.mascotas,
+          items: this.clienteId ==0?this.mascotas:this.mascotasClinte,
           displayExpr: 'nombre',
           valueExpr: 'id',
         },
@@ -545,7 +646,7 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
         editorType: 'dxSelectBox',
         colSpan: 2,
         editorOptions: {
-          items: this.estados,
+          items: this.getEstadosFiltrados(),
           displayExpr: 'nombreEstado',
           value: estado,
           valueExpr: 'id',
@@ -553,11 +654,37 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
         },
         validationRules: [{ type: 'required', message: 'Estado, requerido.' }],
       },
+      {
+        label: {
+          text: idCita == 0 || this.currentUser.rol=='CLIENTE' ? '   ' : 'Selecione una fecha',
+        },
+        dataField: 'startDate',
+        editorType: 'dxDateBox',
+        colSpan: 2,
+        editorOptions: {
+          //  width: '100%',
+          type: 'datetime',
+          visible: idCita == 0 || that.currentUser.rol == 'CLIENTE'? false : true,
+          onValueChanged({ value }) {
+            var mensaje = that.validarCambioFecha(new Date(value));
+
+            if (mensaje != null) {
+              that.noti.mensajeTime(
+                'Atención',
+                mensaje,
+                3000,
+                TipoMessage.warning
+              );
+              form.updateData('startDate', data.appointmentData.startDate);
+              return;
+            }
+          },
+        },
+      },
     ]);
   };
 
   onAppointmentAdding = (e: DxSchedulerTypes.AppointmentAddingEvent) => {
-
     const form = this.formData;
     if (form) {
       const formData = form.option('formData');
@@ -609,9 +736,6 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
         this.getCitas();
       });
 
-     
-     
-
     this.noti.mensajeTime(
       'Éxito',
       'Cita agendada con éxito.',
@@ -637,10 +761,9 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   }
 
   crearProforma(cita) {
-      var servicio = this.servicios.filter(
-      (x) => x.id ==  cita.servicioId );
+    var servicio = this.servicios.filter((x) => x.id == cita.servicioId);
 
-       var data = {
+    var data = {
       clienteId: cita.clienteId,
       sucursalId: cita.sucursalId,
       subtotal: servicio[0].precio,
@@ -648,24 +771,21 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
       total: servicio[0].precio * 1.13,
       estado: 'PROFORMA',
       detalles: [
-          {
-              servicioId: cita.servicioId,
-              cantidad: 1,
-              precio: servicio[0].precio,
-              impuestoPorcentaje: 13,
-              montoImpuesto: servicio[0].precio * 0.13,
-              totalNeto: servicio[0].precio,
-              totalBruto: servicio[0].precio * 1.13,
-          }
-      ]
-  };
+        {
+          servicioId: cita.servicioId,
+          cantidad: 1,
+          precio: servicio[0].precio,
+          impuestoPorcentaje: 13,
+          montoImpuesto: servicio[0].precio * 0.13,
+          totalNeto: servicio[0].precio,
+          totalBruto: servicio[0].precio * 1.13,
+        },
+      ],
+    };
     this.gService
       .create('factura/proforma', data)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((respuesta: any) => {
-        
-  
-      });
+      .subscribe((respuesta: any) => {});
   }
 
   getServicioById = (id: number) =>
@@ -713,8 +833,8 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
   };
 
   isValidAppointmentDate = (date: Date) =>
-    !this.isBloqueo(date) && !this.isHorario(date) && !this.isCita(date);
-
+    !this.isBloqueo(date) && this.isHorario(date)/*  && !this.isCita(date);
+ */
   formatDate(date: Date | string, format: string = 'shortDate'): string {
     // Aquí puedes utilizar un formateador de fecha como date-fns o moment.js
     // Por simplicidad, usaremos toLocaleDateString para este ejemplo
@@ -745,5 +865,72 @@ export class AgendarIndexComponent implements OnInit, OnDestroy {
     );
   }
 
+  applyDisableDatesToDateEditors = (form: DxFormComponent['instance']) => {
+    var bloqueo = this.renamePropertiesInArray(
+      this.bloqueos,
+      {
+        horaInicio: 'startDate',
+        horaFin: 'endDate',
+      },
+      {
+        start: 'shortDate',
+        end: 'shortDate',
+      }
+    );
+    const horario = this.horarios;
+    const startDateEditor = form.getEditor('startDate');
+    startDateEditor.option('disabledDates', bloqueo);
+    //startDateEditor.option('disabledDates', horario);
+  };
+
+  validarCambioFecha(newFecha: any): string | null {
+    if (this.isBloqueo(newFecha)) {
+      return 'Horario no valido.';
+    }
+
+    if (this.currentDate > newFecha) {
+      return 'No se puede seleccionar un horario anterior a la fecha y hora actual';
+    }
+
+    if (this.isHorario(newFecha)) {
+      return 'Horario no valido.';
+    }
+
+    if (this.isCita(newFecha)) {
+      return 'Horario no disponible.';
+    }
+
+    return null;
+  }
+
+  getCitasSucursalCliente(sucursalSelected: any){
+    this.gService
+    .get('sucursal', sucursalSelected)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((data: any) => {
+      this.sucursal = data.sucursal;
+      this.getBloqueos();
+      this.getCitas();
+      this.getHorarios();
+    });
+  }
+
+  getEstadosFiltrados() {
+    if (this.currentUser.rol === 'CLIENTE') {
+      return this.estados.filter(estado => estado.id !== 3  && estado.id !== 4);
+    }else{
+      return this.estados.filter(estado => estado.id !== 4);
+    }
+   // return this.estados;
+  }
+
+  getMascotaByCliente(clienteId: number){
+   
+        var cliente = this.clientes.filter((x) => x.id == clienteId);
+        this.mascotasClinte = cliente[0]?.mascotas;
+  }
+  
+
+  
   ngOnDestroy() {}
 }

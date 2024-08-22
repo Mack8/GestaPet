@@ -43,7 +43,6 @@ listSucursales(){
   this.gService.list("sucursal/")
   .pipe(takeUntil(this.destroy$))
   .subscribe((respuesta:any)=>{
-    console.log("🚀 ~ HorarioIndexComponent ~ .subscribe ~ respuesta:", respuesta)
     this.sucursales=respuesta
     this.sucursales2=respuesta
   })
@@ -55,25 +54,22 @@ ngOnInit(): void {
     this.horarios = new MatTableDataSource(data);
   });
 
-  console.log("🚀 ~ HorarioIndexComponent ~ ngOnInit ~ this.horarios:", this.horarios)
 
   this.gService.arrayBloqueo$.subscribe(data => {
     this.bloqueos = new MatTableDataSource(data);
   });
-  
-  console.log("🚀 ~ HorarioIndexComponent ~ ngOnInit ~ this.bloqueos:", this.bloqueos) */
+  */
 
   this.getHorarios(this.idSucursal, this.tipo);
 }
   
 
 getHorarios(id:any, tipo: string){
-  console.log("🚀 ~ HorarioIndexComponent ~ getHorarios ~ id:", id)
   if(id !=0){
     if ( typeof id === "string"){
       id = parseInt(id.slice(0,-1));
       }
-      console.log("🚀 ~ HorarioIndexComponent ~ getHorarios ~ id:", id)
+    
     this.gService
     .get('horario/sucursalTipo',id+"/"+tipo)
     .pipe(takeUntil(this.destroy$))
@@ -93,26 +89,64 @@ getHorarios(id:any, tipo: string){
  
 }
 
-openForm(id:number, tipo:string){
-  if(this.idSucursal ==0){
-    this.noti.mensajeTime(
-      'Atención',
-      'Debe selecionar una sucursal',
-      3000,
-      TipoMessage.warning
-    )
-    return;
+openForm(id: number, tipo: string, isRepeat: number) {
+
+  if (isRepeat ==0){
+    if (this.idSucursal == 0) {
+      this.noti.mensajeTime(
+        'Atención',
+        'Debe seleccionar una sucursal',
+        3000,
+        TipoMessage.warning
+      );
+      return;
+    }
+  
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '50%';
+    dialogConfig.disableClose = false;
+    dialogConfig.data = {
+      id: id,
+      idRepeat:0,
+      tipo: tipo,
+      idSucursal: this.idSucursal
+    };
+  
+    const dialogRef = this.dialog.open(HorarioDiagComponent, dialogConfig);
+  
+    dialogRef.componentInstance.onSave.subscribe(() => {
+      this.getHorarios(this.idSucursal, this.tipo);
+    });
+  }else{
+    if (this.idSucursal == 0) {
+      this.noti.mensajeTime(
+        'Atención',
+        'Debe seleccionar una sucursal',
+        3000,
+        TipoMessage.warning
+      );
+      return;
+    }
+  
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '50%';
+    dialogConfig.disableClose = false;
+    dialogConfig.data = {
+      id: 0,
+      idRepeat:id,
+      tipo: tipo,
+      idSucursal: this.idSucursal
+    };
+  
+    const dialogRef = this.dialog.open(HorarioDiagComponent, dialogConfig);
+  
+    dialogRef.componentInstance.onSave.subscribe(() => {
+      this.getHorarios(this.idSucursal, this.tipo);
+    });
   }
-  const dialogConfig=new MatDialogConfig()
-  dialogConfig.width='50%'
-  dialogConfig.disableClose=false
-  dialogConfig.data={
-    id:id,
-    tipo:tipo,
-    idSucursal: this.idSucursal
-  }
-  this.dialog.open(HorarioDiagComponent,dialogConfig)
+
 }
+
 
 actualizar(id:number, tipo:string) {
   this.router.navigate(['/videojuego/update', id], {
