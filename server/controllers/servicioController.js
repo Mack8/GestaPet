@@ -25,7 +25,7 @@ module.exports.create = async (request, response, next) => {
           precio: parseFloat(body.precio),
           duracion: parseInt(body.duracion),
           categoriaServicio: body.categoriaServicio,
-          disponibilidad: body.disponibilidad === true ? 1 : 0 // Convertir a TINYINT(1)
+          disponibilidad: body.disponibilidad// Convertir a TINYINT(1)
         }
       });
       response.status(201).json(newServicio);
@@ -43,9 +43,9 @@ module.exports.create = async (request, response, next) => {
           nombre: body.nombre,
           descripcion: body.descripcion,
           precio: parseFloat(body.precio),
-          duracion: parseInt(body.duracion),
+          duracion: body.duracion,
           categoriaServicio: body.categoriaServicio,
-          disponibilidad: body.disponibilidad === true ? 1 : 0 // Convertir a TINYINT(1)
+          disponibilidad: body.disponibilidad // Convertir a TINYINT(1)
         }
       });
       response.status(200).json(updatedServicio);

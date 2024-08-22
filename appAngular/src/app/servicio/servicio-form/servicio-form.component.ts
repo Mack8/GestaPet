@@ -57,6 +57,7 @@ export class ServicioFormComponent {
 
   formularioReactive() {
     let number2decimals = /^[0-9]+[.,]{1,1}[0-9]{2,2}$/;
+    let durationPattern = /^(\d{1,2}h\s\d{1,2}m|\d{1,2}h|\d{1,3}m)$/;
     this.servicioForm = this.fb.group({
       id: [null, null],
       nombre: [
@@ -70,7 +71,7 @@ export class ServicioFormComponent {
       ],
       duracion: [
         null,
-        Validators.compose([Validators.required, Validators.pattern(/^\d+$/)])
+        Validators.compose([Validators.required, Validators.pattern(durationPattern)])
       ],
       categoriaServicio: [null, Validators.required],
       disponibilidad: ['1', Validators.required] // Default to '1' for available
@@ -105,9 +106,34 @@ export class ServicioFormComponent {
     this.guardarServicio();
   }
 
+
+  convertirADuracionEnMinutos(duracion: string): number {
+    let minutos = 0;
+  
+    if (duracion.includes('h')) {
+      const partes = duracion.split(' ');
+      partes.forEach(parte => {
+        if (parte.includes('h')) {
+          minutos += parseInt(parte.replace('h', '')) * 60;
+        }
+        if (parte.includes('m')) {
+          minutos += parseInt(parte.replace('m', ''));
+        }
+      });
+    } else if (duracion.includes('m')) {
+      minutos = parseInt(duracion.replace('m', ''));
+    }
+  
+    return minutos;
+  }
+
+
+  
+
   guardarServicio() {
     const formValue = this.servicioForm.value;
     formValue.disponibilidad = formValue.disponibilidad === '1' ? true : false;
+    formValue.duracion = this.convertirADuracionEnMinutos(formValue.duracion);
     if (this.isCreate) {
       this.gService
         .create('servicio/', formValue)
