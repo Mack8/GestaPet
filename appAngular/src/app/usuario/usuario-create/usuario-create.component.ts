@@ -38,8 +38,11 @@ export class UsuarioCreateComponent {
   reactiveForm() {
     this.formCreate = this.fb.group({
       nombre: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      telefono: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]], // Ejemplo de patrón para un teléfono de 10 dígitos
+      correoElectronico: ['', [Validators.required, Validators.email]],
+      direccion: ['', [Validators.required]],
+      fechaNacimiento: ['', [Validators.required]],
+      contrasena: ['', [Validators.required, Validators.minLength(6)]], // Ejemplo de validación para contraseña de al menos 6 caracteres
     });
   }
 

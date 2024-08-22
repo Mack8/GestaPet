@@ -98,7 +98,6 @@ module.exports.create = async (request, response, next) => {
         direccion: userData.direccion,
         fechaNacimiento: new Date(userData.fechaNacimiento),
         contrasena: hash,
-        rol: Rol[userData.rol], // Convertir el rol a su valor en el enum
       },
     });
 

@@ -92,10 +92,12 @@
 
 
 
-
+@if (this.currentUser?.rol === 'ENCARGADO' || this.currentUser?.rol === 'ADMINISTRADOR' || this.currentUser?.rol === 'CLIENTE') {  
   <!-- Menú Facturación -->
   <button mat-button [matMenuTriggerFor]="menu3">Facturación</button>
   <mat-menu #menu3="matMenu">
+
+  
 
     @if (this.currentUser?.rol === 'ENCARGADO' || this.currentUser?.rol === 'ADMINISTRADOR') {  
     <button
@@ -146,7 +148,7 @@
 
 
   </mat-menu>
-
+}
   
 
   @if (this.currentUser?.rol === 'ENCARGADO' || this.currentUser?.rol === 'ADMINISTRADOR') {  
