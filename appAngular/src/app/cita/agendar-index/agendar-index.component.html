@@ -5,7 +5,7 @@
   <mat-card-content style="margin: 15px">
     <div class="row">
       <div class="col">
-        @if (this.tipoUsuario ==='CLIENTE') {
+        @if (this.currentUser.rol ==='CLIENTE') {
         <label>Sucursal</label>
         <mat-form-field style="width: 300px; display: block">
           <mat-select
@@ -51,7 +51,7 @@
 
           <div *dxTemplate="let model of 'appointment-template'">
             <div class="showtime-preview">
-              @if(tipoUsuario === 'CLIENTE'){
+              @if(currentUser.rol === 'CLIENTE'){
               @if(model.appointmentData.clienteId === clienteId){
               <div>
                 <strong>{{
@@ -97,8 +97,8 @@
               *ngIf="getCitaById | apply : model.appointmentData.id as cita"
             >
               <div class="movie-tooltip">
-                @if(tipoUsuario === 'CLIENTE'){ @if(clienteId ===
-                cita.clienteId){
+                @if(currentUser.rol === 'CLIENTE'){ 
+                  @if(clienteId === cita.clienteId){
                 <div class="movie-info">
                   <div class="movie-title">
                     {{ cita.mascota.nombre }}

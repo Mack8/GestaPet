@@ -43,7 +43,6 @@ listSucursales(){
   this.gService.list("sucursal/")
   .pipe(takeUntil(this.destroy$))
   .subscribe((respuesta:any)=>{
-    console.log("🚀 ~ HorarioIndexComponent ~ .subscribe ~ respuesta:", respuesta)
     this.sucursales=respuesta
     this.sucursales2=respuesta
   })
@@ -55,25 +54,22 @@ ngOnInit(): void {
     this.horarios = new MatTableDataSource(data);
   });
 
-  console.log("🚀 ~ HorarioIndexComponent ~ ngOnInit ~ this.horarios:", this.horarios)
 
   this.gService.arrayBloqueo$.subscribe(data => {
     this.bloqueos = new MatTableDataSource(data);
   });
-  
-  console.log("🚀 ~ HorarioIndexComponent ~ ngOnInit ~ this.bloqueos:", this.bloqueos) */
+  */
 
   this.getHorarios(this.idSucursal, this.tipo);
 }
   
 
 getHorarios(id:any, tipo: string){
-  console.log("🚀 ~ HorarioIndexComponent ~ getHorarios ~ id:", id)
   if(id !=0){
     if ( typeof id === "string"){
       id = parseInt(id.slice(0,-1));
       }
-      console.log("🚀 ~ HorarioIndexComponent ~ getHorarios ~ id:", id)
+    
     this.gService
     .get('horario/sucursalTipo',id+"/"+tipo)
     .pipe(takeUntil(this.destroy$))

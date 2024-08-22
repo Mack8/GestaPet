@@ -31,7 +31,6 @@ module.exports.getHorarioBySucursal = async (request, response, next) => {
 };
 
 module.exports.getHorarioBySucursalTipo = async (request, response, next) => {
-  console.log("🚀 ~ module.exports.getHorarioBySucursal= ~ request:", request);
   let idSucursal = parseInt(request.params.id);
   let tipo = request.params.tipo;
   const horarios = await prisma.horario.findMany({
@@ -45,7 +44,7 @@ module.exports.getHorarioBySucursalTipo = async (request, response, next) => {
 
 module.exports.getHorarioBySucursalTipoHora = async (request, response, next) => {
   try {
-    console.log("🚀 ~ module.exports.getHorarioBySucursal= ~ request:", request);
+    
     let idSucursal = parseInt(request.params.id);
     let tipo = request.params.tipo;
     
