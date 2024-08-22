@@ -10,6 +10,7 @@ router.get('/',facturaController.get)
 router.post('/proforma', facturaController.createFactura);
 
 router.get('/', facturaController.get);
+router.get('/cliente/:id', facturaController.getFacturasByCliente);
 router.get('/:id', facturaController.getFacturaById);
 router.post('/', facturaController.create);
 router.put('/:id', facturaController.updateFactura);

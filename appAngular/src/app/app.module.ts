@@ -32,6 +32,7 @@ import { HttpAuthInterceptorService } from './share/http-auth-interceptor.servic
 import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
 
 import { UsuarioModule } from './usuario/usuario.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //import { NgxMaskModule, IConfig } from 'ngx-mask'
 
@@ -42,6 +43,9 @@ import { UsuarioModule } from './usuario/usuario.module';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
     CoreModule,
@@ -60,10 +64,10 @@ import { UsuarioModule } from './usuario/usuario.module';
     ReportesModule,
    // NgxMaskModule.forRoot(),
    CitaModule,
+   UsuarioModule,
    DxButtonModule,
-
     AppRoutingModule,
-      UsuarioModule,
+     
 
   ],
   providers: [

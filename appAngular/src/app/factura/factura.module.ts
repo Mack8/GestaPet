@@ -39,9 +39,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FacturaTableComponent } from './factura-table/factura-table.component';
+import { FacturasClienteComponent } from './facturas-cliente/facturas-cliente.component';
 
 @NgModule({
-  declarations: [FacturaIndexComponent, FacturaDetailComponent, FacturaDiagComponent, FacturaCreateComponent, FacturaCreateComponent, FacturaTableComponent],
+  declarations: [FacturaIndexComponent, FacturaDetailComponent, FacturaDiagComponent, FacturaCreateComponent, FacturaCreateComponent, FacturaTableComponent, FacturasClienteComponent],
   imports: [
     CommonModule,
     FacturaRoutingModule,
