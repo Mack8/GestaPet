@@ -15,7 +15,7 @@ module.exports.getMascotaById = async (request, response, next) => {
     response.json(mascota);
 };
 
-module.exports.createMascota = async (request, response, next) => {
+module.exports.create = async (request, response, next) => {
     let body = request.body;
     const newMascota = await prisma.mascota.create({
         data: {
@@ -31,7 +31,7 @@ module.exports.createMascota = async (request, response, next) => {
     response.json(newMascota);
 };
 
-module.exports.updateMascota = async (request, response, next) => {
+module.exports.update = async (request, response, next) => {
     let body = request.body;
     let idMascota = parseInt(request.params.id);
     const updateMascota = await prisma.mascota.update({

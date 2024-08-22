@@ -33,6 +33,7 @@ import { HttpErrorInterceptorService } from './share/http-error-interceptor.serv
 
 import { UsuarioModule } from './usuario/usuario.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MascotaModule } from './mascota/mascota.module';
 
 //import { NgxMaskModule, IConfig } from 'ngx-mask'
 
@@ -62,11 +63,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatTabsModule,
     ToastrModule.forRoot(),
     ReportesModule,
+    MascotaModule,
    // NgxMaskModule.forRoot(),
    CitaModule,
    UsuarioModule,
    DxButtonModule,
     AppRoutingModule,
+    
      
 
   ],
