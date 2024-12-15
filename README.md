@@ -1,6 +1,6 @@
 # GestaPet - Sistema de Gestión de Agenda para Clínicas Veterinarias 🐾
 
-## Descripción
+## 📖 **Descripción**
 **GestaPet** es una aplicación web desarrollada para **clínicas veterinarias**, con el objetivo de gestionar:
 - **Citas y servicios** para mascotas.
 - **Catálogo de productos** relacionados con la salud y confort de las mascotas.
@@ -62,8 +62,66 @@ La aplicación facilita la organización eficiente de sucursales, usuarios y res
 - **Herramientas de Desarrollo**:
   - Control de versiones: **GitHub**.
 
-
 ---
+
+## 📋 **Instrucciones para Ejecutar**
+
+### 🚀 **Backend**
+
+#### 1. **Clonar el repositorio**
+
+```bash
+- git clone https://github.com/usuario/gestapet.git
+- cd gestapet/backend
+
+```
+
+#### 2. **Instalar dependencias**
+
+```bash
+- npm install
+```
+
+#### 3. **Configurar variables de entornos**
+
+```bash
+# Configuración de base de datos
+DATABASE_URL="mysql://usuario:contraseña@localhost:3306/nombre_base_datos"
+
+# Puerto del servidor
+PORT=3000
+
+# Clave secreta para JWT
+JWT_SECRET="mi_clave_secreta"
+
+```
+
+#### 4. ** Iniciar el servidor**
+
+```bash
+- npm start
+```
+
+### 🌐 **Frontend**
+
+#### 1. **Accede al directorio del frontend**
+
+```bash
+- cd ../frontend
+```
+
+#### 2. **Instalar dependencias**
+
+```bash
+- npm install
+```
+
+#### 3. **Iniciar la aplicación**
+
+```bash
+- ng serve
+```
+
 
 ## 🧑‍💻 **Equipo de Trabajo**
 | Nombre                        | Correo                        |
@@ -79,13 +137,13 @@ La aplicación facilita la organización eficiente de sucursales, usuarios y res
 ```plaintext
 GestaPet/
 │
-├── backend/            # Código del servidor en Node.js y Prisma
+├── server/            # Código del servidor en Node.js y Prisma
 │   ├── controllers/    # Controladores
 │   ├── models/         # Modelos de base de datos
 │   ├── routes/         # Definición de rutas
 │   └── .env            # Variables de entorno
 │
-├── frontend/           # Código del cliente en Angular
+├── angular/           # Código del cliente en Angular
 │   ├── src/
 │   │   ├── components/ # Componentes reutilizables
 │   │   ├── pages/      # Vistas de la aplicación
@@ -93,3 +151,9 @@ GestaPet/
 │   └── angular.json
 │
 └── README.md           # Documentación del proyecto
+
+
+
+
+
+
