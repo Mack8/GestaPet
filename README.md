@@ -1,63 +1,96 @@
-# Gestión de Agenda de Servicios
+# GestaPet - Sistema de Gestión de Agenda para Clínicas Veterinarias 🐾
 
-### Descripción
-Esta aplicación web permite gestionar agendas de servicios para diferentes tipos de negocios, como clínicas, spas, peluquerías, centros veterinarios, entre otros. Proporciona herramientas para gestionar usuarios, sucursales, servicios, reservas y facturación, ofreciendo una experiencia eficiente tanto para administradores, encargados y clientes.
+## Descripción
+**GestaPet** es una aplicación web desarrollada para **clínicas veterinarias**, con el objetivo de gestionar:
+- **Citas y servicios** para mascotas.
+- **Catálogo de productos** relacionados con la salud y confort de las mascotas.
+- **Horarios y disponibilidad** del personal encargado.
+- **Facturación** de servicios y productos.
 
----
-
-## **Características principales**
-- **Gestión de usuarios**:
-  - Autenticación y autorización con 3 roles: Cliente, Encargado y Administrador.
-  - Registro automático para clientes y gestión de roles por el administrador.
-- **Gestión de sucursales**:
-  - Registro, modificación y visualización de sucursales con información relevante.
-- **Gestión de servicios**:
-  - Administración de servicios, incluyendo nombre, descripción, tarifa y tiempo.
-  - Filtros para buscar y ordenar servicios.
-- **Reservas**:
-  - Registro de citas por clientes y encargados, con múltiples estados (Pendiente, Confirmada, Cancelada, etc.).
-  - Funcionalidad para cancelar, reprogramar y confirmar reservas.
-  - Visualización de agenda semanal con detalles de citas y sus estados.
-- **Facturación**:
-  - Generación de facturas en formato PDF, incluyendo servicios y productos.
-  - Envío de facturas por correo electrónico.
-  - Visualización de historial de facturas por cliente, encargado y administrador.
-- **Gestión de horarios**:
-  - Configuración de horarios semanales y bloqueo de días o turnos.
+La aplicación facilita la organización eficiente de sucursales, usuarios y reservas, permitiendo una experiencia óptima tanto para clientes, encargados y administradores.
 
 ---
 
-## **Requerimientos técnicos**
+## 🎯 **Objetivos**
+- Permitir a los **clientes** agendar citas fácilmente y visualizar sus citas e historial.
+- Facilitar a los **encargados** el manejo de horarios, reservas y productos.
+- Ofrecer a los **administradores** control total sobre usuarios, sucursales, servicios y facturación.
+
+---
+
+## 🚀 **Características Principales**
+### 1. **Gestión de Citas y Servicios**
+- Registro y administración de citas con distintos estados:
+  - Pendiente, Confirmada, Completada, Cancelada, Reprogramada, No asistió.
+- Clasificación de servicios por **categorías**: Consulta, vacunación, cirugía, etc.
+- Campos adicionales:
+  - **Dueño**: Identifica al responsable de la mascota.
+  - **Especie**: Clasifica el tipo de mascota (perro, gato, etc.).
+  - **Disponibilidad de Emergencia**: Define si un servicio está disponible para emergencias.
+
+### 2. **Catálogo de Productos**
+- Gestión de productos con campos adicionales:
+  - **Proveedor**: Distribuidor del artículo.
+  - **Fecha de Caducidad**: Vigencia del producto.
+- Filtrado de productos por **categorías**.
+
+### 3. **Gestión de Usuarios y Roles**
+- Autenticación y autorización con 3 roles:
+  - **Administrador**: Control total del sistema.
+  - **Encargado**: Gestión de citas y sucursales asignadas.
+  - **Cliente**: Reserva de citas y visualización de su historial.
+- Registro automático para clientes.
+
+### 4. **Agenda de Reservas**
+- Representación visual de la agenda semanal con disponibilidad.
+- Bloqueo de turnos o días completos.
+- Reprogramación y cancelación de citas.
+
+### 5. **Facturación**
+- Generación de facturas en **PDF** y envío por correo electrónico.
+- Inclusión automática de servicios y productos.
+
+---
+
+## 🛠️ **Requerimientos Técnicos**
 - **Backend**:
-  - Node.js, Prisma para la comunicación con la base de datos.
+  - Node.js con **Prisma**.
   - Base de datos relacional **MySQL**.
 - **Frontend**:
-  - Framework: Angular.
-  - Interfaz amigable y diseño lógico para usuarios.
-- **Otros**:
-  - Diseño modular basado en principios vistos en clase.
-  - Generación de gráficos para análisis de datos.
+  - Framework: **Angular**.
+  - Diseño responsivo y amigable para el usuario.
+- **Herramientas de Desarrollo**:
+  - Control de versiones: **GitLab** (principal) y **GitHub**.
+  - Almacenamiento local: Respaldo físico por cada integrante.
+  - Comunicación del equipo: **WhatsApp** y correo electrónico.
 
 ---
 
-## **Tipo de negocio**
-La aplicación puede adaptarse a múltiples tipos de negocios, como:
-- Clínicas dentales
-- Salones de belleza
-- Spas
-- Centros veterinarios
-- Tatuadores
-- Gimnasios
-- Clínicas de fisioterapia
+## 🧑‍💻 **Equipo de Trabajo**
+| Nombre                        | Correo                        | Teléfono         |
+|-------------------------------|-------------------------------|------------------|
+| **Marco Daniel Centeno Céspedes** | mcentenoc@est.utn.ac.cr       | 8996-2185        |
+| **Marcia Elena Sánchez Abellán**  | masanchezab@est.utn.ac.cr     | 8989-8962        |
 
-El diseño debe ajustarse al negocio seleccionado, con una interfaz personalizada.
+**Líder del Proyecto**: Marco Daniel Centeno Céspedes.
 
 ---
 
-## **Instrucciones para ejecutar el proyecto**
-
-### **Backend**
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/tu_usuario/nombre_repositorio.git
-   cd nombre_repositorio/backend
+## 📂 **Estructura del Proyecto**
+```plaintext
+GestaPet/
+│
+├── backend/            # Código del servidor en Node.js y Prisma
+│   ├── controllers/    # Controladores
+│   ├── models/         # Modelos de base de datos
+│   ├── routes/         # Definición de rutas
+│   └── .env            # Variables de entorno
+│
+├── frontend/           # Código del cliente en Angular
+│   ├── src/
+│   │   ├── components/ # Componentes reutilizables
+│   │   ├── pages/      # Vistas de la aplicación
+│   │   └── assets/     # Recursos (imágenes, estilos)
+│   └── angular.json
+│
+└── README.md           # Documentación del proyecto
