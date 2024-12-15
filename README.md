@@ -60,19 +60,18 @@ La aplicación facilita la organización eficiente de sucursales, usuarios y res
   - Framework: **Angular**.
   - Diseño responsivo y amigable para el usuario.
 - **Herramientas de Desarrollo**:
-  - Control de versiones: **GitLab** (principal) y **GitHub**.
-  - Almacenamiento local: Respaldo físico por cada integrante.
-  - Comunicación del equipo: **WhatsApp** y correo electrónico.
+  - Control de versiones: **GitHub**.
+
 
 ---
 
 ## 🧑‍💻 **Equipo de Trabajo**
-| Nombre                        | Correo                        | Teléfono         |
-|-------------------------------|-------------------------------|------------------|
-| **Marco Daniel Centeno Céspedes** | mcentenoc@est.utn.ac.cr       | 8996-2185        |
-| **Marcia Elena Sánchez Abellán**  | masanchezab@est.utn.ac.cr     | 8989-8962        |
+| Nombre                        | Correo                        |
+|-------------------------------|-------------------------------|
+| **Marco Daniel Centeno Céspedes** | mcentenoc@est.utn.ac.cr       | 
+| **Marcia Elena Sánchez Abellán**  | masanchezab@est.utn.ac.cr     | 
 
-**Líder del Proyecto**: Marco Daniel Centeno Céspedes.
+**Líder del Proyecto**: Marco Centeno.
 
 ---
 
