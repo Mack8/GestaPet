@@ -1,156 +1,114 @@
-# GestaPet - Sistema de Gestión de Agenda para Clínicas Veterinarias 🐾
-
-## 📖 **Descripción**
-**GestaPet** es una aplicación web desarrollada para **clínicas veterinarias**, con el objetivo de gestionar:
-- **Citas y servicios** para mascotas.
-- **Catálogo de productos** relacionados con la salud y confort de las mascotas.
-- **Horarios y disponibilidad** del personal encargado.
-- **Facturación** de servicios y productos.
-
-La aplicación facilita la organización eficiente de sucursales, usuarios y reservas, permitiendo una experiencia óptima tanto para clientes, encargados y administradores.
-
+# GestaPet 🐾
+ 
+Web application for appointment and operations management in veterinary clinics. Academic team project built with Node.js, Angular and MySQL.
+ 
+**Stack:** Node.js · Express · Prisma ORM · MySQL · Angular · TypeScript
+ 
+> **Academic project** — Universidad Técnica Nacional (UTN), Costa Rica. Built as part of the Software Engineering program using open-source tools.
+ 
 ---
-
-## 🎯 **Objetivos**
-- Permitir a los **clientes** agendar citas fácilmente y visualizar sus citas e historial.
-- Facilitar a los **encargados** el manejo de horarios, reservas y productos.
-- Ofrecer a los **administradores** control total sobre usuarios, sucursales, servicios y facturación.
-
+ 
+## What it does
+ 
+GestaPet helps veterinary clinics manage their day-to-day operations: scheduling appointments, handling a service and product catalog, generating invoices and controlling access by role. It supports multiple user types with different levels of access and a visual weekly agenda with slot blocking.
+ 
 ---
-
-## 🚀 **Características Principales**
-### 1. **Gestión de Citas y Servicios**
-- Registro y administración de citas con distintos estados:
-  - Pendiente, Confirmada, Completada, Cancelada, Reprogramada, No asistió.
-- Clasificación de servicios por **categorías**: Consulta, vacunación, cirugía, etc.
-- Campos adicionales:
-  - **Dueño**: Identifica al responsable de la mascota.
-  - **Especie**: Clasifica el tipo de mascota (perro, gato, etc.).
-  - **Disponibilidad de Emergencia**: Define si un servicio está disponible para emergencias.
-
-### 2. **Catálogo de Productos**
-- Gestión de productos con campos adicionales:
-  - **Proveedor**: Distribuidor del artículo.
-  - **Fecha de Caducidad**: Vigencia del producto.
-- Filtrado de productos por **categorías**.
-
-### 3. **Gestión de Usuarios y Roles**
-- Autenticación y autorización con 3 roles:
-  - **Administrador**: Control total del sistema.
-  - **Encargado**: Gestión de citas y sucursales asignadas.
-  - **Cliente**: Reserva de citas y visualización de su historial.
-- Registro automático para clientes.
-
-### 4. **Agenda de Reservas**
-- Representación visual de la agenda semanal con disponibilidad.
-- Bloqueo de turnos o días completos.
-- Reprogramación y cancelación de citas.
-
-### 5. **Facturación**
-- Generación de facturas en **PDF** y envío por correo electrónico.
-- Inclusión automática de servicios y productos.
-
+ 
+## Features
+ 
+### Appointment Management
+- Appointment registration with configurable states: Pending, Confirmed, Completed, Cancelled, Rescheduled, No-show.
+- Service classification by category: consultations, vaccinations, surgery, etc.
+- Fields for owner, species and emergency availability per service.
+### Product Catalog
+- Product management with vendor, expiration date and category fields.
+- Filtering by category.
+### User Roles & Access Control
+- Three roles with distinct permissions:
+  - **Administrator** — full system control (users, branches, services, billing).
+  - **Manager** — appointment and branch management.
+  - **Client** — self-registration, booking and appointment history.
+### Weekly Schedule
+- Visual weekly agenda with real-time availability.
+- Slot and full-day blocking.
+- Appointment rescheduling and cancellation.
+### Billing
+- Invoice generation in **PDF format**.
+- Automatic email delivery to the client.
+- Automatic inclusion of services and products.
 ---
-
-## 🛠️ **Requerimientos Técnicos**
-- **Backend**:
-  - Node.js con **Prisma**.
-  - Base de datos relacional **MySQL**.
-- **Frontend**:
-  - Framework: **Angular**.
-  - Diseño responsivo y amigable para el usuario.
-- **Herramientas de Desarrollo**:
-  - Control de versiones: **GitHub**.
-
----
-
-## 📋 **Instrucciones para Ejecutar**
-
-### 🚀 **Backend**
-
-#### 1. **Clonar el repositorio**
-
-```bash
-- git clone https://github.com/usuario/gestapet.git
-- cd gestapet/backend
-
+ 
+## Project Structure
+ 
 ```
-
-#### 2. **Instalar dependencias**
-
-```bash
-- npm install
-```
-
-#### 3. **Configurar variables de entornos**
-
-```bash
-# Configuración de base de datos
-DATABASE_URL="mysql://usuario:contraseña@localhost:3306/nombre_base_datos"
-
-# Puerto del servidor
-PORT=3000
-
-# Clave secreta para JWT
-JWT_SECRET="mi_clave_secreta"
-
-```
-
-#### 4. ** Iniciar el servidor**
-
-```bash
-- npm start
-```
-
-### 🌐 **Frontend**
-
-#### 1. **Accede al directorio del frontend**
-
-```bash
-- cd ../frontend
-```
-
-#### 2. **Instalar dependencias**
-
-```bash
-- npm install
-```
-
-#### 3. **Iniciar la aplicación**
-
-```bash
-- ng serve
-```
-
-
-## 🧑‍💻 **Equipo de Trabajo**
-| Nombre                        | Correo                        |
-|-------------------------------|-------------------------------|
-| **Marco Daniel Centeno Céspedes** | mcentenoc@est.utn.ac.cr       | 
-| **Marcia Elena Sánchez Abellán**  | masanchezab@est.utn.ac.cr     | 
-
-**Líder del Proyecto**: Marco Centeno.
-
----
-
-## 📂 **Estructura del Proyecto**
-```plaintext
 GestaPet/
-│
-├── server/            # Código del servidor en Node.js y Prisma
-│   ├── controllers/    # Controladores
-│   ├── models/         # Modelos de base de datos
-│   ├── routes/         # Definición de rutas
-│   └── .env            # Variables de entorno
-│
-├── angular/           # Código del cliente en Angular
-│   ├── src/
-│   │   ├── components/ # Componentes reutilizables
-│   │   ├── pages/      # Vistas de la aplicación
-│   │   └── assets/     # Recursos (imágenes, estilos)
-│   └── angular.json
-│
-└── README.md           # Documentación del proyecto
+├── server/              # Node.js + Express API with Prisma ORM
+│   ├── controllers/     # Route handlers
+│   ├── routes/          # API route definitions
+│   ├── prisma/          # Schema and migrations
+│   └── .env.example     # Environment variable template
+└── appAngular/          # Angular frontend
+    └── src/
+        ├── app/         # Components, pages and services
+        └── assets/      # Static resources
+```
+ 
+---
+ 
+## Getting Started
+ 
+**Requirements:** Node.js 18+, npm, MySQL
+ 
+### Backend (`server/`)
+ 
+```bash
+cd server
+npm install
+```
+ 
+Create a `.env` file based on `.env.example`:
+ 
+```env
+DATABASE_URL="mysql://user:password@localhost:3306/gestapet_db"
+PORT=3000
+JWT_SECRET="your-secret-key"
+SMTP_HOST="smtp.example.com"
+SMTP_USER="your-email@example.com"
+SMTP_PASS="your-password"
+```
+ 
+Apply the database schema and seed base data:
+ 
+```bash
+npx prisma db push
+npx prisma db seed
+npm run dev
+```
+ 
+### Frontend (`appAngular/`)
+ 
+```bash
+cd appAngular
+npm install
+ng serve
+```
+ 
+The frontend runs at `http://localhost:4200` and connects to the backend at `http://localhost:3000`.
+ 
+---
+ 
+## Team
+ 
+| Name | Role |
+|---|---|
+| Marco Daniel Centeno Céspedes | Project Lead & Full Stack Developer |
+| Marcia Elena Sánchez Abellán | Full Stack Developer |
+ 
+---
+ 
+## License
+ 
+MIT
 
 
 
